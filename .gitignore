@@ -31,4 +31,4 @@ hs_err_pid*
 *.properties
 
 #Target folder
-targt/
+target/
