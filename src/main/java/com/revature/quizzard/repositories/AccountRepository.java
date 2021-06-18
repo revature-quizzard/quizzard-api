@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
 
     AccountEntity findByUsername(String username);
@@ -17,6 +17,6 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
     boolean existsUserByUsernameAndPassword(String name, String password);
     
     //Juan and James
-    AccountEntity findById(int id);
+    //AccountEntity findById(int id);
 
 }
