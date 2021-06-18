@@ -8,12 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/test")
+
 public class TestController {
 
-    @GetMapping
+    @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
         System.out.println("Test Succeeded");
+        response.setStatus(200);
+    }
+
+    @GetMapping("/fail")
+    public void securityHealthStatusFail(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("Test Succeeded");
+        // SUPPOSED TO FAIL, this is an authenticated endpoint
         response.setStatus(200);
     }
 
