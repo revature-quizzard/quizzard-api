@@ -3,7 +3,9 @@ package com.revature.quizzard.repositories;
 import com.revature.quizzard.models.user.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
 
     AccountEntity findByUsername(String username);
@@ -13,5 +15,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
     boolean existsByUsername(String username);
 
     boolean existsUserByUsernameAndPassword(String name, String password);
+    
+    //Juan and James
+    AccountEntity findById(int id);
 
 }

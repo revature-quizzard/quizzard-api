@@ -1,5 +1,4 @@
 package com.revature.quizzard.dtos;
 
-public class AccountDTO {
-
+public class InfoAccountDTO {
 }
