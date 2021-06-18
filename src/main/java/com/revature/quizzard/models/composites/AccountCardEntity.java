@@ -1,0 +1,87 @@
+package com.revature.quizzard.models.composites;
+
+import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.user.AccountEntity;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+/**
+ * @Author: Richard Taylor
+ *
+ * AccountCardEntity
+ *
+ * Used to link an <code>AccountEntity</code> to a <code>CardEntity</code>.
+ * If, say, a user wants to bookmark a card, the process would go as follows:
+ * 1) Create a new <code>AccountCardEntity</code>
+ * 2) Set the Card and Account to it via the setters.
+ * 3) Optionally, Set confident and/or favorite to true/false.
+ * 4) Save the <code>AccountEntity</code> or <code>CardEntity</code> to the database.
+ *
+ * NOTE: This allows the card/row to be edited rather than a new row created.
+ *
+ * Usage:
+ * <code>
+ * AccountCardEntity accountCardEntity = new AccountCardEntity();
+ *
+ * accountCardEntity.setCardEntity(cardEntity); //link the userEntity
+ * accountCardEntity.setAccountEntity(accountEntity); //link the accountEntity
+ *
+ * //Save the account or card, NOT the AccountCardEntity
+ *
+ * //setFavorite and/or setConfident here
+ *
+ * //To edit, find the AccountCardEntity by the user or account, update the fields that need to be updated, and save either the user or the account
+ * </code>
+ */
+@Entity
+@Table(name = "accounts_cards")
+@AssociationOverride(name = "pk.accountEntity", joinColumns = @JoinColumn(name = "account_id"))
+@AssociationOverride(name = "pk.cardEntity", joinColumns = @JoinColumn(name = "card_id"))
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccountCardEntity {
+
+    @EmbeddedId
+    private AccountCardId pk = new AccountCardId();
+
+    @Column(name = "confident")
+    private boolean confident;
+
+    @Column(name = "favorite")
+    private boolean favorite;
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.pk.setAccountEntity(accountEntity);
+    }
+
+    public AccountEntity getAccountEntity() {
+        return this.pk.getAccountEntity();
+    }
+
+    public void setCardEntity(CardEntity cardEntity) {
+        this.pk.setCardEntity(cardEntity);
+    }
+
+    public CardEntity getCardEntity() {
+        return this.pk.getCardEntity();
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setConfident(boolean confident) {
+        this.confident = confident;
+    }
+
+    public boolean isConfident() {
+        return confident;
+    }
+
+}
