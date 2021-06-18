@@ -2,9 +2,7 @@ package com.revature.quizzard.models.flashcards;
 
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +11,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
 @Table(name = "cards")
 public @Data class CardEntity {
 

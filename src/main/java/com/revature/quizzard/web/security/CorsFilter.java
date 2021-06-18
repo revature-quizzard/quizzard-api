@@ -1,4 +1,4 @@
-package com.revature.quizzard.security;
+package com.revature.quizzard.web.security;
 
 import org.springframework.stereotype.Component;
 
