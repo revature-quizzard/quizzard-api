@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     /**
-     * 
+     *
      * @param request
      * @param response
      * @param authException
