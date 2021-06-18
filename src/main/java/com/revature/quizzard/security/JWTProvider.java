@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.security;
+package com.revature.quizzard.security;
 
 import com.revature.quizzard.web.dtos.UserDTO;
 import com.revature.quizzard.services.UserService;

@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.security;
+package com.revature.quizzard.security;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
