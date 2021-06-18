@@ -8,10 +8,10 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
 
     AccountEntity findByUsername(String username);
 
-    AccountEntity findByUsernameAndPassword(String name, String password);
+    AccountEntity findByUsernameAndPassword(String username, String password);
 
     boolean existsByUsername(String username);
 
-    boolean existsUserByUsernameAndPassword(String name, String password);
+    boolean existsUserByUsernameAndPassword(String username, String password);
 
 }
