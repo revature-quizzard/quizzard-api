@@ -17,6 +17,7 @@ public class CardService {
     public CardService(CardRepository cardRepository){
         this.cardRepository = cardRepository;
     }
+
     public List<CardDTO> getCards(){
         List<CardEntity> cardEntities = cardRepository.findAll();
         List<CardDTO> cardDTOS = new ArrayList<>();
