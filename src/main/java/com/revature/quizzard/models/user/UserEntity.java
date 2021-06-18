@@ -1,13 +1,8 @@
-package com.revature.quizzard.models;
-
-import com.revature.quizzard.models.RoleEntity;
+package com.revature.quizzard.models.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -34,11 +29,4 @@ public @Data class UserEntity {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "accounts_roles",
-            joinColumns = { @JoinColumn(name = "user_id")},
-            inverseJoinColumns = { @JoinColumn(name = "role_id") }
-    )
-    private Set<RoleEntity> roles = new HashSet<>();
 }

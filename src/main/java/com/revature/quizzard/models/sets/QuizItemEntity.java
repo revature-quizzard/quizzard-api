@@ -1,5 +1,6 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.sets;
 
+import com.revature.quizzard.models.flashcards.CardEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

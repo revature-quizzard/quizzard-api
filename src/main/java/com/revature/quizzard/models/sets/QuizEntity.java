@@ -1,5 +1,6 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.sets;
 
+import com.revature.quizzard.models.sets.SetEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.user;
 
 
 import lombok.AllArgsConstructor;
@@ -24,5 +24,8 @@ public @Data class RoleEntity {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> users = new HashSet<>();
+    private Set<AccountEntity> accountEntities = new HashSet<>();
+
+
+    // TODO need to determine if we can make use of this class without an enum , for a simplistic approach to Spring Security
 }

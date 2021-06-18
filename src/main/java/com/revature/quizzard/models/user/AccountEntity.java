@@ -1,6 +1,8 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.user;
 
 
+import com.revature.quizzard.models.composites.AccountCardEntity;
+import com.revature.quizzard.models.flashcards.ReviewEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +12,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "accounts")
+@Entity
 public @Data class AccountEntity {
-
 
     @Id
     @Column(name = "account_id", unique = true, nullable = false)
@@ -34,10 +36,20 @@ public @Data class AccountEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "accounts_roles",
+            joinColumns = { @JoinColumn(name = "account_id")},
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
 }

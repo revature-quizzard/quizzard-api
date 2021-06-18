@@ -1,5 +1,7 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.flashcards;
 
+import com.revature.quizzard.models.composites.AccountCardEntity;
+import com.revature.quizzard.models.sets.SetEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +24,10 @@ public @Data class CardEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cardEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
 
-    @Column(name = "question")
+    @Column(name = "question", nullable = false)
     private String question;
 
-    @Column(name = "answer")
+    @Column(name = "answer", nullable = false)
     private String answer;
 
     @Column(name = "reviewable")
@@ -37,4 +39,7 @@ public @Data class CardEntity {
     @ManyToOne(targetEntity = SubjectEntity.class)
     @JoinColumn(name = "subject_id")
     private SubjectEntity subject;
+
+    @ManyToMany(mappedBy = "cards")
+    private Set<SetEntity> setEntities = new HashSet<>();
 }

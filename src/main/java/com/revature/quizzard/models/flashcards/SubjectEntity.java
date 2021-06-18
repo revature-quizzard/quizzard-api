@@ -1,14 +1,10 @@
-package com.revature.quizzard.models;
-
-import com.revature.quizzard.models.CardEntity;
+package com.revature.quizzard.models.flashcards;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +17,7 @@ public @Data class SubjectEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne(targetEntity = CardEntity.class)

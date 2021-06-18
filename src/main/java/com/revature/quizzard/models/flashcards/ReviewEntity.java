@@ -1,4 +1,4 @@
-package com.revature.quizzard.models;
+package com.revature.quizzard.models.flashcards;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Table(name = "reviews")
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Table(name = "reviews")
 public @Data class ReviewEntity {
 
     @Id
