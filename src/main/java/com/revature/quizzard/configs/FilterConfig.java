@@ -8,9 +8,21 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
 
+/**
+ * FilterConfig
+ *
+ * This class holds the configuration beans for all of the filters within this application.
+ * To register a new filter, refer to the code below.
+ *
+ */
 @Configuration
 public class FilterConfig {
 
+    /**
+     * Registration bean for the CorsFilter.
+     *
+     * @return filterRegistrationBean
+     */
     @Bean
     @SuppressWarnings({"rawtypes, unchecked"})
     public FilterRegistrationBean corsRegistrationBean() {
@@ -20,6 +32,11 @@ public class FilterConfig {
         return filterRegistrationBean;
     }
 
+    /**
+     * Registration bean for the JWTokenFilter
+     *
+     * @return filterRegistrationBean
+     */
     @Bean
     @SuppressWarnings({"rawtypes, unchecked"})
     public FilterRegistrationBean JWTokenRegistrationBean() {
