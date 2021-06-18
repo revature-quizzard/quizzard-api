@@ -12,6 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
+    /**
+     * This method handles an AuthenticationException should one be thrown in <code>WebSecurityConfig.configure()</code>.
+     * There a number of things that can be done with this exception (such as registering a user with details provided,
+     * which would be a bad idea). This application will reject the request with an error message
+     *
+     * @param request The client request
+     * @param response The response to be returned with the error message
+     * @param authException
+     * @throws IOException
+     * @throws ServletException
+     * @author Nicholas Recino
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories("com.revature.quizzard.repositories")
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.revature")
-@PropertySource("classpath:application.properties") // Will be changed to yaml in future
+//@PropertySource("classpath:application.properties") // Will be changed to yaml in future
 @Import({AOPConfig.class})
 public class AppConfig {
 
