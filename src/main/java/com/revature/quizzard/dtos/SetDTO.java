@@ -1,5 +1,6 @@
 package com.revature.quizzard.dtos;
 
+import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ public class SetDTO {
     private int setId;
     private String setName;
     private boolean isPublic;
-    private int accountID;
+    private AccountEntity account;
 
     public int getSetId() {
         return setId;
@@ -36,11 +37,11 @@ public class SetDTO {
         isPublic = aPublic;
     }
 
-    public int getAccountID() {
-        return accountID;
+    public AccountEntity getAccount() {
+        return account;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setAccount(AccountEntity account) {
+        this.account = account;
     }
 }

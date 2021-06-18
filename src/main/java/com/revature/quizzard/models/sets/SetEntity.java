@@ -1,6 +1,7 @@
 package com.revature.quizzard.models.sets;
 
 import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public @Data class SetEntity {
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -29,12 +30,13 @@ public @Data class SetEntity {
     private Set<CardEntity> cards = new HashSet<>();
 
     @Column(name = "name", nullable = false)
-    String name;
+    private String name;
 
     @Column(name = "public")
-    Boolean isPublic;
+    private Boolean isPublic;
 
-    @Column(name = "account_id")
-    int accountId;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "account_id")
+    private AccountEntity account;
 
 }
