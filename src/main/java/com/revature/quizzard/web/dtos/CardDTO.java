@@ -17,4 +17,5 @@ public class CardDTO {
     private boolean isPublic;
     private SubjectEntity subject;
 
+
 }
