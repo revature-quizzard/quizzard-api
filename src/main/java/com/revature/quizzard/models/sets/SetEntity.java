@@ -34,4 +34,7 @@ public @Data class SetEntity {
     @Column(name = "public")
     Boolean isPublic;
 
+    @Column(name = "account_id")
+    int accountId;
+
 }
