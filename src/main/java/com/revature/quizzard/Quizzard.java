@@ -14,7 +14,6 @@ public class Quizzard implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-
     }
 
 }

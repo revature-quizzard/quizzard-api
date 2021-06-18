@@ -7,19 +7,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-public @Data class User {
+@NoArgsConstructor
+@Table(name = "quizzes")
+public @Data class QuizEntity {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quiz_id", unique = true, nullable = false)
     private int id;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String email;
+    @ManyToOne(targetEntity = SetEntity.class)
+    @JoinColumn(name = "set_id")
+    private SetEntity set;
 
 }

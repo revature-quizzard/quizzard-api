@@ -6,6 +6,8 @@
 
     <properties>
         <spring-boot-version>2.3.11.RELEASE</spring-boot-version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <parent>
@@ -17,49 +19,204 @@
     <groupId>com.revature</groupId>
     <artifactId>quizzard-api</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Qwizzard</name>
+
+    <developers>
+
+        <developer>
+            <name>Ann Louis-Charles</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Austin Knauer</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Christopher Levano</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>EJ Best</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Everett Diuguid</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Giancarlo Tomasello</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>James Bialon</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>James Fallon</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Juan Mendoza</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Kevin Chang</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Kyle Plummer</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Nicholas Recino</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Nick McConnell</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Ozzy Castillo</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Richard Taylor</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Sean Taba</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Sheckeem Daley</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Uros Vorkapic</name>
+            <email>example email</email>
+        </developer>
+        <developer>
+            <name>Vinson Chin</name>
+            <email>example email</email>
+        </developer>
+
+    </developers>
 
     <dependencies>
-        <!--Database-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-
 
         <!--Security & Authorization-->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        Spring Security Thymeleaf-->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
+<!--        Spring Boot Starter Security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+<!--        JWT Auth0-->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.10.3</version>
         </dependency>
-
+<!--        Spring Boot Starter Mail-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+<!--        Spring Security Core-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+<!--        Spring Security Config-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+<!--        Spring Security Web-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+
+
+        <!--Spring Dependencies/ Not Security Suite Related-->
+<!--        Web Sockets-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+<!--    Spring Web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+<!--    JPA Annotations-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+<!--    Spring Fox / Swagger UI-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+
+        <!--Utilities-->
+<!--        Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+
         </dependency>
+<!--        Database handling-->
+<!--        PostgreSQL-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.12</version>
+        </dependency>
+<!--        H2 Test-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+
+        </dependency>
+
+
+        <!--Testing Frameworks-->
+<!--        Junit testing platform-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+<!--        Mockito Dependency -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+<!--        Spring Security Test Suite-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
+
 
     <build>
         <plugins>
@@ -68,6 +225,66 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-version}</version>
             </plugin>
+
+<!--            Jacoco Maven Plugin Use mvn jacoco:report for when you want to generate the site in the target folder-->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+
+                <configuration>
+                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <excludes>
+                                        <exclude>
+                                            *test
+                                        </exclude>
+                                    </excludes>
+                                    <limits>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.01</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.01</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 
