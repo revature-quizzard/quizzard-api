@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/")
 public class TestController {
 
     @GetMapping
