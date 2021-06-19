@@ -1,31 +1,34 @@
 package com.revature.quizzard.services;
 
-import com.revature.quizzard.dtos.AccountDTO;
+import com.revature.quizzard.dtos.AccountLoginDTO;
+import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
 
 //@Component
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class AccountService {
 
     public AccountRepository accountRepository;
+    public UserRepository userRepository;
 
-    @Autowired
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @Transactional
-    public AccountDTO register(AccountEntity accountEntity, HttpServletResponse response) {
-        AccountDTO accountDTO = null;
+    public AccountLoginDTO register(AccountEntity accountEntity, HttpServletResponse response) {
+        AccountLoginDTO accountDTO = null;
         try{
             if(accountRepository.existsByUsername(accountEntity.getUsername())) {
                 //return with error
@@ -35,7 +38,7 @@ public class AccountService {
             }
             //continue with logic
             accountRepository.save(accountEntity);
-            accountDTO = new AccountDTO(accountEntity);
+            accountDTO = new AccountLoginDTO(accountEntity);
         } catch (IOException e) {
             //TODO - Log aspect and/or exception handling aspect
             e.printStackTrace();
@@ -44,4 +47,30 @@ public class AccountService {
 
     }
 
+    public AccountLoginDTO register(AccountRegisterDTO accountRegisterDTO) {
+        AccountEntity accountEntity = new AccountEntity();
+        UserEntity userEntity = new UserEntity();
+
+        accountEntity.setUsername(accountRegisterDTO.getUsername());
+        accountEntity.setPassword(accountRegisterDTO.getPassword());
+        userEntity.setEmail(accountRegisterDTO.getEmail());
+        userEntity.setFirstName(accountRegisterDTO.getFirstName());
+        userEntity.setLastName(accountRegisterDTO.getLastName());
+        userEntity.setAccount(accountEntity);
+        accountEntity.setUser(userEntity);
+
+        accountRepository.save(accountEntity);
+        userRepository.save(userEntity);
+
+        AccountLoginDTO accountLoginDTO = new AccountLoginDTO(accountEntity);
+        return accountLoginDTO;
+    }
+
+    public AccountEntity login(AccountLoginDTO accountLoginDTO) {
+
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity = accountRepository.findByUsernameAndPassword(accountLoginDTO.getUsername(), accountLoginDTO.getPassword());
+
+        return accountEntity;
+    }
 }

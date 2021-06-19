@@ -65,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .authorizeRequests().antMatchers("/test","/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
+                .authorizeRequests().antMatchers("/login","/register","/test","/swagger-ui.html/**",
+                "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
                 .anyRequest().authenticated();  // This style is used to authorize specific endpoints that do not need JWT authentication
         http.addFilterBefore(jwTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
