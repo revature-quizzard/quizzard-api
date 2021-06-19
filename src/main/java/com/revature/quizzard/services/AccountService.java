@@ -26,8 +26,14 @@ public class AccountService {
         this.accountRepo = accountRepo;
         this.userRepo = userRepo;
     }
-
-
+    
+    
+    /**
+     * Method for being able to update the Account username, password and User email.
+     * @param id
+     * @param accountInfoDTO
+     * @return
+     */
     @Transactional(propagation = Propagation.SUPPORTS)
     public UpdatedAccountDTO updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
         if(accountRepo.findById(id).isPresent()){
@@ -35,7 +41,12 @@ public class AccountService {
             if(userRepo.findById(account.getUser().getId()).isPresent()) {
                 UserEntity user = userRepo.findById(account.getUser().getId()).get();
 
-                account.setPassword(accountInfoDTO.getPassword());
+                
+                if(isValid(accountInfoDTO.getPassword())){
+                    account.setPassword(accountInfoDTO.getPassword());
+                }
+                
+                
                 account.setUsername(accountInfoDTO.getUsername());
                 user.setEmail(accountInfoDTO.getEmail());
 
@@ -48,5 +59,12 @@ public class AccountService {
         
         
         return null;
+    }
+    
+    private boolean isValid(String str){
+        if(str.trim().equals("")){
+            return false;
+        }
+        return true;
     }
 }
