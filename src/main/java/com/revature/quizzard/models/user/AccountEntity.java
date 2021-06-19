@@ -1,7 +1,7 @@
 package com.revature.quizzard.models.user;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.revature.quizzard.dtos.responsemodel.lists.AccountCardDTO;
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @NoArgsConstructor
@@ -53,4 +54,11 @@ public @Data class AccountEntity {
 
     @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
+
+    //scuffed implementation, I know
+    public Set<AccountCardDTO> getAccountCards() {
+        return this.accountCardEntities.stream()
+                .map(AccountCardDTO::new)
+                .collect(Collectors.toSet());
+    }
 }

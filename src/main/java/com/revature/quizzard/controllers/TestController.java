@@ -33,9 +33,9 @@ public class TestController {
     }
 
     @GetMapping("/account")
-    public AccountEntity getAccount() {
+    public AccountResponseDTO getAccount() {
         AccountEntity account = accountRepository.findById(1).get();
-        return account;
+        return new AccountResponseDTO(account);
     }
 
 }
