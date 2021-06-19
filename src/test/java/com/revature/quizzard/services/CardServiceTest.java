@@ -63,7 +63,7 @@ public class CardServiceTest {
     }
 
     @Test
-    public void test_createCards(){
+    public void test_createCard(){
         //Expected
 
 
