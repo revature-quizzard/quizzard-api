@@ -2,6 +2,7 @@ package com.revature.quizzard.services;
 
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.exceptions.InvalidRequestException;
+import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountCardRepository;
@@ -16,6 +17,7 @@ import org.mockito.Mock;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.MockitoAnnotations.*;
 import static org.mockito.Mockito.*;
@@ -85,12 +87,20 @@ public class AccountServiceTest {
         accountEntity.setId(1);
         accountEntity.setUsername("username");
         accountEntity.setPassword("password");
-        accountEntity.setAccountCardEntities(new HashSet<>());
-
+        Set<AccountCardEntity> accountCardEntitySet = new HashSet<>();
+        AccountCardEntity cardEntityAccount = new AccountCardEntity();
         CardEntity cardEntity = new CardEntity();
         cardEntity.setQuestion("question");
         cardEntity.setAnswer("answer");
-        cardEntity.setId(2);
+        cardEntity.setId(1);
+        cardEntityAccount.setCardEntity(cardEntity);
+        cardEntityAccount.setAccountEntity(accountEntity);
+
+        accountCardEntitySet.add(cardEntityAccount);
+
+        accountEntity.setAccountCardEntities(accountCardEntitySet);
+
+
         when(mockAccountRepository.findById(1)).thenReturn(Optional.of(accountEntity));
         when(mockCardRepository.findById(1)).thenReturn(Optional.of(cardEntity));
 
