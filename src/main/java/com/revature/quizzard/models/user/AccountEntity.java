@@ -3,6 +3,7 @@ package com.revature.quizzard.models.user;
 
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
+import com.revature.quizzard.models.sets.SetEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,9 @@ public @Data class AccountEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "account")
+    private Set<SetEntity> sets = new HashSet<>();
+
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
@@ -52,4 +56,5 @@ public @Data class AccountEntity {
 
     @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
+
 }
