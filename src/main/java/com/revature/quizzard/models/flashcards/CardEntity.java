@@ -21,7 +21,7 @@ public @Data class CardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cardEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cardEntity")
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
 
     @Column(name = "question", nullable = false)

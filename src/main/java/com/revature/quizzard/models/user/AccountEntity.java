@@ -1,6 +1,7 @@
 package com.revature.quizzard.models.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Set;
 public @Data class AccountEntity {
 
     @Id
-    @Column(name = "account_id", unique = true, nullable = false)
+    @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
