@@ -30,6 +30,11 @@ public class CardService {
         return cardDTOS;
     }
 
+    /**
+     * Saves a new card into the database by converting the CardDTO into a CardEntity
+     * @param newCard A CardDTO representing the card to be added to the database
+     * @return The card that was added to the database
+     */
     public CardDTO createCard(CardDTO newCard){
         CardEntity newCardEntity = new CardEntity(newCard);
         CardEntity savedCard = cardRepository.save(newCardEntity);
