@@ -37,6 +37,7 @@ public class CardServiceTest {
     public void teardownTest(){
         mockCardRepository = null;
         sut = null;
+        cardDTO = null;
     }
 
     @Test
@@ -63,7 +64,17 @@ public class CardServiceTest {
 
     @Test
     public void test_createCards(){
+        //Expected
 
+
+        doReturn(new CardEntity()).when(mockCardRepository).save(any());
+        //Act
+        CardDTO result = sut.createCard(cardDTO);
+
+        //Assert
+        verify(mockCardRepository, times(1)).save(any());
+
+        assertEquals(cardDTO, result);
     }
 
 
