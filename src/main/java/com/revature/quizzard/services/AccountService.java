@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,25 +37,34 @@ public class AccountService {
      * @return
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public UpdatedAccountDTO updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
+    public Map<String, String> updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
         if(accountRepo.findById(id).isPresent()){
+            Map<String, String> updatedAccountInfo = new HashMap<>();
             AccountEntity account = accountRepo.findById(id).get();
             if(userRepo.findById(account.getUser().getId()).isPresent()) {
                 UserEntity user = userRepo.findById(account.getUser().getId()).get();
 
-                
+                System.out.println(accountInfoDTO.getEmail());
                 if(isValid(accountInfoDTO.getPassword())){
                     account.setPassword(accountInfoDTO.getPassword());
+                    updatedAccountInfo.put("Password", "Updated");
                 }
-                
-                
-                account.setUsername(accountInfoDTO.getUsername());
-                user.setEmail(accountInfoDTO.getEmail());
 
-                user = userRepo.save(user);
-                account = accountRepo.save(account);
+                if(isValid(accountInfoDTO.getEmail())){
+                    user.setEmail(accountInfoDTO.getEmail());
+                    updatedAccountInfo.put("Email", "Updated to " + user.getEmail());
+                }
 
-                return new UpdatedAccountDTO(user.getEmail(), account.getUsername());
+                if(isValid(accountInfoDTO.getUsername())){
+                    account.setUsername(accountInfoDTO.getUsername());
+                    updatedAccountInfo.put("Username", "Updated to " + account.getUsername());
+                }
+
+
+                userRepo.save(user);
+                accountRepo.save(account);
+
+                return updatedAccountInfo;
             }
         }
         

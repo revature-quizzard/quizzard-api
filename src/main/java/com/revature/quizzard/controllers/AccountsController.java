@@ -3,12 +3,13 @@ package com.revature.quizzard.controllers;
 import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.UpdatedAccountDTO;
 import com.revature.quizzard.services.AccountService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -22,11 +23,11 @@ public class AccountsController {
         this.accountService = accountService;
     }
 
-    @PutMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE, value = "/update/{accountId}")
-    public UpdatedAccountDTO updateAccount(@PathVariable(value = "accountId") int accountId,
-                                           @RequestBody AccountInfoDTO accountInfoDTO){
-        UpdatedAccountDTO updatedAccountDTO = accountService.updateAccountInfo(accountId, accountInfoDTO);
-        return updatedAccountDTO;
+    @PutMapping(value = "/update", consumes = APPLICATION_JSON_VALUE)
+    public Map<String, String> updateAccount(@RequestBody AccountInfoDTO accountInfoDTO){
+        System.out.println(accountInfoDTO);
+        Map<String, String> updatedAccountMap = accountService.updateAccountInfo(1, accountInfoDTO);
+        return updatedAccountMap;
     }
 
 }

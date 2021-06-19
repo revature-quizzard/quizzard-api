@@ -1,13 +1,25 @@
 package com.revature.quizzard.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
 import javax.validation.constraints.Email;
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class AccountInfoDTO {
+
+
+
     private String username;
 
-    @Email
+
     private String email;
+
 
     private String password;
 
@@ -33,5 +45,14 @@ public class AccountInfoDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountInfoDTO{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
