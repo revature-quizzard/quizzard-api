@@ -46,11 +46,17 @@ public class AccountCardEntity {
     @EmbeddedId
     private AccountCardId pk = new AccountCardId();
 
-    @Column(name = "confident")
-    private boolean confident;
+    @Column(name = "confident", nullable = true)
+    private Boolean confident;
 
     @Column(name = "favorite")
-    private boolean favorite;
+    private Boolean favorite;
+
+    public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, boolean favorite) {
+        this.setAccountEntity(accountEntity);
+        this.setCardEntity(cardEntity);
+        this.setFavorite(favorite);
+    }
 
     public void setAccountEntity(AccountEntity accountEntity) {
         this.pk.setAccountEntity(accountEntity);

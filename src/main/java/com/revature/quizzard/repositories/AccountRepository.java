@@ -2,6 +2,8 @@ package com.revature.quizzard.repositories;
 
 import com.revature.quizzard.models.user.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
@@ -13,5 +15,4 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
     boolean existsByUsername(String username);
 
     boolean existsUserByUsernameAndPassword(String name, String password);
-
 }
