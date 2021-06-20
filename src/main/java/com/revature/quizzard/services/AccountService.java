@@ -3,12 +3,14 @@ package com.revature.quizzard.services;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,13 @@ public class AccountService {
         userEntity.setAccount(accountEntity);
         accountEntity.setUser(userEntity);
 
-        accountRepository.save(accountEntity);
-        userRepository.save(userEntity);
+        try {
+            accountRepository.save(accountEntity);
+            userRepository.save(userEntity);
+        } catch (Exception e) {
+            throw new DuplicateRegistrationException("The username and/or email has already been taken.");
+        }
+
 
         AuthenticatedDTO authenticatedDTO = new AuthenticatedDTO(accountEntity);
         return authenticatedDTO;

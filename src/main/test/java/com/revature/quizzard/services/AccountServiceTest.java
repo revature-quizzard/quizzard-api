@@ -3,8 +3,10 @@ package com.revature.quizzard.services;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import org.junit.After;
@@ -78,22 +80,49 @@ public class AccountServiceTest {
     @Test
     public void test_registerWithValidInformation() {
         //Arrange
+        AccountEntity accountEntity = new AccountEntity();
+
+        accountEntity.setId(1);
+        accountEntity.setUsername("valid");
+        accountEntity.setPassword("password");
+        accountEntity.setPoints(32767);
+
+        AuthenticatedDTO authenticatedDTO;
         AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
 
         //Act
-        sut.register(accountRegisterDTO);
+        authenticatedDTO = sut.register(accountRegisterDTO);
 
         //Assert
+        Assert.assertEquals(new AuthenticatedDTO(accountEntity).getUsername(),authenticatedDTO.getUsername());
 
     }
 
-    @Test
+    @Test(expected = DuplicateRegistrationException.class)
     public void test_registerWithTakenUsername() {
+        //Arrange
+        AuthenticatedDTO authenticatedDTO;
+        AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
+        when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
 
+        //Act
+        authenticatedDTO = sut.register(accountRegisterDTO);
+
+        //Assert
+        Assert.assertNull(authenticatedDTO.getUsername());
     }
 
-    @Test
+    @Test(expected = DuplicateRegistrationException.class)
     public void test_registerWithTakenEmail() {
+        //Arrange
+        AuthenticatedDTO authenticatedDTO;
+        AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
+        when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
 
+        //Act
+        authenticatedDTO = sut.register(accountRegisterDTO);
+
+        //Assert
+        Assert.assertNull(authenticatedDTO.getUsername());
     }
 }

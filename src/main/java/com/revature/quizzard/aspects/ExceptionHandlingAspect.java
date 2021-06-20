@@ -1,5 +1,6 @@
 package com.revature.quizzard.aspects;
 
+import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.exceptions.InvalidRequestException;
 import org.springframework.http.HttpStatus;
@@ -17,4 +18,8 @@ public class ExceptionHandlingAspect {
     @ExceptionHandler(InvalidCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void handleInvalidCredentialsException() {}
+
+    @ExceptionHandler(DuplicateRegistrationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public void handleDuplicateRegistrationException() {}
 }
