@@ -42,6 +42,11 @@ public class AccountService {
         userEntity.setLastName(accountRegisterDTO.getLastName());
         userEntity.setAccount(accountEntity);
         //accountEntity.setUser(userEntity);
+//        String username;
+//        String password;
+//        String email;
+//        String firstName;
+//        String lastName;
 
         try {
             accountRepository.save(accountEntity);

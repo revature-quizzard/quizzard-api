@@ -37,11 +37,6 @@ public class JWTokenUtil {
 
     @PostConstruct
     public void init(){
-//        byte[] parsed = DatatypeConverter.parseBase64Binary(SECRET);
-//        String jca = sigAlg.getJcaName();
-//        SecretKeySpec keySpec = new SecretKeySpec(parsed, jca);
-//        secretKey = keySpec;
-
         this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
@@ -71,24 +66,12 @@ public class JWTokenUtil {
         return expiration.before(new Date());
     }
 
+
     /**
-     *  Generates a token based on the fields provided by a User Data Transfer Object
-     * @param user The user in question to generate the token about
-     * @return The JWT token to return to the calling service
+     * Generates a token based on the fields provided by a User Data Transfer Object
+     * @param authenticatedDTO The user in question to generate the token about
+     * @return The JWT to return to the calling service
      */
-//    public String generateToken(UserDTO user) {
-//        return Jwts.builder()
-//                .setIssuer("Revature Strategic Initiatives")
-//                .setSubject("user_id" + "")  // Needs User ID implementation
-//                .claim("username", "") // Needs username implementation
-//                .claim("role", "") // Needs Role implementation
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION * 1000))
-//                .signWith(sigAlg, this.secretKey)
-//                .compact();
-//    }
-
-
     public String generateToken(AuthenticatedDTO authenticatedDTO) {
         return Jwts.builder()
 

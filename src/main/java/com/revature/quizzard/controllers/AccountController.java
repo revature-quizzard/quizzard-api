@@ -70,7 +70,7 @@ public class AccountController {
         System.out.println(credentialsDTO.toString());
 
         AuthenticatedDTO authenticatedDTO = accountService.login(credentialsDTO);
-        response.addHeader("Authorization", jwTokenUtil.generateToken(authenticatedDTO));
+        response.addHeader("Authorization", "Bearer " + jwTokenUtil.generateToken(authenticatedDTO));
 
         return authenticatedDTO;
     }

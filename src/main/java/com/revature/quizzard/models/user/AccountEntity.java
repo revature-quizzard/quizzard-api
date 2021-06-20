@@ -2,11 +2,12 @@ package com.revature.quizzard.models.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.quizzard.dtos.responsemodel.lists.AccountCardDTO;
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,10 +26,6 @@ public class AccountEntity {
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-//    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-//    private UserEntity user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
@@ -52,8 +49,6 @@ public class AccountEntity {
 
     public int getId() {return this.id;}
 
-//    @JsonIgnore
-//    public UserEntity getUser() {return this.user;}
 
     public Set<AccountCardEntity> getAccountCardEntities() {return this.accountCardEntities;}
 
@@ -66,9 +61,6 @@ public class AccountEntity {
     public int getPoints() {return this.points;}
 
     public void setId(int id) {this.id = id; }
-
-//    @JsonIgnore
-//    public void setUser(UserEntity user) {this.user = user; }
 
     public void setAccountCardEntities(Set<AccountCardEntity> accountCardEntities) {this.accountCardEntities = accountCardEntities; }
 
