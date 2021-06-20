@@ -13,5 +13,6 @@ import java.util.Optional;
 @Repository
 public interface SetRepository extends JpaRepository<SetEntity, Integer> {
 
+    @Query(value = "SELECT * FROM sets WHERE account = (SELECT * FROM accounts where account_id = ?1)")
     List<SetEntity> findAllCreatedByAccountId(int account_id);
 }
