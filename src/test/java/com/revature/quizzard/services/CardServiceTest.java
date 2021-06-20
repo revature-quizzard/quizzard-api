@@ -64,9 +64,8 @@ public class CardServiceTest {
 
     @Test
     public void test_createCard(){
+
         //Expected
-
-
         doReturn(new CardEntity()).when(mockCardRepository).save(any());
         //Act
         CardDTO result = sut.createCard(cardDTO);

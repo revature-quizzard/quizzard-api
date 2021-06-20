@@ -22,6 +22,7 @@ public class CardService {
         List<CardEntity> cardEntities = cardRepository.findAll();
         List<CardDTO> cardDTOS = new ArrayList<>();
 
+        //Fix magic number with actual id
         for(CardEntity card: cardEntities){
             cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
                     card.isPublic(), card.getSubject()));
@@ -38,6 +39,8 @@ public class CardService {
     public CardDTO createCard(CardDTO newCard){
         CardEntity newCardEntity = new CardEntity(newCard);
         CardEntity savedCard = cardRepository.save(newCardEntity);
+
+        System.out.println("Saved ID: " + savedCard.getId());
         newCard.setId(savedCard.getId());
 
         return newCard;

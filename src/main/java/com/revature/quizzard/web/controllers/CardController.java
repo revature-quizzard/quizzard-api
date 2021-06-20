@@ -1,6 +1,7 @@
 package com.revature.quizzard.web.controllers;
 
 import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.*;
 import com.revature.quizzard.web.dtos.*;
 import org.springframework.beans.factory.annotation.*;
