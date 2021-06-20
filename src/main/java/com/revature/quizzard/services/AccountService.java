@@ -64,14 +64,12 @@ public class AccountService {
      */
     public AuthenticatedDTO login(CredentialsDTO credentialsDTO) throws InvalidCredentialsException {
 
-        AccountEntity accountEntity = new AccountEntity();
-        AuthenticatedDTO authenticatedDTO = new AuthenticatedDTO();
+        AccountEntity accountEntity;
+        AuthenticatedDTO authenticatedDTO;
         accountEntity = accountRepository.findByUsernameAndPassword(credentialsDTO.getUsername(), credentialsDTO.getPassword());
 
         try {
-            authenticatedDTO.setId(accountEntity.getId());
-            authenticatedDTO.setUsername(accountEntity.getUsername());
-            authenticatedDTO.setPoints(accountEntity.getPoints());
+            authenticatedDTO = new AuthenticatedDTO(accountEntity);
         } catch (NullPointerException e) {
             throw new InvalidCredentialsException("Invalid username and/or password!");
         }

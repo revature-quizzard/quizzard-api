@@ -6,6 +6,7 @@ import com.revature.quizzard.dtos.CredentialsDTO;
 import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.UserRepository;
@@ -15,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.util.HashSet;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -51,6 +54,7 @@ public class AccountServiceTest {
         accountEntity.setId(1);
         accountEntity.setUsername("valid");
         accountEntity.setPassword("password");
+        accountEntity.setRoles(new HashSet<RoleEntity>());
         accountEntity.setPoints(32767);
 
         CredentialsDTO credentialsDTO = new CredentialsDTO("valid","password");
@@ -62,7 +66,7 @@ public class AccountServiceTest {
         authenticatedDTO = sut.login(credentialsDTO);
 
         //Assert
-        Assert.assertEquals(new AuthenticatedDTO(1,32767, "valid"), authenticatedDTO);
+        Assert.assertEquals(new AuthenticatedDTO(1,32767, "valid", new HashSet<RoleEntity>()), authenticatedDTO);
     }
 
     @Test(expected = InvalidCredentialsException.class)

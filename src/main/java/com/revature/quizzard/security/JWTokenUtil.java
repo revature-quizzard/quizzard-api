@@ -1,5 +1,7 @@
 package com.revature.quizzard.security;
 
+import com.revature.quizzard.dtos.AuthenticatedDTO;
+import com.revature.quizzard.dtos.RoleDTO;
 import com.revature.quizzard.dtos.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,7 +37,12 @@ public class JWTokenUtil {
 
     @PostConstruct
     public void init(){
-        secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
+        byte[] parsed = DatatypeConverter.parseBase64Binary(SECRET);
+        String jca = sigAlg.getJcaName();
+        SecretKeySpec keySpec = new SecretKeySpec(parsed, jca);
+        secretKey = keySpec;
+
+        //this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -69,15 +76,34 @@ public class JWTokenUtil {
      * @param user The user in question to generate the token about
      * @return The JWT token to return to the calling service
      */
-    public String generateToken(UserDTO user) {
+//    public String generateToken(UserDTO user) {
+//        return Jwts.builder()
+//                .setIssuer("Revature Strategic Initiatives")
+//                .setSubject("user_id" + "")  // Needs User ID implementation
+//                .claim("username", "") // Needs username implementation
+//                .claim("role", "") // Needs Role implementation
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION * 1000))
+//                .signWith(sigAlg, this.secretKey)
+//                .compact();
+//    }
+
+
+    public String generateToken(AuthenticatedDTO authenticatedDTO) {
         return Jwts.builder()
-                .setIssuer("Revature Strategic Initiatives")
-                .setSubject("user_id" + "")  // Needs User ID implementation
-                .claim("username", "") // Needs username implementation
-                .claim("role", "") // Needs Role implementation
+
+
+                .setIssuer("Revature Quizzard")
+                .setId("" + authenticatedDTO.getId())
+                .setSubject(authenticatedDTO.getUsername())
+                .claim("id","" + authenticatedDTO.getId())
+                .claim("userName", authenticatedDTO.getUsername())
+                .claim("role", authenticatedDTO.getRoles())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION * 1000))
-                .signWith(sigAlg, this.secretKey)
+                .signWith(
+                        sigAlg,
+                        this.secretKey)
                 .compact();
     }
 

@@ -3,12 +3,16 @@ package com.revature.quizzard.controllers;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.AccountService;
+import io.swagger.annotations.ResponseHeader;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * The Controller for Accounts.
@@ -32,7 +36,7 @@ public class AccountController {
      */
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthenticatedDTO register(@RequestBody AccountRegisterDTO accountRegisterDTO) {
+    public AuthenticatedDTO register(@RequestBody AccountRegisterDTO accountRegisterDTO, HttpServletResponse response) {
         System.out.println(accountRegisterDTO.toString());
 
         AuthenticatedDTO authenticatedDTO = accountService.register(accountRegisterDTO);
@@ -40,7 +44,7 @@ public class AccountController {
         CredentialsDTO credentialsDTO = new CredentialsDTO();
         credentialsDTO.setUsername(accountRegisterDTO.getUsername());
         credentialsDTO.setPassword(accountRegisterDTO.getPassword());
-        login(credentialsDTO); // Call login after registration assuming success
+        login(credentialsDTO, response); // Call login after registration assuming success
 
         //TODO: add try-catch in case of invalid registration.
         //TODO: eventually re-factor to leverage Exception aspect.
@@ -60,10 +64,13 @@ public class AccountController {
      */
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public AuthenticatedDTO login(@RequestBody CredentialsDTO credentialsDTO) {
+    @ResponseHeader(name = "response")
+    public AuthenticatedDTO login(@RequestBody CredentialsDTO credentialsDTO, HttpServletResponse response) {
         System.out.println(credentialsDTO.toString());
 
         AuthenticatedDTO authenticatedDTO = accountService.login(credentialsDTO);
+        JWTokenUtil jwTokenUtil = new JWTokenUtil();
+        response.addHeader("Authorization", jwTokenUtil.generateToken(authenticatedDTO));
 
         return authenticatedDTO;
     }
