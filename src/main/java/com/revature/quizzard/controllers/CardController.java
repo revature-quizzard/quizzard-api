@@ -18,6 +18,7 @@ public class CardController {
     @PostMapping("/favorite")
     @ResponseStatus(HttpStatus.OK)
     public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
+        System.out.println(cardFavoriteDTO);
         cardService.addFavoriteCard(cardFavoriteDTO);
     }
 
