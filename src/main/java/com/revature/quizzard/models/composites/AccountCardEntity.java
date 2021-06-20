@@ -50,10 +50,19 @@ public class AccountCardEntity {
     private AccountCardId pk = new AccountCardId();
 
     @Column(name = "confident", columnDefinition = "boolean default false")
+
     private Boolean confident;
 
     @Column(name = "favorite")
     private Boolean favorite;
+
+
+    public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, boolean favorite) {
+        this.setAccountEntity(accountEntity);
+        this.setCardEntity(cardEntity);
+        this.setFavorite(favorite);
+    }
+
 
     public void setAccountEntity(AccountEntity accountEntity) {
         this.pk.setAccountEntity(accountEntity);

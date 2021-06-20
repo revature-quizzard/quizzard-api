@@ -138,7 +138,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-
         </dependency>
 
 
@@ -203,7 +202,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.9.0</version>
+            <version>3.8.0</version>
         </dependency>
 <!--        Spring Security Test Suite-->
         <dependency>

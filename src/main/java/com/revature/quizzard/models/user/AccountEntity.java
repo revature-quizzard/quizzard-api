@@ -32,8 +32,7 @@ public @Data class AccountEntity {
 
     @ManyToOne(targetEntity = ReviewEntity.class)
     @JoinColumn(name = "review_id")
-    private ReviewEntity review;
-    //private Set<ReviewEntity> reviews = new HashSet<>();
+    private Set<ReviewEntity> reviews = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();

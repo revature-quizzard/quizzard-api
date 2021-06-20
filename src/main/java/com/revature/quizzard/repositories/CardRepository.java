@@ -9,7 +9,8 @@ import java.util.Set;
 @Repository
 public interface CardRepository extends JpaRepository<CardEntity, Integer> {
 
-    Set<CardEntity> findByIsPublicIsTrue();
-    Set<CardEntity> findByReviewableTrue();
+//    Set<CardEntity> findByIsPublicIsTrue();
+//    Set<CardEntity> findByReviewableTrue();
+
 
 }
