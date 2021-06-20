@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public @Data class AccountLoginDTO {
+    int id;
+    int points;
     String username;
-    String password;
 
     public AccountLoginDTO(AccountEntity accountEntity) {
+        this.id = accountEntity.getId();
         this.username = accountEntity.getUsername();
-        this.password = accountEntity.getPassword();
+        this.points = accountEntity.getPoints();
     }
 
 }

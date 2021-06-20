@@ -2,6 +2,7 @@ package com.revature.quizzard.services;
 
 import com.revature.quizzard.dtos.AccountLoginDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
+import com.revature.quizzard.dtos.CredentialsDTO;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
@@ -66,11 +67,16 @@ public class AccountService {
         return accountLoginDTO;
     }
 
-    public AccountEntity login(AccountLoginDTO accountLoginDTO) {
+    public AccountLoginDTO login(CredentialsDTO credentialsDTO) {
 
         AccountEntity accountEntity = new AccountEntity();
-        accountEntity = accountRepository.findByUsernameAndPassword(accountLoginDTO.getUsername(), accountLoginDTO.getPassword());
+        AccountLoginDTO accountLoginDTO = new AccountLoginDTO();
+        accountEntity = accountRepository.findByUsernameAndPassword(credentialsDTO.getUsername(), credentialsDTO.getPassword());
 
-        return accountEntity;
+        accountLoginDTO.setId(accountEntity.getId());
+        accountLoginDTO.setUsername(accountEntity.getUsername());
+        accountLoginDTO.setPoints(accountEntity.getPoints());
+
+        return accountLoginDTO;
     }
 }

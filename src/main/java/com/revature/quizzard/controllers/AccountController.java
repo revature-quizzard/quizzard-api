@@ -2,6 +2,7 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.AccountLoginDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
+import com.revature.quizzard.dtos.CredentialsDTO;
 import com.revature.quizzard.services.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,11 @@ public class AccountController {
         System.out.println(accountRegisterDTO.toString());
 
         AccountLoginDTO accountLoginDTO = accountService.register(accountRegisterDTO);
-        login(accountLoginDTO); // Call login after registration assuming success
+
+        CredentialsDTO credentialsDTO = new CredentialsDTO();
+        credentialsDTO.setUsername(accountRegisterDTO.getUsername());
+        credentialsDTO.setPassword(accountRegisterDTO.getPassword());
+        login(credentialsDTO); // Call login after registration assuming success
 
         //TODO: add try-catch in case of invalid registration.
         //TODO: eventually re-factor to leverage Exception aspect.
@@ -32,11 +37,12 @@ public class AccountController {
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void login(@RequestBody AccountLoginDTO accountLoginDTO) {
-        System.out.println(accountLoginDTO.toString());
+    public AccountLoginDTO login(@RequestBody CredentialsDTO credentialsDTO) {
+        System.out.println(credentialsDTO.toString());
 
-        accountService.login(accountLoginDTO);
+        AccountLoginDTO accountLoginDTO = accountService.login(credentialsDTO);
 
+        return accountLoginDTO;
         //TODO: add try-catch in case of invalid login.
         //TODO: eventually re-factor to leverage Exception aspect.
     }
