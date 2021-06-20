@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public @Data class AccountLoginDTO {
+public @Data class AuthenticatedDTO {
     int id;
     int points;
     String username;
 
-    public AccountLoginDTO(AccountEntity accountEntity) {
+    public AuthenticatedDTO(AccountEntity accountEntity) {
         this.id = accountEntity.getId();
         this.username = accountEntity.getUsername();
         this.points = accountEntity.getPoints();
