@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
 
-//@Component
+/**
+ * Service for Accounts
+ */
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class AccountService {
@@ -48,6 +50,12 @@ public class AccountService {
 
     }
 
+    /**
+     * This method is responsible for the registration/creation of a new user and their account, persisted into the database.
+     * @param accountRegisterDTO The DTO required to register a user, it has fields from both <code>UserEntity</code> <code>AccountEntity</code>.
+     * @return accountLoginDTO The DTO required to login to a successfully registered user's account.
+     * @author Sheckeem Daley, Kyle Plummer
+     */
     public AccountLoginDTO register(AccountRegisterDTO accountRegisterDTO) {
         AccountEntity accountEntity = new AccountEntity();
         UserEntity userEntity = new UserEntity();
@@ -67,6 +75,12 @@ public class AccountService {
         return accountLoginDTO;
     }
 
+    /**
+     * This method is responsible for login into an account that exists in the database
+     * @param credentialsDTO The DTO required for authentication.
+     * @return accountLoginDTO The DTO required to login to an account.
+     * @author Sheckeem Daley, Kyle Plummer
+     */
     public AccountLoginDTO login(CredentialsDTO credentialsDTO) {
 
         AccountEntity accountEntity = new AccountEntity();
