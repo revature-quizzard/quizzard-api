@@ -25,7 +25,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @EnableWebSecurity
 @Configuration
@@ -59,17 +61,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @param http The Security manager for all http requests
      * @throws Exception Throws an exception if there is any issue with Filters being applied to the Filter Chain
      * @author Nicholas Recino
+     * @author Richard Taylor
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .authorizeRequests().antMatchers("/h2/**", "/test/**","/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
-                .anyRequest().authenticated();// This style is used to authorize specific endpoints that do not need JWT authentication
+                .authorizeRequests().antMatchers(authenticatePointsForTesting()).permitAll()
+                .anyRequest().authenticated();
         http.addFilterBefore(jwTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
+    }
+
+    /**
+     *  This is utilized for setting points to not be authenticated via JWT's used for Register/Login
+     *  and then for all testing of endpoints where you do not intend to utilize JWT state to process information
+     *  and are expecting multiple changes, anything after webjars will be deleted upon production.
+     * @return an array of unprotected end points
+     * @author Nicholas Recino
+     */
+    public String[] authenticatePointsForTesting(){
+        List<String> pointsToAuthenticate = new ArrayList<>();
+        pointsToAuthenticate.add("/h2/**");
+        pointsToAuthenticate.add("/test/**");
+        pointsToAuthenticate.add("/swagger-ui.html/**");
+        pointsToAuthenticate.add("/configuration/**");
+        pointsToAuthenticate.add("/swagger-resources/**");
+        pointsToAuthenticate.add("/v2/api-docs");
+        pointsToAuthenticate.add("/webjars/**");
+        return pointsToAuthenticate.toArray(new String[0]);
     }
 
     /**
