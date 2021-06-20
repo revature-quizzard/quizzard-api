@@ -95,6 +95,8 @@ public class AccountServiceTest {
 
         //Assert
         Assert.assertEquals(new AuthenticatedDTO(accountEntity).getUsername(),authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(1)).save(any());
 
     }
 
@@ -110,6 +112,8 @@ public class AccountServiceTest {
 
         //Assert
         Assert.assertNull(authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(0)).save(any());
     }
 
     @Test(expected = DuplicateRegistrationException.class)
@@ -124,5 +128,7 @@ public class AccountServiceTest {
 
         //Assert
         Assert.assertNull(authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(0)).save(any());
     }
 }
