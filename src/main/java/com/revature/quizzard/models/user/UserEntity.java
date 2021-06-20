@@ -17,7 +17,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(targetEntity = AccountEntity.class)
+    @OneToOne(targetEntity = AccountEntity.class, fetch = FetchType.LAZY)
     private AccountEntity account;
 
     @Column(name = "first_name")

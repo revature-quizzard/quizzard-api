@@ -1,9 +1,12 @@
 package com.revature.quizzard.models.composites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -46,16 +49,26 @@ public class AccountCardEntity {
     @EmbeddedId
     private AccountCardId pk = new AccountCardId();
 
-    @Column(name = "confident")
-    private boolean confident;
+    @Column(name = "confident", columnDefinition = "boolean default false")
+
+    private Boolean confident;
 
     @Column(name = "favorite")
-    private boolean favorite;
+    private Boolean favorite;
+
+
+    public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, boolean favorite) {
+        this.setAccountEntity(accountEntity);
+        this.setCardEntity(cardEntity);
+        this.setFavorite(favorite);
+    }
+
 
     public void setAccountEntity(AccountEntity accountEntity) {
         this.pk.setAccountEntity(accountEntity);
     }
 
+    @JsonIgnore
     public AccountEntity getAccountEntity() {
         return this.pk.getAccountEntity();
     }
@@ -63,12 +76,12 @@ public class AccountCardEntity {
     public void setCardEntity(CardEntity cardEntity) {
         this.pk.setCardEntity(cardEntity);
     }
-
+    @JsonIgnore
     public CardEntity getCardEntity() {
         return this.pk.getCardEntity();
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setFavorite(Boolean favorite) {
         this.favorite = favorite;
     }
 
@@ -76,7 +89,7 @@ public class AccountCardEntity {
         return favorite;
     }
 
-    public void setConfident(boolean confident) {
+    public void setConfident(Boolean confident) {
         this.confident = confident;
     }
 

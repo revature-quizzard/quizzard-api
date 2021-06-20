@@ -11,27 +11,73 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
+import com.revature.quizzard.exceptions.InvalidRequestException;
+import com.revature.quizzard.models.composites.AccountCardEntity;
+import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.repositories.AccountCardRepository;
+import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.CardRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Service for Accounts
  */
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountService {
 
-    public AccountRepository accountRepository;
-    public UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
+    private final CardRepository cardRepository;
+    private final AccountCardRepository accountCardRepository;
 
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    /**
+     * Takes in an account DTO, and checks the values inside of it. Runs logic to check if the user has interacted with the card or not
+     * then changes the favorite column in the junction table to the value of the field in the dto.
+     *
+     * @param dto contains the account id, card id, and state of favorite
+     * @return  true if the operation is successful
+     * @throws InvalidRequestException if the account or card are not present in the optional.
+     * @author Richard Taylor
+     * @author Nicholas Recino
+     */
+    public boolean addFavoriteCard(CardFavoriteDTO dto) throws InvalidRequestException {
+        Optional<AccountEntity> o_account = accountRepository.findById(dto.getAccountId());
+        Optional<CardEntity> o_card = cardRepository.findById(dto.getCardId());
+        Optional<AccountCardEntity> accountCardEntity = Optional.empty();
+        if (o_card.isPresent() && o_account.isPresent()) {
+            AccountEntity accountEntity = o_account.get();
+            CardEntity card = o_card.get();
+            accountCardEntity = accountEntity.getAccountCardEntities()
+                    .stream()
+                    .filter(cardToFavorite -> cardToFavorite.getAccountEntity().getId() == dto.getAccountId() &&
+                            cardToFavorite.getCardEntity().getId() == dto.getCardId())
+                    .findFirst();
+            if (!accountCardEntity.isPresent()) {
+                accountEntity.getAccountCardEntities().add(new AccountCardEntity(accountEntity, card, dto.isFavorite()));
+                accountRepository.save(accountEntity);
+                return true;
+            } else {
+                accountCardEntity.get().setFavorite(dto.isFavorite());
+                accountCardRepository.save(accountCardEntity.get());
+            }
+            return true;
+        } else {
+            throw new InvalidRequestException();
+        }
     }
 
     @Transactional
     public AccountLoginDTO register(AccountEntity accountEntity, HttpServletResponse response) {
-        AccountLoginDTO accountDTO = null;
+        AccountLoginDTO accountLoginDTO = null;
         try{
             if(accountRepository.existsByUsername(accountEntity.getUsername())) {
                 //return with error
@@ -41,12 +87,12 @@ public class AccountService {
             }
             //continue with logic
             accountRepository.save(accountEntity);
-            accountDTO = new AccountLoginDTO(accountEntity);
+            accountLoginDTO = new AccountLoginDTO(accountEntity);
         } catch (IOException e) {
             //TODO - Log aspect and/or exception handling aspect
             e.printStackTrace();
         }
-        return accountDTO;
+        return accountLoginDTO;
 
     }
 
@@ -54,7 +100,8 @@ public class AccountService {
      * This method is responsible for the registration/creation of a new user and their account, persisted into the database.
      * @param accountRegisterDTO The DTO required to register a user, it has fields from both <code>UserEntity</code> <code>AccountEntity</code>.
      * @return accountLoginDTO The DTO required to login to a successfully registered user's account.
-     * @author Sheckeem Daley, Kyle Plummer
+     * @author Sheckeem Daley
+     * @author Kyle Plummer
      */
     public AccountLoginDTO register(AccountRegisterDTO accountRegisterDTO) {
         AccountEntity accountEntity = new AccountEntity();
@@ -79,7 +126,8 @@ public class AccountService {
      * This method is responsible for login into an account that exists in the database
      * @param credentialsDTO The DTO required for authentication.
      * @return accountLoginDTO The DTO required to login to an account.
-     * @author Sheckeem Daley, Kyle Plummer
+     * @author Sheckeem Daley
+     * @author Kyle Plummer
      */
     public AccountLoginDTO login(CredentialsDTO credentialsDTO) {
 
@@ -94,3 +142,7 @@ public class AccountService {
         return accountLoginDTO;
     }
 }
+
+
+
+
