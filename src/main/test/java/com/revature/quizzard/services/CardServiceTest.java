@@ -25,11 +25,11 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 
-public class AccountServiceTest {
+public class CardServiceTest {
 
 
     @InjectMocks
-    private AccountService sut;
+    private CardService sut;
 
     @Mock
     private AccountRepository mockAccountRepository;

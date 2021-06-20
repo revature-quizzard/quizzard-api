@@ -3,6 +3,7 @@ package com.revature.quizzard.controllers;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.services.CardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TestController {
 
     private AccountRepository accountRepository;
-    private AccountService accountService;
+    private CardService cardService;
 
 
     @GetMapping("/test")
@@ -50,7 +51,7 @@ public class TestController {
     @PostMapping("/favorite/card")
     @ResponseStatus(HttpStatus.OK)
     public void addFavoriteCard(@RequestBody CardFavoriteDTO dto) {
-        accountService.addFavoriteCard(dto);
+        cardService.addFavoriteCard(dto);
     }
 
 
