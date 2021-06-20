@@ -4,6 +4,7 @@ package com.revature.quizzard.models.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
+@ToString
 public @Data class RoleEntity {
 
     @Id

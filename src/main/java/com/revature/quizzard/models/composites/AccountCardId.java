@@ -1,5 +1,6 @@
 package com.revature.quizzard.models.composites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import lombok.AllArgsConstructor;
