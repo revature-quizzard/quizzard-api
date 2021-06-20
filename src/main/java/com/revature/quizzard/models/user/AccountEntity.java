@@ -54,7 +54,7 @@ public @Data class AccountEntity {
     @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
 
-    //scuffed implementation, I know
+    //scuffed implementation, I know -Richard
     public Set<AccountCardDTO> getAccountCards() {
         return this.accountCardEntities.stream()
                 .map(AccountCardDTO::new)
