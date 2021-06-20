@@ -26,9 +26,9 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserEntity user;
+//    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+//    private UserEntity user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
@@ -52,8 +52,8 @@ public class AccountEntity {
 
     public int getId() {return this.id;}
 
-    @JsonIgnore
-    public UserEntity getUser() {return this.user;}
+//    @JsonIgnore
+//    public UserEntity getUser() {return this.user;}
 
     public Set<AccountCardEntity> getAccountCardEntities() {return this.accountCardEntities;}
 
@@ -67,8 +67,8 @@ public class AccountEntity {
 
     public void setId(int id) {this.id = id; }
 
-    @JsonIgnore
-    public void setUser(UserEntity user) {this.user = user; }
+//    @JsonIgnore
+//    public void setUser(UserEntity user) {this.user = user; }
 
     public void setAccountCardEntities(Set<AccountCardEntity> accountCardEntities) {this.accountCardEntities = accountCardEntities; }
 
@@ -85,19 +85,18 @@ public class AccountEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountEntity that = (AccountEntity) o;
-        return getId() == that.getId() && getPoints() == that.getPoints() && getUser().equals(that.getUser()) && Objects.equals(getAccountCardEntities(), that.getAccountCardEntities()) && Objects.equals(getRoles(), that.getRoles()) && getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword());
+        return getId() == that.getId() && getPoints() == that.getPoints() && Objects.equals(getAccountCardEntities(), that.getAccountCardEntities()) && Objects.equals(getRoles(), that.getRoles()) && getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getAccountCardEntities(), getRoles(), getUsername(), getPassword(), getPoints());
+        return Objects.hash(getId(), getAccountCardEntities(), getRoles(), getUsername(), getPassword(), getPoints());
     }
 
     @Override
     public String toString() {
         return "AccountEntity{" +
                 "id=" + id +
-                ", user=" + user +
                 ", accountCardEntities=" + accountCardEntities +
                 ", roles=" + roles +
                 ", username='" + username + '\'' +

@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountController {
 
-    private AccountService accountService;
+    private final AccountService accountService;
+    private final JWTokenUtil jwTokenUtil;
 
     /**
      * The AccountController's POST method for the <code>/register</code> endpoint
@@ -69,7 +70,6 @@ public class AccountController {
         System.out.println(credentialsDTO.toString());
 
         AuthenticatedDTO authenticatedDTO = accountService.login(credentialsDTO);
-        JWTokenUtil jwTokenUtil = new JWTokenUtil();
         response.addHeader("Authorization", jwTokenUtil.generateToken(authenticatedDTO));
 
         return authenticatedDTO;

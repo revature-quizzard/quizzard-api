@@ -37,12 +37,12 @@ public class JWTokenUtil {
 
     @PostConstruct
     public void init(){
-        byte[] parsed = DatatypeConverter.parseBase64Binary(SECRET);
-        String jca = sigAlg.getJcaName();
-        SecretKeySpec keySpec = new SecretKeySpec(parsed, jca);
-        secretKey = keySpec;
+//        byte[] parsed = DatatypeConverter.parseBase64Binary(SECRET);
+//        String jca = sigAlg.getJcaName();
+//        SecretKeySpec keySpec = new SecretKeySpec(parsed, jca);
+//        secretKey = keySpec;
 
-        //this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
+        this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
