@@ -17,6 +17,10 @@ public class SubjectService {
         this.subjectRepository = subjectRepository;
     }
 
+    /**
+     * Returns a list of all the subjects stored in the database
+     * @return A list of SubjectEntities
+     */
     public List<SubjectEntity> getAllSubjects(){
         List<SubjectEntity> subjectEntities = subjectRepository.findAll();
 
