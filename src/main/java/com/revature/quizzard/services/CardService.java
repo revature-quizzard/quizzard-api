@@ -23,7 +23,7 @@ public class CardService {
      * @return A list of cardDTOs
      */
     public List<CardDTO> getCards(){
-        List<CardEntity> cardEntities = cardRepository.findAll();
+        List<C  ardEntity> cardEntities = cardRepository.findAll();
         List<CardDTO> cardDTOS = new ArrayList<>();
 
         //Fix magic number with actual id
