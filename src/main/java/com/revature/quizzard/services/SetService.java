@@ -4,6 +4,7 @@ import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.SetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 public class SetService {
 
     private SetRepository setRepo;
+    private AccountRepository accountRepo;
 
     @Autowired
     public SetService(SetRepository setRepo) {
@@ -24,9 +26,10 @@ public class SetService {
     }
 
     @Transactional(readOnly = true)
-    public List<SetDTO> getCreatedSets(int accountId) {
+    public List<SetDTO> getCreatedSets(String username) {
 
-        List<SetEntity> accountSets = setRepo.findAllCreatedByAccountId(accountId);
+        AccountEntity creator = accountRepo.findByUsername(username);
+        List<SetEntity> accountSets = setRepo.findAllCreatedByAccount(creator);
 
         List<SetDTO> createdSets = new ArrayList<SetDTO>();
 
@@ -35,7 +38,7 @@ public class SetService {
             setDTO.setSetId(set.getId());
             setDTO.setSetName(set.getName());
             setDTO.setPublic(set.getIsPublic());
-            setDTO.setAccount(set.getAccount());
+            setDTO.setCreator(set.getCreator());
             createdSets.add(setDTO);
         }
 

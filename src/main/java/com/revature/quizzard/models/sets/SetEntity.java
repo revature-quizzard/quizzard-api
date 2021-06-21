@@ -42,8 +42,4 @@ public @Data class SetEntity {
     @Column(name = "public")
     private Boolean isPublic;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "account_id")
-    private AccountEntity account;
-
 }

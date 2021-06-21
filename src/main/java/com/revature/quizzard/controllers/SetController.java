@@ -24,14 +24,14 @@ public class SetController {
         this.setService = setService;
     }
 
-    @GetMapping(value = "/created/{accountId}", produces = "application/json")
+    @GetMapping(value = "/created/{username}", produces = "application/json")
     // TODO: Spring Security implementation/add roles
 //    @Secured({})
-    public List<SetDTO> findAllCreatedSetsByAccountID(@PathVariable int accountId, HttpServletRequest request, HttpServletResponse response) {
+    public List<SetDTO> findAllCreatedSetsByAccountID(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
 
         // TODO: change to object being sent with request header
 //        Integer accountId = ((AccountEntity)request.getAttribute("account")).getId();
-        List<SetDTO> foundSets = setService.getCreatedSets(accountId);
+        List<SetDTO> foundSets = setService.getCreatedSets(username);
 
         if (foundSets == null) {
             response.setStatus(404);
