@@ -28,9 +28,9 @@ public @Data class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @OneToOne(cascade = CascadeType.ALL, optional = false)
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-//    private UserEntity user;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserEntity user;
 
 
 
