@@ -25,8 +25,8 @@ public @Data class RoleEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<AccountEntity> accountEntities = new HashSet<>();
+//    @ManyToMany(mappedBy = "roles")
+//    private Set<AccountEntity> accountEntities = new HashSet<>();
 
 
     // TODO need to determine if we can make use of this class without an enum , for a simplistic approach to Spring Security
