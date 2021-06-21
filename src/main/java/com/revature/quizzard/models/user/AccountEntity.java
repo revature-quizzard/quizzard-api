@@ -26,13 +26,11 @@ public @Data class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserEntity user;
+//    @OneToOne(cascade = CascadeType.ALL, optional = false)
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+//    private UserEntity user;
 
-    @ManyToOne(targetEntity = ReviewEntity.class)
-    @JoinColumn(name = "review_id")
-    private Set<ReviewEntity> reviews = new HashSet<>();
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
