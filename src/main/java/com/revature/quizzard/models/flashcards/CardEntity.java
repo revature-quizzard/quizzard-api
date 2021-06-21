@@ -48,6 +48,7 @@ public @Data class CardEntity {
         this.answer = card.getAnswer();
         this.reviewable = card.isReviewable();
         this.isPublic = card.isPublic();
-        this.subject = card.getSubject();
+        this.subject = new SubjectEntity();
+        this.subject.setId(card.getSubjectId());
     }
 }

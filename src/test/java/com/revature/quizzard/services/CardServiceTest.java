@@ -26,10 +26,7 @@ public class CardServiceTest {
         cardDTO.setQuestion("foo");
         cardDTO.setPublic(true);
         cardDTO.setReviewable(true);
-
-        SubjectEntity subjectEntity = new SubjectEntity();
-        subjectEntity.setName("Java");
-        cardDTO.setSubject(subjectEntity);
+        cardDTO.setSubjectId(1);
 
     }
 

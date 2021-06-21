@@ -47,7 +47,7 @@ public class CardControllerIntegrationTestSuite {
 
     @Test
     public void test_createCard() throws Exception {
-        CardDTO newCard = new CardDTO(1, "question", "answer", true, true, null);
+        CardDTO newCard = new CardDTO(1, "question", "answer", true, true, 1);
         ObjectMapper json = new ObjectMapper();
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/card/newcard")
