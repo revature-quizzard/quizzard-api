@@ -63,7 +63,7 @@ public class AccountService {
         userEntity.setEmail(accountRegisterDTO.getEmail());
         userEntity.setFirstName(accountRegisterDTO.getFirstName());
         userEntity.setLastName(accountRegisterDTO.getLastName());
-        userEntity.setAccount(accountEntity);
+        //userEntity.setAccount(accountEntity);
 
 
         try {
