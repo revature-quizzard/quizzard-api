@@ -18,6 +18,10 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
+    /**
+     * Returns a list of all cards in the database
+     * @return A list of cardDTOs
+     */
     public List<CardDTO> getCards(){
         List<CardEntity> cardEntities = cardRepository.findAll();
         List<CardDTO> cardDTOS = new ArrayList<>();
@@ -34,7 +38,7 @@ public class CardService {
     /**
      * Returns a list of cards that belong to a specified user
      * @param id The account id
-     * @return A list of cards
+     * @return A list of cardsDTOs
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
@@ -53,7 +57,9 @@ public class CardService {
     /**
      * Saves a new card into the database by converting the CardDTO into a CardEntity
      * @param newCard A CardDTO representing the card to be added to the database
-     * @return The card that was added to the database
+     * @return The card (cardDTO) that was added to the database
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
      */
     public CardDTO createCard(CardDTO newCard){
         CardEntity newCardEntity = new CardEntity(newCard);
