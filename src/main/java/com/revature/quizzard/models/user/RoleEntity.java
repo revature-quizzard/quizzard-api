@@ -26,5 +26,9 @@ public @Data class RoleEntity {
     private String name;
 
 
+    public RoleEntity(String name) {
+        this.name = name;
+    }
+
     // TODO need to determine if we can make use of this class without an enum , for a simplistic approach to Spring Security
 }

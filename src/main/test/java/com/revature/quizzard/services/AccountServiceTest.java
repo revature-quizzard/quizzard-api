@@ -7,7 +7,6 @@ import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
-import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import org.junit.After;

@@ -103,6 +103,12 @@
     </developers>
 
     <dependencies>
+        <!-- Added for MockMVC -Kyle, Sheckeem -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!--Security & Authorization-->
 <!--        Spring Security Thymeleaf-->

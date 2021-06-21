@@ -5,14 +5,20 @@ import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
 import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
+import com.revature.quizzard.exceptions.InvalidRoleException;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.RoleRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Optional;
 
 /**
  * Service for Accounts
@@ -23,6 +29,7 @@ public class AccountService {
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final RoleRepository roleRepository;
 
     /**
      * This method is responsible for the registration/creation of a new user and their account, persisted into the database.
@@ -31,22 +38,27 @@ public class AccountService {
      * @author Sheckeem Daley
      * @author Kyle Plummer
      */
-    public AuthenticatedDTO register(AccountRegisterDTO accountRegisterDTO) {
+    public AuthenticatedDTO register(AccountRegisterDTO accountRegisterDTO) throws InvalidRoleException {
         AccountEntity accountEntity = new AccountEntity();
         UserEntity userEntity = new UserEntity();
+        Optional<RoleEntity> optionalRoleEntity = roleRepository.findById(1);
+
+        if(!optionalRoleEntity.isPresent()) {
+            throw new InvalidRoleException("This role does not exist!");
+        }
 
         accountEntity.setUsername(accountRegisterDTO.getUsername());
         accountEntity.setPassword(accountRegisterDTO.getPassword());
+
+        HashSet<RoleEntity> roleSet = new HashSet<>();
+        roleSet.add(optionalRoleEntity.get());
+        accountEntity.setRoles(roleSet);
+
         userEntity.setEmail(accountRegisterDTO.getEmail());
         userEntity.setFirstName(accountRegisterDTO.getFirstName());
         userEntity.setLastName(accountRegisterDTO.getLastName());
         userEntity.setAccount(accountEntity);
-        //accountEntity.setUser(userEntity);
-//        String username;
-//        String password;
-//        String email;
-//        String firstName;
-//        String lastName;
+
 
         try {
             accountRepository.save(accountEntity);
