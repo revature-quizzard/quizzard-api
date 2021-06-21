@@ -27,9 +27,9 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @OneToOne(cascade = CascadeType.ALL, optional = false)
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-//    private UserEntity user;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserEntity user;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
@@ -53,7 +53,6 @@ public class AccountEntity {
     private int points;
 
     public int getId() {return this.id;}
-
 
     public Set<AccountCardEntity> getAccountCardEntities() {return this.accountCardEntities;}
 

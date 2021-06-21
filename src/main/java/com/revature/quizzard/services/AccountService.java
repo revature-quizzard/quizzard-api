@@ -1,5 +1,6 @@
 package com.revature.quizzard.services;
 
+
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
@@ -17,8 +18,13 @@ import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.HashSet;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+import java.io.IOException;
 
 /**
  * Service for Accounts

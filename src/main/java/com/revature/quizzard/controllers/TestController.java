@@ -11,22 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 
-import com.revature.quizzard.services.AccountService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TestController {
 
-    private AccountRepository accountRepository;
-    private CardService cardService;
+
+    private final AccountRepository accountRepository;
+    private final CardService cardService;
 
 
     @GetMapping("/test")
@@ -50,11 +47,9 @@ public class TestController {
 
     @PostMapping("/favorite/card")
     @ResponseStatus(HttpStatus.OK)
-    public void addFavoriteCard(@RequestBody CardFavoriteDTO dto) {
+
+    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO dto) {
+
         cardService.addFavoriteCard(dto);
     }
-
-
-
-
 }
