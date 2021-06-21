@@ -28,12 +28,23 @@ public class CardController {
      * Returns all cards in the data base
      * @param req The HttpServletRequest
      * @return All the cards in the card table of the database
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
      */
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public List<CardDTO> getCards(HttpServletRequest req){
         return cardService.getCards();
     }
 
+
+    /**
+     * Returns all cards that belong to a specific account
+     * @param id The account id
+     * @param req The HttpServletRequest
+     * @return All cards that belong to the specified account
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
     @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
     public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
         return cardService.getCardsByAccountId(Integer.parseInt(id));
@@ -45,6 +56,8 @@ public class CardController {
      * @param newCard The new card object to be added
      * @param req The HttpServletRequest
      * @return The card object that was just added to the database
+     * @auhtor Giancarlo Tomasello
+     * @author Kevin Chang
      */
     @PostMapping(value = "/newcard", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public CardDTO createCard(@RequestBody CardDTO newCard, HttpServletRequest req){
