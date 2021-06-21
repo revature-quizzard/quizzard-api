@@ -28,6 +28,7 @@ public class CardService {
 
         //Fix magic number with actual id
         for(CardEntity card: cardEntities){
+
             cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
                     card.isPublic(), card.getSubject().getId()));
         }
