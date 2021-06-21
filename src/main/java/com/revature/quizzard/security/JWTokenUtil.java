@@ -27,6 +27,10 @@ public class JWTokenUtil {
     @Value("${jwt.secret}")
     private String SECRET;
 
+    public JWTokenUtil(){
+
+    }
+
 
 
     @PostConstruct

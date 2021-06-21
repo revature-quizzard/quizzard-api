@@ -28,6 +28,10 @@ hs_err_pid*
 
 #Config fiiles
 *.yml
+*.properties
 
 #Target folder
-targt/
+target/
+
+*.sql
+
