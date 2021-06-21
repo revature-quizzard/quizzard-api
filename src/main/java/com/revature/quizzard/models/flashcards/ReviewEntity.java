@@ -28,9 +28,6 @@ public @Data class ReviewEntity {
 
     @ManyToOne(targetEntity = AccountEntity.class)
     @JoinColumn(name = "account_id")
-    private AccountEntity account;
+    private Set<AccountEntity> accounts = new HashSet<>();
 
-    @ManyToOne(targetEntity = CardEntity.class)
-    @JoinColumn(name = "card_id")
-    private CardEntity cardEntity;
 }
