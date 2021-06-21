@@ -31,6 +31,13 @@ public class CardService {
         return cardDTOS;
     }
 
+    /**
+     * Returns a list of cards that belong to a specified user
+     * @param id The account id
+     * @return A list of cards
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
     public List<CardDTO> getCardsByAccountId(int id){
         List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
         List<CardDTO> cardDTOS = new ArrayList<>();

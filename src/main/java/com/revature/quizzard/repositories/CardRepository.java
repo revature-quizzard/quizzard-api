@@ -16,5 +16,6 @@ public interface CardRepository extends JpaRepository<CardEntity, Integer> {
 
     @Query(nativeQuery = true, value = "select c.* from accounts_cards ac inner join cards c on (ac.card_id = c.card_id) where ac.account_id = ?1")
     List<CardEntity> findAllCardsByAccountId(int accountId);
+    
 
 }
