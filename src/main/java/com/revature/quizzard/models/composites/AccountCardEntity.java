@@ -57,12 +57,12 @@ public class AccountCardEntity {
     private Boolean favorite;
 
 
-    public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, boolean favorite) {
+    public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, Boolean favorite, Boolean confident) {
         this.setAccountEntity(accountEntity);
         this.setCardEntity(cardEntity);
-        this.setFavorite(favorite);
+        if(favorite != null) this.setFavorite(favorite);
+        if(confident != null) this.setConfident(confident);
     }
-
 
     public void setAccountEntity(AccountEntity accountEntity) {
         this.pk.setAccountEntity(accountEntity);

@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public @Data class CardFavoriteDTO {
+public @Data class CardConfidentDTO {
     private int accountId;
     private int cardId;
-    private boolean favorite;
+    private boolean confident;
 }
