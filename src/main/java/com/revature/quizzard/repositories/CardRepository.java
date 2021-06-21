@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
+@Repository
 public interface CardRepository extends JpaRepository<CardEntity, Integer> {
 
-    Set<CardEntity> findByPublicIsTrue();
-    Set<CardEntity> findByReviewableTrue();
+//    Set<CardEntity> findByIsPublicIsTrue();
+//    Set<CardEntity> findByReviewableTrue();
+
 
 }
