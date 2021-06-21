@@ -34,6 +34,12 @@ public class CardController {
         return cardService.getCards();
     }
 
+    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
+    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
+        return cardService.getCardsByAccountId(Integer.parseInt(id));
+    }
+
+
     /**
      * Creates a new flashcard in the database from infomration sent in the from of a JSON
      * @param newCard The new card object to be added
