@@ -28,7 +28,6 @@ public class SetController {
     private SetService setService;
 
     @GetMapping(value = "public", produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public Set<SetDTO> getPubicSets(HttpServletRequest  req){
 
         Set<SetDTO> publicSets = new HashSet<>();
