@@ -2,7 +2,6 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.services.*;
-import com.revature.quizzard.web.dtos.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
