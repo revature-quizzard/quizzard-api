@@ -55,10 +55,6 @@ public class AccountControllerTest {
     }
 
 
-    /*
-    This is actually putting the new user in the h2 inmem database. This is not what we want, we need
-    to be able to injects mocked objects and mock method call returns.
-     */
     @Test
     public void test_registerWithValidInput() throws Exception {
         //Create Registration DTO
@@ -127,11 +123,6 @@ public class AccountControllerTest {
 
      */
 
-
-    /*
-    This is actually checking the user in the h2 inmem database. This is not what we want, we need
-    to be able to injects mocked objects and mock method call returns.
-     */
     @Test
     public void test_loginWithValidCredentials() throws Exception {
         CredentialsDTO credentialsDTO = new CredentialsDTO("testuser", "password");
