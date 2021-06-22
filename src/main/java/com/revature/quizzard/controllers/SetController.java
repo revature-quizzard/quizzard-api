@@ -35,7 +35,7 @@ public class SetController {
 
         setsFromDB.stream().forEach(setEntity -> {
             set.setSetId(setEntity.getId());
-            set.setUserId(setEntity.getAccount().getUser().getId());
+            set.setUserId(setEntity.getCreator().getUser().getId());
             set.setName(setEntity.getName());
             publicSets.add(set);
         });

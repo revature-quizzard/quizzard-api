@@ -23,15 +23,16 @@ public @Data class SetEntity {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "cards_sets",
+            name = "sets_cards",
             joinColumns = { @JoinColumn(name = "set_id")},
             inverseJoinColumns = { @JoinColumn(name = "card_id") }
     )
     private Set<CardEntity> cards = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    // FOR OWNERSHIP OF A SET BY AN ACCOUNT
+    @ManyToOne(targetEntity = AccountEntity.class)
     @JoinColumn(name = "account_id")
-    private AccountEntity account;
+    private AccountEntity creator; // creator/owner
 
     @Column(name = "name", nullable = false)
     String name;

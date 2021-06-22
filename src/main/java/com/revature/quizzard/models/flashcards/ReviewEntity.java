@@ -1,10 +1,13 @@
 package com.revature.quizzard.models.flashcards;
 
+import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -22,5 +25,9 @@ public @Data class ReviewEntity {
 
     @Column(name = "approved")
     private boolean approved;
+
+    @ManyToOne(targetEntity = AccountEntity.class)
+    @JoinColumn(name = "account_id")
+    private Set<AccountEntity> accounts = new HashSet<>();
 
 }
