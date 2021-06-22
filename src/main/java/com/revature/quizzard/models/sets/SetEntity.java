@@ -19,7 +19,7 @@ public @Data class SetEntity {
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int setId;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

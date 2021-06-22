@@ -62,13 +62,14 @@ public class CardController {
      * @author Kevin Chang
      */
     @PostMapping(value = "/newcard", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public CardDTO createCard(@RequestBody CardDTO newCard, HttpServletRequest req){
+    public CardDTO createCard(@RequestBody CardDTO newCard, HttpServletRequest req) {
         System.out.println("Post Mapping Reached");
 
         CardDTO createdCard = cardService.createCard(newCard);
 
         System.out.println("Finished crate card method");
         return createdCard;
+    }
 
       
     @PostMapping("/favorite")

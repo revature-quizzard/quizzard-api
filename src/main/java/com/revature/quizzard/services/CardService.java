@@ -77,7 +77,7 @@ public class CardService {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    public CardDTO createCard(CardDTO newCard){
+    public CardDTO createCard(CardDTO newCard) {
         CardEntity newCardEntity = new CardEntity(newCard);
         CardEntity savedCard = cardRepository.save(newCardEntity);
 
@@ -85,6 +85,7 @@ public class CardService {
         newCard.setId(savedCard.getId());
 
         return newCard;
+    }
 
     /**
      * Takes in a DTO containing the account id, card id, and information about wether or not the user is confident in that card
