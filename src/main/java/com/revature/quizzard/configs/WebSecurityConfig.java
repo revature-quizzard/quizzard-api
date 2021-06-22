@@ -1,5 +1,6 @@
 package com.revature.quizzard.configs;
 
+
 import com.revature.quizzard.security.AuthEntryPointJwt;
 import com.revature.quizzard.security.CorsFilter;
 import com.revature.quizzard.security.JWTokenFilter;
@@ -176,3 +177,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .select().apis(RequestHandlerSelectors.basePackage("com.revature.quizzard")).build();
     }
 }
+
