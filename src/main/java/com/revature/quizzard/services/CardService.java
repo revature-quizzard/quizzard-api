@@ -20,10 +20,12 @@ public class CardService {
 
     /**
      * Returns a list of all cards in the database
-     * @return A list of cardDTOs
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
      */
     public List<CardDTO> getCards(){
-        List<C  ardEntity> cardEntities = cardRepository.findAll();
+        List<CardEntity> cardEntities = cardRepository.findAll();
         List<CardDTO> cardDTOS = new ArrayList<>();
 
         //Fix magic number with actual id
@@ -39,7 +41,7 @@ public class CardService {
     /**
      * Returns a list of cards that belong to a specified user
      * @param id The account id
-     * @return A list of cardsDTOs
+     * @return List<CardDTO>
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
@@ -58,7 +60,7 @@ public class CardService {
     /**
      * Saves a new card into the database by converting the CardDTO into a CardEntity
      * @param newCard A CardDTO representing the card to be added to the database
-     * @return The card (cardDTO) that was added to the database
+     * @return CardDTO
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */

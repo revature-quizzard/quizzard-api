@@ -19,7 +19,7 @@ public class SubjectService {
 
     /**
      * Returns a list of all the subjects stored in the database
-     * @return A list of SubjectEntities
+     * @return List<SubjectEntity>
      */
     public List<SubjectEntity> getAllSubjects(){
         List<SubjectEntity> subjectEntities = subjectRepository.findAll();

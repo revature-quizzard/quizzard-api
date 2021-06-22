@@ -25,9 +25,9 @@ public class CardController {
     }
 
     /**
-     * Returns all cards in the data base
+     * Returns all cards in the database
      * @param req The HttpServletRequest
-     * @return All the cards in the card table of the database
+     * @return List<CardDTO>
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
@@ -41,7 +41,7 @@ public class CardController {
      * Returns all cards that belong to a specific account
      * @param id The account id
      * @param req The HttpServletRequest
-     * @return All cards that belong to the specified account
+     * @return List<CardDTO>
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
@@ -52,10 +52,10 @@ public class CardController {
 
 
     /**
-     * Creates a new flashcard in the database from infomration sent in the from of a JSON
+     * Creates a new flashcard in the database from a passed in CardDTO in the Request Body
      * @param newCard The new card object to be added
      * @param req The HttpServletRequest
-     * @return The card object that was just added to the database
+     * @return CardDTO
      * @auhtor Giancarlo Tomasello
      * @author Kevin Chang
      */

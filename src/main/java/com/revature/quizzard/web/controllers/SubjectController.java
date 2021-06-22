@@ -18,6 +18,12 @@ public class SubjectController {
 
     private SubjectService subjectService;
 
+    /**
+     * Constructor that creates SubjectController from an autowired SubjectService
+     * @param subjectService
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
     @Autowired
     public SubjectController(SubjectService subjectService){
         this.subjectService = subjectService;
@@ -26,8 +32,9 @@ public class SubjectController {
     /**
      * Retuns a list of all the subjects in the database
      * @param req A HttpServletRequest
-     * @return A list of subjectEntities from the database
-     * @author
+     * @return List<SubjectEntity>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
      */
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public List<SubjectEntity> getSubjects(HttpServletRequest req){
