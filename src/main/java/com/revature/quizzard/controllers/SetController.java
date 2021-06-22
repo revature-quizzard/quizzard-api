@@ -20,6 +20,9 @@ import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ * SetController Class -- Allows to reach the API functionalities for the Set component
+ */
 @RestController
 @RequestMapping("/set")
 @AllArgsConstructor(onConstructor_ = @Autowired)
@@ -27,6 +30,11 @@ public class SetController {
 
     private SetService setService;
 
+    /**
+     * getPublicSets -- Endpoint to find all the public sets persisted in the database
+     * @param req -- Empty request that triggers the process to find all the public sets
+     * @return -- JSON structure with the public set data and their public cards
+     */
     @GetMapping(value = "public", produces = APPLICATION_JSON_VALUE)
     public Set<SetDTO> getPubicSets(HttpServletRequest  req){
 
@@ -40,12 +48,14 @@ public class SetController {
             set.setName(setEntity.getName());
             setEntity.getCards().stream().forEach(cardEntity -> {
                 CardDTO card = new CardDTO();
-                card.setCardId(cardEntity.getId());
-                card.setQuestion(cardEntity.getQuestion());
-                card.setAnswer(cardEntity.getAnswer());
-                card.setSubject(cardEntity.getSubject());
-                card.setCreator(cardEntity.getCreator());
-                set.addCardToSet(card);
+                if(cardEntity.isPublic()){
+                    card.setCardId(cardEntity.getId());
+                    card.setQuestion(cardEntity.getQuestion());
+                    card.setAnswer(cardEntity.getAnswer());
+                    card.setSubject(cardEntity.getSubject());
+                    card.setCreator(cardEntity.getCreator());
+                    set.addCardToSet(card);
+                }
             });
 
             publicSets.add(set);
