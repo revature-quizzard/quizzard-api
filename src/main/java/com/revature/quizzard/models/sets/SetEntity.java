@@ -28,6 +28,10 @@ public @Data class SetEntity {
     )
     private Set<CardEntity> cards = new HashSet<>();
 
+    //account id FK to Account that owns the set
+        //need to include
+
+
     @Column(name = "name", nullable = false)
     String name;
 
