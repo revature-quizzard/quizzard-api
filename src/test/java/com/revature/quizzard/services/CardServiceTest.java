@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 public class CardServiceTest {
 
     private CardService sut;
+    private AccountRepository mockAccountRepository;
+    private AccountCardRepository mockAccountCardRepository;
     private CardRepository mockCardRepository;
     private CardDTO cardDTO;
 
@@ -20,7 +22,9 @@ public class CardServiceTest {
     @Before
     public void setupTest(){
         mockCardRepository = mock(CardRepository.class);
-        sut = new CardService(mockCardRepository);
+        mockAccountRepository = mock(AccountRepository.class);
+        mockAccountCardRepository = mock(AccountCardRepository.class);
+        sut = new CardService(mockAccountRepository, mockCardRepository, mockAccountCardRepository);
         cardDTO = new CardDTO();
         cardDTO.setAnswer("bar");
         cardDTO.setQuestion("foo");
