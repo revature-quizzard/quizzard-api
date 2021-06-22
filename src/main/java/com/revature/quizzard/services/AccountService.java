@@ -14,17 +14,12 @@ import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.RoleRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.HashSet;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import java.io.IOException;
 
 /**
  * Service for Accounts
@@ -43,25 +38,22 @@ public class AccountService {
      * @return accountLoginDTO The DTO required to login to a successfully registered user's account.
      * @author Sheckeem Daley
      * @author Kyle Plummer
+     * @throws InvalidRoleException when the role does not exist in the database
      */
     public AuthenticatedDTO register(AccountRegisterDTO accountRegisterDTO) throws InvalidRoleException {
         AccountEntity accountEntity = new AccountEntity();
         UserEntity userEntity = new UserEntity();
         Optional<RoleEntity> optionalRoleEntity = roleRepository.findById(1);
-
         if(!optionalRoleEntity.isPresent()) {
             throw new InvalidRoleException("This role does not exist!");
         }
 
         accountEntity.setUsername(accountRegisterDTO.getUsername());
         accountEntity.setPassword(accountRegisterDTO.getPassword());
-
-
         HashSet<RoleEntity> roleSet = new HashSet<>();
         roleSet.add(optionalRoleEntity.get());
         accountEntity.setRoles(roleSet);
         accountEntity.setUser(userEntity);
-
 
         userEntity.setEmail(accountRegisterDTO.getEmail());
         userEntity.setFirstName(accountRegisterDTO.getFirstName());
@@ -86,6 +78,7 @@ public class AccountService {
      * @return accountLoginDTO The DTO required to login to an account.
      * @author Sheckeem Daley
      * @author Kyle Plummer
+     * @throws InvalidCredentialsException when the username/password are not found/matched in the database
      */
     public AuthenticatedDTO login(CredentialsDTO credentialsDTO) throws InvalidCredentialsException {
 

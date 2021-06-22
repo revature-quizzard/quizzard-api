@@ -8,6 +8,7 @@ import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.RoleRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -32,6 +34,9 @@ public class AccountServiceTest {
     @Mock
     private UserRepository mockUserRepository;
 
+    @Mock
+    private RoleRepository mockRoleRepository;
+
     @Before
     public void setUp() {
         openMocks(this);
@@ -41,6 +46,7 @@ public class AccountServiceTest {
     public void tearDown() {
         mockAccountRepository = null;
         mockUserRepository = null;
+        mockRoleRepository = null;
     }
 
     @Test
@@ -93,8 +99,12 @@ public class AccountServiceTest {
         AuthenticatedDTO authenticatedDTO;
         AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
 
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
+
         //Act
         authenticatedDTO = sut.register(accountRegisterDTO);
+
 
         //Assert
         Assert.assertEquals(new AuthenticatedDTO(accountEntity).getUsername(),authenticatedDTO.getUsername());
@@ -109,6 +119,9 @@ public class AccountServiceTest {
         AuthenticatedDTO authenticatedDTO;
         AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
         when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
+
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
 
         //Act
         authenticatedDTO = sut.register(accountRegisterDTO);
@@ -125,6 +138,9 @@ public class AccountServiceTest {
         AuthenticatedDTO authenticatedDTO;
         AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
         when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
+
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
 
         //Act
         authenticatedDTO = sut.register(accountRegisterDTO);

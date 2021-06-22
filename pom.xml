@@ -22,7 +22,6 @@
     <name>Qwizzard</name>
 
     <developers>
-
         <developer>
             <name>Ann Louis-Charles</name>
             <email>example email</email>
@@ -132,20 +131,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-
         </dependency>
 <!--        Spring Security Config-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-
         </dependency>
 <!--        Spring Security Web-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
         </dependency>
-
+        <!-- Do we want to add validators to entites?-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-validation</artifactId>-->
+<!--            <version>${spring-boot-version}</version>-->
+<!--            &lt;!&ndash; <version>2.5.0</version> &ndash;&gt;-->
+<!--        </dependency>-->
 
         <!--Spring Dependencies/ Not Security Suite Related-->
 <!--        Web Sockets-->
