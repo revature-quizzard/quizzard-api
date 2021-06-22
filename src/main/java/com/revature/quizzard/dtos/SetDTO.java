@@ -11,21 +11,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Accessors
+@Getter @Setter
 public class SetDTO {
 
     @NotNull
     @JsonProperty("set_id")
-    @Getter @Setter
+
     private int setId;
 
     @NotNull
     @JsonProperty("user_id")
-    @Getter @Setter
     private int userId;
 
     @NotNull
     @JsonProperty("set_name")
-    @Getter @Setter
     private String name;
 
 //    @JsonProperty("sets")

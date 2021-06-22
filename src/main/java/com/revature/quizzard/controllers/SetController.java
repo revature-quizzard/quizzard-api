@@ -2,7 +2,9 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.sets.SetEntity;
+import com.revature.quizzard.repositories.SetRepository;
 import com.revature.quizzard.services.SetService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +21,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/set")
+@AllArgsConstructor(onConstructor_ = @Autowired)
 public class SetController {
 
     private SetService setService;
-
-    @Autowired
-    public SetController(SetService setService) {
-        this.setService = setService;
-    }
 
     @GetMapping(value = "public", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

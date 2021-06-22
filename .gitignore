@@ -32,3 +32,6 @@ hs_err_pid*
 
 #Target folder
 target/
+
+#Test Data
+*.sql
