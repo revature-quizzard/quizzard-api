@@ -67,7 +67,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseHeader(name = "response")
     public AuthenticatedDTO login(@RequestBody CredentialsDTO credentialsDTO, HttpServletResponse response) {
-        System.out.println(credentialsDTO.toString());
+        //System.out.println(credentialsDTO.toString());
 
         AuthenticatedDTO authenticatedDTO = accountService.login(credentialsDTO);
         response.addHeader("Authorization", "Bearer " + jwTokenUtil.generateToken(authenticatedDTO));

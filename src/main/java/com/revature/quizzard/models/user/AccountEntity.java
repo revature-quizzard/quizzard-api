@@ -52,6 +52,10 @@ public class AccountEntity {
     @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
 
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     public int getId() {return this.id;}
 
     public Set<AccountCardEntity> getAccountCardEntities() {return this.accountCardEntities;}

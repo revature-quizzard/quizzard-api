@@ -74,8 +74,6 @@ public class JWTokenUtil {
      */
     public String generateToken(AuthenticatedDTO authenticatedDTO) {
         return Jwts.builder()
-
-
                 .setIssuer("Revature Quizzard")
                 .setId("" + authenticatedDTO.getId())
                 .setSubject(authenticatedDTO.getUsername())

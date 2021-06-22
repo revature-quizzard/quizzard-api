@@ -56,14 +56,16 @@ public class AccountService {
         accountEntity.setUsername(accountRegisterDTO.getUsername());
         accountEntity.setPassword(accountRegisterDTO.getPassword());
 
+
         HashSet<RoleEntity> roleSet = new HashSet<>();
         roleSet.add(optionalRoleEntity.get());
         accountEntity.setRoles(roleSet);
+        accountEntity.setUser(userEntity);
+
 
         userEntity.setEmail(accountRegisterDTO.getEmail());
         userEntity.setFirstName(accountRegisterDTO.getFirstName());
         userEntity.setLastName(accountRegisterDTO.getLastName());
-        //userEntity.setAccount(accountEntity);
 
 
         try {
