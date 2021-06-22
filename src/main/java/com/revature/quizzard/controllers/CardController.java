@@ -2,16 +2,12 @@ package com.revature.quizzard.controllers;
 
 
 import com.revature.quizzard.dtos.*;
-import com.revature.quizzard.services.*;
-import org.springframework.beans.factory.annotation.*;
+import com.revature.quizzard.dtos.requestmodels.*;
 import org.springframework.web.bind.annotation.*;
-import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
-import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.services.CardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.*;
 
@@ -70,7 +66,6 @@ public class CardController {
         System.out.println("Finished crate card method");
         return createdCard;
     }
-
       
     @PostMapping("/favorite")
     @ResponseStatus(HttpStatus.OK)

@@ -93,6 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/swagger-resources/**");
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
+        pointsToAuthenticate.add("/card/**");
+        pointsToAuthenticate.add("/subject/**");
         pointsToAuthenticate.add("/created/**");
         return pointsToAuthenticate.toArray(new String[0]);
     }
