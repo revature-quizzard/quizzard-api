@@ -1,6 +1,7 @@
 package com.revature.quizzard.models.user;
 
 
+import com.revature.quizzard.dtos.responsemodel.lists.AccountCardDTO;
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @NoArgsConstructor
@@ -20,7 +22,7 @@ import java.util.Set;
 public @Data class AccountEntity {
 
     @Id
-    @Column(name = "account_id", unique = true, nullable = false)
+    @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -28,10 +30,7 @@ public @Data class AccountEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserEntity user;
 
-    @ManyToOne(targetEntity = ReviewEntity.class)
-    @JoinColumn(name = "review_id")
-    private ReviewEntity review;
-    //private Set<ReviewEntity> reviews = new HashSet<>();
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.accountEntity", cascade = CascadeType.ALL)
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
@@ -52,4 +51,11 @@ public @Data class AccountEntity {
 
     @Column(name = "points", columnDefinition = "Integer default 0", nullable = true)
     private int points;
+
+    //scuffed implementation, I know -Richard
+    public Set<AccountCardDTO> getAccountCards() {
+        return this.accountCardEntities.stream()
+                .map(AccountCardDTO::new)
+                .collect(Collectors.toSet());
+    }
 }

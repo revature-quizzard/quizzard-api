@@ -1,8 +1,16 @@
 package com.revature.quizzard.controllers;
 
+
 import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.services.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.bind.annotation.*;
+import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
+import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
+import com.revature.quizzard.services.CardService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.*;
@@ -13,15 +21,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/card")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CardController {
 
     private CardService cardService;
-
-    @Autowired
-    public CardController(CardService cardService){
-        this.cardService = cardService;
-    }
-
+  
     /**
      * Returns all cards in the database
      * @param req The HttpServletRequest
@@ -65,5 +69,18 @@ public class CardController {
 
         System.out.println("Finished crate card method");
         return createdCard;
+
+      
+    @PostMapping("/favorite")
+    @ResponseStatus(HttpStatus.OK)
+    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
+        cardService.addFavoriteCard(cardFavoriteDTO);
+    }
+
+    @PostMapping("/confident")
+    @ResponseStatus(HttpStatus.OK)
+    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
+        cardService.toggleConfidentCard(cardConfidentDTO);
+
     }
 }
