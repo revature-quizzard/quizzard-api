@@ -65,8 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.headers().frameOptions().sameOrigin();
+        //Added to grant acess to H2 Console
+        http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                .and().csrf().ignoringAntMatchers("/h2-console/**")
+                .and().headers().frameOptions().sameOrigin();
+//        http.headers().frameOptions().sameOrigin();
         http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeRequests().antMatchers(authenticatePointsForTesting()).permitAll()
