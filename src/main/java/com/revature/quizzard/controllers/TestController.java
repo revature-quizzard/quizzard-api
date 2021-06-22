@@ -1,9 +1,11 @@
 package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
+import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.services.CardService;
+import com.revature.quizzard.services.SetService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -23,6 +26,7 @@ public class TestController {
 
     private final AccountRepository accountRepository;
     private final CardService cardService;
+    private final SetService setService;
 
     @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
@@ -47,6 +51,14 @@ public class TestController {
     @ResponseStatus(HttpStatus.OK)
     public void toggleFavoriteCard(@RequestBody CardFavoriteDTO dto) {
         cardService.addFavoriteCard(dto);
+    }
+
+    @GetMapping("/sets")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SetEntity> getPublicSets()
+    {
+        List<SetEntity> list = setService.getPublicSets();
+        return list;
     }
 
 }

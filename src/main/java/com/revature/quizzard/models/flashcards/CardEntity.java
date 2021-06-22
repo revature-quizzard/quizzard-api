@@ -40,6 +40,6 @@ public @Data class CardEntity {
     @JoinColumn(name = "subject_id")
     private SubjectEntity subject;
 
-    @ManyToMany(mappedBy = "cards")
-    private Set<SetEntity> setEntities = new HashSet<>();
+//    @ManyToMany(mappedBy = "cards")
+//    private Set<SetEntity> setEntities = new HashSet<>();
 }

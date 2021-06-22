@@ -20,11 +20,11 @@ public @Data class SetEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "sets_cards",
-            joinColumns = { @JoinColumn(name = "set_id")},
-            inverseJoinColumns = { @JoinColumn(name = "card_id") }
+            joinColumns = @JoinColumn(name = "set_id", referencedColumnName = "set_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id", referencedColumnName = "card_id")
     )
     private Set<CardEntity> cards = new HashSet<>();
 
@@ -34,4 +34,13 @@ public @Data class SetEntity {
     @Column(name = "public")
     Boolean isPublic;
 
+    @Override
+    public String toString()
+    {
+        return "SetEntity{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       ", isPublic=" + isPublic +
+                       '}';
+    }
 }
