@@ -1,14 +1,10 @@
 package com.revature.quizzard.repositories;
 
-import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.composites.AccountCardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Set;
-
 @Repository
-public interface CardRepository extends JpaRepository<CardEntity, Integer> {
-
-
+public interface AccountCardRepository extends JpaRepository<AccountCardEntity, Integer> {
 
 }

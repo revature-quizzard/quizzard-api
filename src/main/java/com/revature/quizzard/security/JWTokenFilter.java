@@ -5,32 +5,39 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
+@Component
+public class JWTokenFilter implements Filter {
 
-public class JWTokenFilter extends OncePerRequestFilter {
 
-    private final JWTokenUtil jwtTokenUtil;
+    private JWTokenUtil jwtTokenUtil;
 
     /**
      *  Constructor for the JWTokenFilter
-     * @param jwtTokenUtil The JWT Utility class used to help parse the JWT
      * @author Nicholas Recino
      */
-    public JWTokenFilter(JWTokenUtil jwtTokenUtil) {
-        this.jwtTokenUtil = jwtTokenUtil;
+    public JWTokenFilter() {
+
+    }
+
+    @Override
+    public void init(FilterConfig cfg) {
+        ApplicationContext container = WebApplicationContextUtils.getRequiredWebApplicationContext(cfg.getServletContext());
+        this.jwtTokenUtil = container.getBean(JWTokenUtil.class);
     }
 
 
@@ -44,8 +51,9 @@ public class JWTokenFilter extends OncePerRequestFilter {
      * @author Nicholas Recino
      */
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authToken = request.getHeader("Authorization");
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String authToken = ((HttpServletRequest)request).getHeader("Authorization");
         if (authToken != null) {
             String token = authToken.split(" ")[1];
 
@@ -63,7 +71,6 @@ public class JWTokenFilter extends OncePerRequestFilter {
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, Collections.singletonList(authority));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
 
         }
         filterChain.doFilter(request, response);

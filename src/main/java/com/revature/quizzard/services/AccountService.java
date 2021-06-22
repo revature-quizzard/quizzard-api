@@ -11,41 +11,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashMap;
 import java.util.Map;
-
-@Service
+import com.revature.quizzard.dtos.AccountDTO;
+import lombok.AllArgsConstructor;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 @Transactional
+@Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountService {
-    
-    private AccountRepository accountRepo;
-    private UserRepository userRepo;
 
-    @Autowired
-    public AccountService(AccountRepository accountRepo, UserRepository userRepo){
-        this.accountRepo = accountRepo;
-        this.userRepo = userRepo;
+    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
+
+    @Transactional
+    public AccountDTO register(AccountEntity accountEntity, HttpServletResponse response) {
+        AccountDTO accountDTO = null;
+        try{
+            if(accountRepository.existsByUsername(accountEntity.getUsername())) {
+                //return with error
+                response.setStatus(409);
+                response.sendError(409, "Username already taken.");
+                return null;
+            }
+            //continue with logic
+            accountRepository.save(accountEntity);
+            accountDTO = new AccountDTO(accountEntity);
+        } catch (IOException e) {
+            //TODO - Log aspect and/or exception handling aspect
+            e.printStackTrace();
+        }
+        return accountDTO;
+
     }
-    
-    
+
     /**
      * Method for being able to update the Account username, password and User email.
      * @param id
      * @param accountInfoDTO
-     * @return
+     * @return updateAccountInfo
+     * @author James Fallon, Juan Mendoza
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public Map<String, Object> updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
-        if(accountRepo.findById(id).isPresent()){
+        if(accountRepository.findById(id).isPresent()){
 
 
-            AccountEntity account = accountRepo.findById(id).get();
+            AccountEntity account = accountRepository.findById(id).get();
 
             Map<String, Object> updatedAccountMap = new HashMap<>();
 
-            if(userRepo.findById(account.getUser().getId()).isPresent()) {
-                UserEntity user = userRepo.findById(account.getUser().getId()).get();
+            if(userRepository.findById(account.getUser().getId()).isPresent()) {
+                UserEntity user = userRepository.findById(account.getUser().getId()).get();
 
                 if(isValid(accountInfoDTO.getPassword())){
                     account.setPassword(accountInfoDTO.getPassword());
@@ -63,24 +81,35 @@ public class AccountService {
                 }
 
 
-                userRepo.save(user);
-                accountRepo.save(account);
+                userRepository.save(user);
+                accountRepository.save(account);
 
                 return updatedAccountMap;
             }
+
+            return null;
         }
-        
-        
+
+
         return null;
     }
-    
+
+    /**
+     * If fields are blank, then they will not be updated
+     * @param str
+     * @return
+     * @James Fallon Juan Mendoza
+     */
     private boolean isValid(String str){
         if(str.trim().equals("")){
             return false;
         }
-        if(str == null){
-            return false;
-        }
+
         return true;
     }
+
 }
+
+
+
+

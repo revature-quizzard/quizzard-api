@@ -28,6 +28,10 @@ public class JWTokenUtil {
     @Value("${jwt.secret}")
     private String SECRET;
 
+    public JWTokenUtil(){
+
+    }
+
 
 
     @PostConstruct
@@ -49,7 +53,7 @@ public class JWTokenUtil {
     }
 
     public int getIdFromToken(String token) {
-        return Integer.parseInt(getClaimFromToken(token, Claims::getSubject));
+        return Integer.parseInt(getClaimFromToken(token, Claims::getId));
     }
 
     public Date getExpirationDateFromToken(String token) {
