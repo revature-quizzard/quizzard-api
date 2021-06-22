@@ -15,7 +15,7 @@ public class CardDTO {
     private String answer;
     private boolean reviewable;
     private boolean isPublic;
-    private int subjectId;
+    private int  subjectId;
 
 
 }

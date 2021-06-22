@@ -23,6 +23,12 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
+    /**
+     * Retuns a list of all the subjects in the database
+     * @param req A HttpServletRequest
+     * @return A list of subjectEntities from the database
+     * @author
+     */
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public List<SubjectEntity> getSubjects(HttpServletRequest req){
         return subjectService.getAllSubjects();
