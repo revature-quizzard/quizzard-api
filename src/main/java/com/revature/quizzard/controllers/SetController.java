@@ -29,11 +29,12 @@ public class SetController {
     @GetMapping(value = "public", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Set<SetDTO> getPubicSets(HttpServletRequest  req){
-        SetDTO set = new SetDTO();
+       
         Set<SetDTO> publicSets = new HashSet<>();
         Set<SetEntity> setsFromDB = setService.findIsPublic(true);
 
         setsFromDB.stream().forEach(setEntity -> {
+            SetDTO set = new SetDTO();
             set.setSetId(setEntity.getId());
             set.setUserId(setEntity.getCreator().getUser().getId());
             set.setName(setEntity.getName());
