@@ -28,14 +28,13 @@ public class AccountsController {
     }
 
     @PutMapping(value = "/update", consumes = APPLICATION_JSON_VALUE)
-    public UpdatedAccountDTO updateAccount(@RequestBody AccountInfoDTO accountInfoDTO, HttpServletRequest req, HttpServletResponse resp){
+    public Map updateAccount(@RequestBody AccountInfoDTO accountInfoDTO, HttpServletRequest req){
 
-        //int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
+        int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
 
-        UpdatedAccountDTO updatedAccountDTO = accountService.updateAccountInfo(1, accountInfoDTO);
+        Map updatedAccountMap = accountService.updateAccountInfo(accountID, accountInfoDTO);
 
-        //resp.setHeader("Authorization", jwTokenUtil.generateToken(updatedAccountDTO));
-        return updatedAccountDTO;
+        return updatedAccountMap;
     }
 
 }

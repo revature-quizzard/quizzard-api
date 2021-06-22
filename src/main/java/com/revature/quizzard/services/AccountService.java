@@ -36,40 +36,37 @@ public class AccountService {
      * @return
      */
     @Transactional(propagation = Propagation.SUPPORTS)
-    public UpdatedAccountDTO updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
+    public Map<String, Object> updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
         if(accountRepo.findById(id).isPresent()){
 
 
             AccountEntity account = accountRepo.findById(id).get();
-            UpdatedAccountDTO updatedAccountDTO = new UpdatedAccountDTO();
-            updatedAccountDTO.setUsername(account.getUsername());
-            updatedAccountDTO.setId(account.getId());
-            updatedAccountDTO.setPoints(account.getPoints());
-            updatedAccountDTO.setRoles(account.getRoles());
+
+            Map<String, Object> updatedAccountMap = new HashMap<>();
+
             if(userRepo.findById(account.getUser().getId()).isPresent()) {
                 UserEntity user = userRepo.findById(account.getUser().getId()).get();
 
                 if(isValid(accountInfoDTO.getPassword())){
                     account.setPassword(accountInfoDTO.getPassword());
-                    updatedAccountDTO.setUpdatedPassword(true);
+                    updatedAccountMap.put("password", true);
                 }
 
                 if(isValid(accountInfoDTO.getEmail())){
                     user.setEmail(accountInfoDTO.getEmail());
-                    updatedAccountDTO.setUpdatedEmail(true);
+                    updatedAccountMap.put("email", user.getEmail());
                 }
 
                 if(isValid(accountInfoDTO.getUsername())){
-                    updatedAccountDTO.setUsername(accountInfoDTO.getUsername());
                     account.setUsername(accountInfoDTO.getUsername());
-                    updatedAccountDTO.setUpdatedUsername(true);
+                    updatedAccountMap.put("username", account.getUsername());
                 }
 
 
                 userRepo.save(user);
                 accountRepo.save(account);
 
-                return updatedAccountDTO;
+                return updatedAccountMap;
             }
         }
         
