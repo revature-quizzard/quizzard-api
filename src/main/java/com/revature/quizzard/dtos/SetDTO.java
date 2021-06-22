@@ -26,9 +26,12 @@ public class SetDTO {
     @JsonProperty("set_name")
     private String name;
 
-//    @JsonProperty("sets")
-//    @Getter @Setter
-//    private Set<CardDTO> cards = new HashSet<>();
+    @JsonProperty("cards")
+    @Getter @Setter
+    private Set<CardDTO> cards = new HashSet<>();
 
+    public void addCardToSet (CardDTO card){
+        cards.add(card);
+    }
 
 }

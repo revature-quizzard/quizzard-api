@@ -1,5 +1,6 @@
 package com.revature.quizzard.services;
 
+import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.repositories.SetRepository;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,11 @@ public class SetService {
 
     private SetRepository setRepository;
 
-    public Set<SetEntity> findIsPublic(Boolean isPublic){
-        return setRepository.findIsPublic(isPublic);
+    public Set<SetEntity> findIsPublic(Boolean isPublic) throws ResourceNotFoundException{
+        Set<SetEntity> publicSets = setRepository.findIsPublic(isPublic);
+        if (publicSets.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        return publicSets;
     }
 }
