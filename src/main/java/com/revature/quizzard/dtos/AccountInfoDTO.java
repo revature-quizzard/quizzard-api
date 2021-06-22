@@ -17,7 +17,7 @@ public class AccountInfoDTO {
 
     private String username;
 
-
+    @Email
     private String email;
 
 

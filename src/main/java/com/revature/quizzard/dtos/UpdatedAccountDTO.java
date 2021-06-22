@@ -1,36 +1,23 @@
 package com.revature.quizzard.dtos;
 
+import com.revature.quizzard.models.user.AccountEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.Email;
 
-public class UpdatedAccountDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public @Data class UpdatedAccountDTO extends AuthenticatedDTO {
 
-    @Email
-    private String email;
 
-    private String username;
+    private boolean updatedPassword;
+    private boolean updatedUsername;
+    private boolean updatedEmail;
 
-    public UpdatedAccountDTO(){
-        super();
+    public UpdatedAccountDTO(AccountEntity accountEntity){
+        super(accountEntity);
     }
 
-    public UpdatedAccountDTO(String email, String username) {
-        this.email = email;
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }
