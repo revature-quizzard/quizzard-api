@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,19 +23,34 @@ public class SetService {
     private SetRepository setRepo;
     private AccountRepository accountRepo;
 
+    /**
+     * Returns a list of sets that were created by the account. Takes in a username and finds the account associated
+     * with that username. Uses that account to find the sets.
+     *
+     * @param username of account
+     * @return List<SetDTO>
+     * @author Vinson Chin
+     * @author Austin Knauer
+     */
     @Transactional(readOnly = true)
-    public List<SetDTO> getCreatedSets(String username) {
+    public List<SetDTO> getCreatedSets(String username) throws ResourceNotFoundException{
 
-        AccountEntity creator = accountRepo.findByUsername(username);
-        List<SetEntity> accountSets = setRepo.findAllCreatedByAccount(creator);
+        Optional<AccountEntity> creator = Optional.ofNullable(accountRepo.findByUsername(username));
 
-        List<SetDTO> createdSets = new ArrayList<SetDTO>();
+        if (creator.isPresent()) {
 
-        for (SetEntity set: accountSets) {
-            SetDTO setDTO = new SetDTO(set);
-            createdSets.add(setDTO);
+            List<SetEntity> accountSets = setRepo.findAllCreatedByAccount(creator);
+
+            List<SetDTO> createdSets = new ArrayList<SetDTO>();
+
+            for (SetEntity set : accountSets) {
+                SetDTO setDTO = new SetDTO(set);
+                createdSets.add(setDTO);
+            }
+
+            return createdSets;
+        } else {
+            throw new ResourceNotFoundException();
         }
-
-        return createdSets;
     }
 }
