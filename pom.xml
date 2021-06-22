@@ -60,7 +60,7 @@
         </developer>
         <developer>
             <name>Kevin Chang</name>
-            <email>example email</email>
+            <email>kevin.chang@revature.net</email>
         </developer>
         <developer>
             <name>Kyle Plummer</name>
@@ -158,6 +158,12 @@
 
         </dependency>
 <!--    Spring Web-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

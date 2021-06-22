@@ -1,6 +1,12 @@
 package com.revature.quizzard.services;
 
 
+
+import com.revature.quizzard.dtos.*;
+import com.revature.quizzard.models.flashcards.*;
+import com.revature.quizzard.repositories.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.exceptions.InvalidRequestException;
@@ -17,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -25,6 +32,61 @@ public class CardService {
     private final AccountRepository accountRepository;
     private final CardRepository cardRepository;
     private final AccountCardRepository accountCardRepository;
+
+    /**
+     * Returns a list of all cards in the database
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
+    public List<CardDTO> getCards(){
+        List<CardEntity> cardEntities = cardRepository.findAll();
+        List<CardDTO> cardDTOS = new ArrayList<>();
+
+        //Fix magic number with actual id
+        for(CardEntity card: cardEntities){
+
+            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
+                    card.isPublic(), card.getSubject().getId()));
+        }
+        
+        return cardDTOS;
+    }
+
+    /**
+     * Returns a list of cards that belong to a specified user
+     * @param id The account id
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
+    public List<CardDTO> getCardsByAccountId(int id){
+        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
+        List<CardDTO> cardDTOS = new ArrayList<>();
+
+        for(CardEntity card: cardEntities){
+            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
+                    card.isPublic(), card.getSubject().getId()));
+        }
+
+        return cardDTOS;
+    }
+
+    /**
+     * Saves a new card into the database by converting the CardDTO into a CardEntity
+     * @param newCard A CardDTO representing the card to be added to the database
+     * @return CardDTO
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
+    public CardDTO createCard(CardDTO newCard){
+        CardEntity newCardEntity = new CardEntity(newCard);
+        CardEntity savedCard = cardRepository.save(newCardEntity);
+
+        System.out.println("Saved ID: " + savedCard.getId());
+        newCard.setId(savedCard.getId());
+
+        return newCard;
 
     /**
      * Takes in a DTO containing the account id, card id, and information about wether or not the user is confident in that card
