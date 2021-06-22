@@ -20,8 +20,4 @@ public @Data class SubjectEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-//    @ManyToOne(targetEntity = CardEntity.class)
-//    @JoinColumn(name = "card_id")
-//    private CardEntity card;
-//    private Set<CardEntity> cards = new HashSet<>();
 }
