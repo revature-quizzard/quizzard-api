@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.dtos;
+package com.revature.quizzard.dtos;
 
 import lombok.*;
 

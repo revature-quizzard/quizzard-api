@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.dtos;
+package com.revature.quizzard.dtos;
 
 import com.revature.quizzard.models.composites.*;
 import com.revature.quizzard.models.flashcards.*;

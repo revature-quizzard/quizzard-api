@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.controllers;
+package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.services.SubjectService;

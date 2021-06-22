@@ -1,8 +1,8 @@
 package com.revature.quizzard.services;
 
+import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.repositories.*;
-import com.revature.quizzard.web.dtos.*;
 import org.junit.*;
 
 import java.util.*;

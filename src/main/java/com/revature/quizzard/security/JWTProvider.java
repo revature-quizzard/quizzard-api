@@ -1,6 +1,6 @@
 package com.revature.quizzard.security;
 
-import com.revature.quizzard.web.dtos.UserDTO;
+import com.revature.quizzard.dtos.UserDTO;
 import com.revature.quizzard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

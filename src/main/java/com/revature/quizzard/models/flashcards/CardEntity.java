@@ -2,7 +2,7 @@ package com.revature.quizzard.models.flashcards;
 
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
-import com.revature.quizzard.web.dtos.CardDTO;
+import com.revature.quizzard.dtos.CardDTO;
 import lombok.*;
 
 import javax.persistence.*;

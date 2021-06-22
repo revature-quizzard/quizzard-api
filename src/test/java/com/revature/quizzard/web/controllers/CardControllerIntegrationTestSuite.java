@@ -1,8 +1,7 @@
 package com.revature.quizzard.web.controllers;
 
 import com.fasterxml.jackson.databind.*;
-import com.revature.quizzard.models.flashcards.SubjectEntity;
-import com.revature.quizzard.web.dtos.CardDTO;
+import com.revature.quizzard.dtos.CardDTO;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 import org.springframework.beans.factory.annotation.*;
@@ -14,8 +13,6 @@ import org.springframework.test.web.servlet.request.*;
 import org.springframework.test.web.servlet.result.*;
 import org.springframework.test.web.servlet.setup.*;
 import org.springframework.web.context.*;
-
-import javax.smartcardio.Card;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)

@@ -1,6 +1,6 @@
 package com.revature.quizzard.security;
 
-import com.revature.quizzard.web.dtos.UserDTO;
+import com.revature.quizzard.dtos.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
