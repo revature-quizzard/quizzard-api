@@ -1,6 +1,7 @@
 package com.revature.quizzard.models.sets;
 
 import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,13 @@ public @Data class SetEntity {
             inverseJoinColumns = @JoinColumn(name = "card_id", referencedColumnName = "card_id")
     )
     private Set<CardEntity> cards = new HashSet<>();
+
+
+    // FOR OWNERSHIP OF A SET BY AN ACCOUNT
+    @ManyToOne(targetEntity = AccountEntity.class)
+    @JoinColumn(name = "account_id")
+    private AccountEntity creator; // creator/owner
+
 
     @Column(name = "name", nullable = false)
     String name;
