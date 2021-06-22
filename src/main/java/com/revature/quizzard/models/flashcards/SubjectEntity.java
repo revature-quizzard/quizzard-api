@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -22,6 +24,6 @@ public @Data class SubjectEntity {
 
     @ManyToOne(targetEntity = CardEntity.class)
     @JoinColumn(name = "card_id")
-    private CardEntity card;
-//    private Set<CardEntity> cards = new HashSet<>();
+   // private CardEntity card;
+    private Set<CardEntity> cards = new HashSet<>();
 }

@@ -31,7 +31,7 @@ public class SetController {
     public Set<SetDTO> getPubicSets(HttpServletRequest  req){
         SetDTO set = new SetDTO();
         Set<SetDTO> publicSets = new HashSet<>();
-        Set<SetEntity> setsFromDB = setService.findIsPublicTrue(true);
+        Set<SetEntity> setsFromDB = setService.findIsPublic(true);
 
         setsFromDB.stream().forEach(setEntity -> {
             set.setSetId(setEntity.getId());

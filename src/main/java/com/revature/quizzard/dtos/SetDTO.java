@@ -16,7 +16,6 @@ public class SetDTO {
 
     @NotNull
     @JsonProperty("set_id")
-
     private int setId;
 
     @NotNull

@@ -14,7 +14,7 @@ public class SetService {
 
     private SetRepository setRepository;
 
-    public Set<SetEntity> findIsPublicTrue(Boolean isPublic){
+    public Set<SetEntity> findIsPublic(Boolean isPublic){
         return setRepository.findIsPublic(isPublic);
     }
 }

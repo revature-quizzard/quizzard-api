@@ -45,8 +45,8 @@ public @Data class AccountEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "account")
-    private Set<SetEntity> sets = new HashSet<>();
+//    @OneToMany(mappedBy = "account")
+//    private Set<SetEntity> sets = new HashSet<>();
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;

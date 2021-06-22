@@ -16,4 +16,5 @@ public interface SetRepository extends JpaRepository<SetEntity, Integer> {
     @Query("Select s from SetEntity s where s.isPublic=:isPublic")
     Set<SetEntity>findIsPublic(@Param("isPublic") Boolean isPublic);
 
+
 }

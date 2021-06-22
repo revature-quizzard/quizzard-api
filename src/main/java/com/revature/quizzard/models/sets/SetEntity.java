@@ -23,7 +23,7 @@ public @Data class SetEntity {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "sets_cards",
+            name = "cards_sets",
             joinColumns = { @JoinColumn(name = "set_id")},
             inverseJoinColumns = { @JoinColumn(name = "card_id") }
     )
