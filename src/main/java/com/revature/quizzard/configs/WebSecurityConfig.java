@@ -91,6 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
         pointsToAuthenticate.add("/sets/**");
+        pointsToAuthenticate.add("/cards/**");
         return pointsToAuthenticate.toArray(new String[0]);
     }
 

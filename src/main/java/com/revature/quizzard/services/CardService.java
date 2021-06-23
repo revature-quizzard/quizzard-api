@@ -1,5 +1,6 @@
 package com.revature.quizzard.services;
 
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.exceptions.InvalidRequestException;
@@ -94,5 +95,11 @@ public class CardService {
         } else {
             throw new InvalidRequestException();
         }
+    }
+
+    public CardEntity savePublicCard(CardEntity newCard)
+    {
+
+        return cardRepository.save(newCard);
     }
 }

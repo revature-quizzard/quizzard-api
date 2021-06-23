@@ -1,9 +1,13 @@
 package com.revature.quizzard.controllers;
 
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
+import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.SubjectRepository;
 import com.revature.quizzard.services.CardService;
 import com.revature.quizzard.services.SetService;
 import lombok.AllArgsConstructor;
@@ -19,12 +23,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TestController {
 
     private final AccountRepository accountRepository;
+    private final SubjectRepository subjectRepository;
     private final CardService cardService;
     private final SetService setService;
 
@@ -58,7 +64,22 @@ public class TestController {
     public List<SetEntity> getPublicSets()
     {
         List<SetEntity> list = setService.getPublicSets();
+        System.out.println(list);
         return list;
+    }
+
+    @PostMapping("/cards/save")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CardEntity saveCard(@RequestBody CardDTO newCard)
+    {
+        System.out.println(newCard);
+        SubjectEntity subject = subjectRepository.findById(newCard.getSubject_id());
+        Optional<AccountEntity> account = accountRepository.findById(newCard.getId());
+        CardEntity card = new CardEntity(newCard.getId(), null, newCard.getQuestion(), newCard.getAnswer(),
+                                         newCard.isReviewable(), newCard.isPublic(), subject, account.orElse(null));
+        CardEntity returnCard = cardService.savePublicCard(card);
+        System.out.println(returnCard);
+        return returnCard;
     }
 
 }

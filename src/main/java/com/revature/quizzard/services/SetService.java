@@ -1,6 +1,7 @@
 package com.revature.quizzard.services;
 
 import com.revature.quizzard.models.sets.SetEntity;
+import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.SetRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,6 @@ public class SetService
 
     public List<SetEntity> getPublicSets()
     {
-        return setRepository.findAll();
+        return setRepository.findAllByIsPublic(true);
     }
 }
