@@ -24,4 +24,6 @@ public @Data class AuthenticatedDTO {
         this.roles = accountEntity.getRoles();
     }
 
+
 }
+

@@ -1,11 +1,9 @@
 package com.revature.quizzard.security;
 
 import com.revature.quizzard.dtos.AuthenticatedDTO;
-import com.revature.quizzard.dtos.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +34,7 @@ public class JWTokenUtil {
 
     @PostConstruct
     public void init(){
-        secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
+        this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -65,14 +63,14 @@ public class JWTokenUtil {
         return expiration.before(new Date());
     }
 
+
     /**
-     *  Generates a token based on the fields provided by a User Data Transfer Object
-     * @param user The user in question to generate the token about
-     * @return The JWT token to return to the calling service
+     * Generates a token based on the fields provided by a User Data Transfer Object
+     * @param authenticatedDTO The user in question to generate the token about
+     * @return The JWT to return to the calling service
      */
     public String generateToken(AuthenticatedDTO authenticatedDTO) {
         return Jwts.builder()
-
 
                 .setIssuer("Revature Quizzard")
                 .setId("" + authenticatedDTO.getId())

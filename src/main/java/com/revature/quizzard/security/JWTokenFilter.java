@@ -4,14 +4,20 @@ package com.revature.quizzard.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
@@ -30,13 +36,15 @@ public class JWTokenFilter implements Filter {
      *  Constructor for the JWTokenFilter
      * @author Nicholas Recino
      */
-    public JWTokenFilter() {
+
+    public JWTokenFilter(){
 
     }
 
     @Override
     public void init(FilterConfig cfg) {
         ApplicationContext container = WebApplicationContextUtils.getRequiredWebApplicationContext(cfg.getServletContext());
+
         this.jwtTokenUtil = container.getBean(JWTokenUtil.class);
     }
 

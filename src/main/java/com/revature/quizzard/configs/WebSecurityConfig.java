@@ -1,5 +1,6 @@
 package com.revature.quizzard.configs;
 
+
 import com.revature.quizzard.security.AuthEntryPointJwt;
 import com.revature.quizzard.security.CorsFilter;
 import com.revature.quizzard.security.JWTokenFilter;
@@ -86,11 +87,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/h2/**");
         pointsToAuthenticate.add("/test/**");
         pointsToAuthenticate.add("/accounts/**");
+        pointsToAuthenticate.add("/login");
+        pointsToAuthenticate.add("/register");
         pointsToAuthenticate.add("/swagger-ui.html/**");
         pointsToAuthenticate.add("/configuration/**");
         pointsToAuthenticate.add("/swagger-resources/**");
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
+        pointsToAuthenticate.add("/card/**");
+        pointsToAuthenticate.add("/subject/**");
         return pointsToAuthenticate.toArray(new String[0]);
     }
 
@@ -102,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//      authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
+     authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
         authenticationManagerBuilder.userDetailsService(userDetailService);
     }
 
@@ -177,3 +182,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .select().apis(RequestHandlerSelectors.basePackage("com.revature.quizzard")).build();
     }
 }
+

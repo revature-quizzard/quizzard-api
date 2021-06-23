@@ -3,6 +3,7 @@ package com.revature.quizzard.controllers;
 import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.UpdatedAccountDTO;
+import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.AccountService;
 
@@ -31,8 +32,9 @@ public class AccountsController {
     public Map updateAccount(@RequestBody AccountInfoDTO accountInfoDTO, HttpServletRequest req){
 
         int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
-
         Map updatedAccountMap = accountService.updateAccountInfo(accountID, accountInfoDTO);
+
+
 
         return updatedAccountMap;
     }

@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TestController {
 
+
     private final AccountRepository accountRepository;
     private final CardService cardService;
+
 
     @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
@@ -45,8 +47,9 @@ public class TestController {
 
     @PostMapping("/favorite/card")
     @ResponseStatus(HttpStatus.OK)
+
     public void toggleFavoriteCard(@RequestBody CardFavoriteDTO dto) {
+
         cardService.addFavoriteCard(dto);
     }
-
 }
