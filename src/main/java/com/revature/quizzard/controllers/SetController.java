@@ -26,6 +26,15 @@ public class SetController {
         this.setService = setService;
     }
 
+    /**
+     * Retrieves from the database all sets that were created by account
+     * @param username A string used to find associated account
+     * @param request HTTP request
+     * @param response HTTP response
+     * @return List<SetDTO>
+     * @author Vinson Chin
+     * @author Austin Knauer
+     */
     @GetMapping(value = "/sets/created/{username}", produces = "application/json")
     public List<SetDTO> findAllCreatedSetsByAccount(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
 
