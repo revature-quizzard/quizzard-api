@@ -1,4 +1,4 @@
-package com.revature.quizzard.web.controllers;
+package com.revature.quizzard.controllers;
 
 import com.fasterxml.jackson.databind.*;
 import com.revature.quizzard.dtos.CardDTO;
