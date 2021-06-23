@@ -5,6 +5,8 @@ import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.SetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,13 +26,12 @@ public class SetController {
         this.setService = setService;
     }
 
-    @GetMapping(value = "/created/{username}", produces = "application/json")
-    // TODO: Spring Security implementation/add roles
-//    @Secured({})
-    public List<SetDTO> findAllCreatedSetsByAccountID(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping(value = "/sets/created/{username}", produces = "application/json")
+    public List<SetDTO> findAllCreatedSetsByAccount(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
 
-        // TODO: change to object being sent with request header
-//        Integer accountId = ((AccountEntity)request.getAttribute("account")).getId();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+
         List<SetDTO> foundSets = setService.getCreatedSets(username);
 
         if (foundSets == null) {
