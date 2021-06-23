@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
+/**
+ * Interface to handle all the calls to the database for data of the sets
+ */
 @Repository
 public interface SetRepository extends JpaRepository<SetEntity, Integer> {
 
