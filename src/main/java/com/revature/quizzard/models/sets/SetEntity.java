@@ -29,12 +29,10 @@ public @Data class SetEntity {
     )
     private Set<CardEntity> cards = new HashSet<>();
 
-
     // FOR OWNERSHIP OF A SET BY AN ACCOUNT
     @ManyToOne(targetEntity = AccountEntity.class)
     @JoinColumn(name = "account_id")
     private AccountEntity creator; // creator/owner
-
 
     @Column(name = "name", nullable = false)
     String name;

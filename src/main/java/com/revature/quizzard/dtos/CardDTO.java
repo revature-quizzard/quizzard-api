@@ -1,7 +1,5 @@
 package com.revature.quizzard.dtos;
 
-import com.revature.quizzard.models.flashcards.CardEntity;
-
 public class CardDTO {
     private int subject_id;
     private String question;
@@ -10,8 +8,9 @@ public class CardDTO {
     private boolean isPublic;
     private int id;
     private int account_id;
+    private int studySet_id;
 
-    public CardDTO(int subject_id, String question, String answer, boolean reviewable, boolean isPublic, int id)
+    public CardDTO(int subject_id, String question, String answer, boolean reviewable, boolean isPublic, int id, int account_id, int studySet_id)
     {
         this.subject_id = subject_id;
         this.question = question;
@@ -19,6 +18,8 @@ public class CardDTO {
         this.reviewable = reviewable;
         this.isPublic = isPublic;
         this.id = id;
+        this.account_id = account_id;
+        this.studySet_id = studySet_id;
     }
 
     public int getAccount_id()
@@ -34,6 +35,16 @@ public class CardDTO {
     public int getId()
     {
         return id;
+    }
+
+    public int getStudySet_id()
+    {
+        return studySet_id;
+    }
+
+    public void setStudySet_id(int studySet_id)
+    {
+        this.studySet_id = studySet_id;
     }
 
     public void setId(int id)

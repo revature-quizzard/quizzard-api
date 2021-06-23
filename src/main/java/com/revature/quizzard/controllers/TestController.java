@@ -2,6 +2,7 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
+import com.revature.quizzard.exceptions.StudySetNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
@@ -26,7 +27,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+
+@RequestMapping("/")
+
 public class TestController {
 
     private final AccountRepository accountRepository;
@@ -48,9 +53,11 @@ public class TestController {
     }
 
     @GetMapping("/account")
-    public AccountResponseDTO getAccount() {
-        AccountEntity account = accountRepository.findById(1).get();
-        return new AccountResponseDTO(account);
+    public AccountEntity getAccount() {
+        Optional<AccountEntity> account = accountRepository.findById(1);
+        System.out.println(account);
+        if(account.isPresent()) return account.get();
+        return null;
     }
 
     @PostMapping("/favorite/card")
@@ -73,13 +80,16 @@ public class TestController {
     public CardEntity saveCard(@RequestBody CardDTO newCard)
     {
         System.out.println(newCard);
-        SubjectEntity subject = subjectRepository.findById(newCard.getSubject_id());
-        Optional<AccountEntity> account = accountRepository.findById(newCard.getId());
+        Optional<SetEntity>     set = setService.getSetById(newCard.getStudySet_id());
+        Optional<SubjectEntity> subject = subjectRepository.findById(newCard.getSubject_id());
+        Optional<AccountEntity> account = accountRepository.findById(newCard.getAccount_id());
         CardEntity card = new CardEntity(newCard.getId(), null, newCard.getQuestion(), newCard.getAnswer(),
-                                         newCard.isReviewable(), newCard.isPublic(), subject, account.orElse(null));
+                                         newCard.isReviewable(), newCard.isPublic(), subject.orElse(null), account.orElse(null));
+        set.orElseThrow(StudySetNotFoundException::new).getCards().add(card);
         CardEntity returnCard = cardService.savePublicCard(card);
+        SetEntity returnSet = setService.updateSet(set.get());
+
         System.out.println(returnCard);
         return returnCard;
     }
-
 }
