@@ -19,7 +19,7 @@ public @Data class SetEntity {
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int setId;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -37,9 +37,9 @@ public @Data class SetEntity {
 
 
     @Column(name = "name", nullable = false)
-    String name;
+    private String name;
 
     @Column(name = "public")
-    Boolean isPublic;
+    private Boolean isPublic;
 
 }
