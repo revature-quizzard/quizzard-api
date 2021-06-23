@@ -29,7 +29,7 @@ public class CardDTO {
     private SubjectEntity subject;
 
     @NotNull
-    @JsonProperty("creator")
-    private AccountEntity creator;
+    @JsonProperty("creator_id")
+    private int creatorId;
 
 }

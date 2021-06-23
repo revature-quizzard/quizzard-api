@@ -5,8 +5,6 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.security.config.web.servlet.SecurityMarker;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +17,8 @@ public class SetDTO {
     private int setId;
 
     @NotNull
-    @JsonProperty("user_id")
-    private int userId;
+    @JsonProperty("creator_id")
+    private int creatorId;
 
     @NotNull
     @JsonProperty("set_name")
