@@ -1,7 +1,7 @@
 package com.revature.quizzard.security;
 
+import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.UserDTO;
-import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -39,7 +39,7 @@ public class JWTProvider {
         String token = ""; // Needs to be set to something
         // TODO Logic needs to be written after we determine how exactly we login, IE what info gets sent over with what style
 
-        UserDTO userToGenerate = new UserDTO(); // TODO User service logic to find the user from the logic above
+        AuthenticatedDTO userToGenerate = new AuthenticatedDTO(); // TODO User service logic to find the user from the logic above
 
         if(userToGenerate != null){
             token = jwTokenUtil.generateToken(userToGenerate);

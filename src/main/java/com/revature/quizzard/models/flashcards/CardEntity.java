@@ -2,6 +2,11 @@ package com.revature.quizzard.models.flashcards;
 
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
+
+import com.revature.quizzard.dtos.CardDTO;
+
+
+import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +26,7 @@ public @Data class CardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cardEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cardEntity")
     private Set<AccountCardEntity> accountCardEntities = new HashSet<>();
 
     @Column(name = "question", nullable = false)
@@ -40,6 +45,18 @@ public @Data class CardEntity {
     @JoinColumn(name = "subject_id")
     private SubjectEntity subject;
 
-    @ManyToMany(mappedBy = "cards")
-    private Set<SetEntity> setEntities = new HashSet<>();
+    public CardEntity(CardDTO card){
+        this.question = card.getQuestion();
+        this.answer = card.getAnswer();
+        this.reviewable = card.isReviewable();
+        this.isPublic = card.isPublic();
+        this.subject = new SubjectEntity();
+        this.subject.setId(card.getSubjectId());
+    }
+    @ManyToOne(targetEntity = AccountEntity.class)
+    @JoinColumn(name = "account_id")
+    private AccountEntity creator;
+
+//    @ManyToMany(mappedBy = "cards")
+//    private Set<SetEntity> setEntities = new HashSet<>();
 }

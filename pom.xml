@@ -18,11 +18,10 @@
 
     <groupId>com.revature</groupId>
     <artifactId>quizzard-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>latest</version>
     <name>Qwizzard</name>
 
     <developers>
-
         <developer>
             <name>Ann Louis-Charles</name>
             <email>example email</email>
@@ -61,7 +60,7 @@
         </developer>
         <developer>
             <name>Kevin Chang</name>
-            <email>example email</email>
+            <email>kevin.chang@revature.net</email>
         </developer>
         <developer>
             <name>Kyle Plummer</name>
@@ -103,29 +102,24 @@
     </developers>
 
     <dependencies>
+        <!-- Added for MockMVC -Kyle, Sheckeem -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!--Security & Authorization-->
 <!--        Spring Security Thymeleaf-->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 <!--        Spring Boot Starter Security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+
         </dependency>
 <!--        JWT-->
         <dependency>
@@ -137,89 +131,62 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 <!--        Spring Security Config-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 <!--        Spring Security Web-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
+        <!-- Do we want to add validators to entites?-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-validation</artifactId>-->
+<!--            <version>${spring-boot-version}</version>-->
+<!--            &lt;!&ndash; <version>2.5.0</version> &ndash;&gt;-->
+<!--        </dependency>-->
 
         <!--Spring Dependencies/ Not Security Suite Related-->
 <!--        Web Sockets-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+
         </dependency>
 <!--    Spring Web-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+
         </dependency>
 <!--    JPA Annotations-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+
         </dependency>
 <!--    Spring Fox / Swagger UI-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+
         </dependency>
 
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <!--Utilities-->
 <!--        Lombok-->
@@ -238,8 +205,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
-
+            <version>1.4.200</version>
         </dependency>
 
 
@@ -255,19 +221,14 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.9.0</version>
+            <version>3.8.0</version>
         </dependency>
 <!--        Spring Security Test Suite-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+
         </dependency>
 
     </dependencies>
