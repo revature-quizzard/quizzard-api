@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,10 +40,6 @@ public class JWTokenFilter implements Filter {
      *  Constructor for the JWTokenFilter
      * @author Nicholas Recino
      */
-//    @Autowired
-//    public JWTokenFilter(JWTokenUtil jwTokenUtil){
-//        this.jwtTokenUtil = jwTokenUtil;
-//    }
 
     public JWTokenFilter(){
 
@@ -75,15 +72,11 @@ public class JWTokenFilter implements Filter {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(jwtTokenUtil.getSecretKey())
                     .parseClaimsJws(token);
-            //String rolePrefix = "ROLE_";
             Claims body = claimsJws.getBody();
             String username = body.get("userName").toString();
             System.out.println(body.get("role"));
 
             List<LinkedHashMap<Object, Object>> roles = (List<LinkedHashMap<Object, Object>>) body.get("role");
-           // List<RoleEntity> roles = (List<RoleEntity>) body.get("role");
-            // If we implement roles this would be the spot to process this accordingly, or into permissions, giving GrantedAuthorities for all unique permissions
-            //role = rolePrefix + role;
 
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
@@ -91,6 +84,7 @@ public class JWTokenFilter implements Filter {
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority((String) role.get("name"));
                 authorities.add(authority);
             }
+
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);

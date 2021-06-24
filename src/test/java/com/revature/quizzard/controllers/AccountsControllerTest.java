@@ -77,7 +77,7 @@ public class AccountsControllerTest {
         AccountInfoDTO accountInfoDTO = new AccountInfoDTO();
         accountInfoDTO.setUsername("newUser");
 
-        this.mockMvc.perform(MockMvcRequestBuilders.put("/accounts/update").header("Authorization", jwt)
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/accounts/update").header("Authorization","Bearer " + jwt)
                 .content(asJsonString(accountInfoDTO))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

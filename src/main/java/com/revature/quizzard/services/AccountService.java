@@ -81,7 +81,7 @@ public class AccountService {
 
     /**
 <<<<<<< HEAD
-     * Method for being able to update the Account username, password and User email.
+     * This method is responsible for being able to update the Account username, password and User email to be persisted into the database.
      * @param id
      * @param accountInfoDTO
      * @return updateAccountInfo
