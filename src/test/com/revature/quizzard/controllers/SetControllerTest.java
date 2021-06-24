@@ -41,12 +41,12 @@ public class SetControllerTest {
     }
 
     @Test
-    public void test_getCards() throws Exception {
+    public void test_getSets() throws Exception {
         //Arrange
 
         //Act
         this.mockMvc.perform(MockMvcRequestBuilders.get("/set/public")
-                .header("Content-Tye", "application/json"))
+                .header("Content-Type", "application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
