@@ -1,5 +1,6 @@
 package com.revature.quizzard.models.sets;
 
+import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
@@ -42,4 +43,9 @@ public @Data class SetEntity {
     @Column(name = "public")
     private Boolean isPublic;
 
+    public SetEntity(SetDTO setDTO) {
+        this.isPublic = setDTO.isPublic();
+        this.name = setDTO.getSetName();
+        this.creator = setDTO.getCreator();
+    }
 }
