@@ -18,4 +18,12 @@ public class CardDTO {
     private int  subjectId;
 
 
+    public CardDTO(CardEntity cardEntity){
+        this.id = cardEntity.getId();
+        this.question = cardEntity.getQuestion();
+        this.answer = cardEntity.getAnswer();
+        this.reviewable = cardEntity.isReviewable();
+        this.isPublic = cardEntity.isPublic();
+        this.subjectId = cardEntity.getSubject().getId();
+    }
 }

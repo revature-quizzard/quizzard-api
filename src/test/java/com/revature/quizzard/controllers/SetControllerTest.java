@@ -64,7 +64,7 @@ public class SetControllerTest {
 
     @Test
     public void test_createCards() throws Exception {
-        SetDTO newSet = new SetDTO(1,"mockName",false, mockAccount);
+        SetDTO newSet = new SetDTO();
         ObjectMapper json = new ObjectMapper();
         //mockAccount needs acctController, jwtTokenUtil, and jwt.secret
 

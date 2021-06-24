@@ -3,17 +3,20 @@ package com.revature.quizzard.models.sets;
 import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "sets")
 public @Data class SetEntity {
 
@@ -47,6 +50,6 @@ public @Data class SetEntity {
         this.isPublic = setDTO.isPublic();
         this.name = setDTO.getSetName();
         this.creator = setDTO.getCreator();
-        //TODO implement constructor to take in List<CardDTO> convert Set
+        this.cards = new HashSet<>(setDTO.getCardDTOList().stream().map(CardEntity::new).collect(Collectors.toSet()));
     }
 }

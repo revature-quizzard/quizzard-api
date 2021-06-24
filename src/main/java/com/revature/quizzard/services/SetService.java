@@ -67,7 +67,6 @@ public class SetService {
         SetEntity setEntity = new SetEntity(newSet);
         setRepo.save(setEntity);
         System.out.println("Saved:" + newSet.getSetName());
-
         return newSet;
     }
 }
