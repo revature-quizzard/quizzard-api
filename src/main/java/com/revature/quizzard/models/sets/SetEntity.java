@@ -47,5 +47,6 @@ public @Data class SetEntity {
         this.isPublic = setDTO.isPublic();
         this.name = setDTO.getSetName();
         this.creator = setDTO.getCreator();
+        //TODO implement constructor to take in List<CardDTO> convert Set
     }
 }
