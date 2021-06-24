@@ -79,4 +79,9 @@ public class SetServiceTest {
         List<SetDTO> result = sut.getCreatedSets("test");
 
     }
+
+    @Test
+    public void test_createNewStudySet(){
+
+    }
 }
