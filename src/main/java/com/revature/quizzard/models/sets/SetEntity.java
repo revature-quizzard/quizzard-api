@@ -46,6 +46,6 @@ public @Data class SetEntity {
     public SetEntity(SetDTO setDTO) {
         this.isPublic = setDTO.isPublic();
         this.name = setDTO.getSetName();
-        //Account
+        this.creator = setDTO.getCreator();
     }
 }

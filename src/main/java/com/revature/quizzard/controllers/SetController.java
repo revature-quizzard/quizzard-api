@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 public class SetController {
 
@@ -40,9 +42,10 @@ public class SetController {
     }
 
 
-    @PostMapping(value = "/sets/newset", consumes = "application/json")
+    @PostMapping(value = "/sets/newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public SetDTO createNewSet(@RequestBody SetDTO newSet){
-        SetDTO newStudySet = new SetDTO(setService.createStudySets(newSet));
+        SetDTO newStudySet = setService.createStudySets(newSet);
+        System.out.println("New set creation method invoked.");
         return newStudySet;
     }
 

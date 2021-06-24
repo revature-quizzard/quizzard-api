@@ -1,5 +1,6 @@
 package com.revature.quizzard.dtos;
 
+import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
