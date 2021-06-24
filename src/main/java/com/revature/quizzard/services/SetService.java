@@ -53,4 +53,22 @@ public class SetService {
             throw new ResourceNotFoundException();
         }
     }
+
+    /**
+     * Saves a new set into the database which converts the provided setDTO into a setEntity
+     * @param newSet A SetDTO to be sent to the database
+     * @return SetEntity
+     * @author Ann Louis-Charles
+     * @author Chris Levano
+     */
+
+    @Transactional
+    public SetEntity createStudySets(SetDTO newSet) {
+        SetEntity setEntity = new SetEntity(newSet);
+        setRepo.save(setEntity);
+        newSet.setSetName(newSet.getSetName());
+        System.out.println("Saved:" + newSet.getSetName());
+
+        return setEntity;
+    }
 }

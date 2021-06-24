@@ -5,9 +5,7 @@ import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.SetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,4 +38,13 @@ public class SetController {
         response.setStatus(200);
         return foundSets;
     }
+
+
+    @PostMapping(value = "/sets/newset", consumes = "application/json")
+    public SetDTO createNewSet(@RequestBody SetDTO newSet){
+        SetDTO newStudySet = new SetDTO(setService.createStudySets(newSet));
+        return newStudySet;
+    }
+
+
 }
