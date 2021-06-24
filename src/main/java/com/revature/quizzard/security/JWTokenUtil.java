@@ -47,6 +47,7 @@ public class JWTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
+        token = token.split(" ")[1];
         return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
     }
 
