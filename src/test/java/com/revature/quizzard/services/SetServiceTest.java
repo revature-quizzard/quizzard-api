@@ -70,7 +70,7 @@ public class SetServiceTest {
 
         List<SetDTO> result = sut.getCreatedSets("test");
 
-        assertEquals(result.size(), 0);
+        assertEquals(0, result.size());
     }
 
     @Test(expected = ResourceNotFoundException.class)

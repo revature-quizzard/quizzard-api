@@ -2,7 +2,11 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.SetService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -20,26 +24,31 @@ import java.util.List;
 public class SetController {
 
     private SetService setService;
+    private JWTokenUtil jwtTokenUtil;
 
     @Autowired
-    public SetController(SetService setService) {
+    public SetController(SetService setService, JWTokenUtil jwtTokenUtil) {
         this.setService = setService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     /**
      * Retrieves from the database all sets that were created by account
-     * @param username A string used to find associated account
-     * @param request HTTP request
+     * @param request HTTP request containing the authorization token with username
      * @param response HTTP response
      * @return List<SetDTO>
      * @author Vinson Chin
      * @author Austin Knauer
      */
-    @GetMapping(value = "/sets/created/{username}", produces = "application/json")
-    public List<SetDTO> findAllCreatedSetsByAccount(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping(value = "/sets/created", produces = "application/json")
+    public List<SetDTO> findAllCreatedSetsByAccount(HttpServletRequest request, HttpServletResponse response) {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
+        String authToken = request.getHeader("Authorization");
+        String token = authToken.split(" ")[1];
+        Jws<Claims> claimsJws = Jwts.parser()
+                .setSigningKey(jwtTokenUtil.getSecretKey())
+                .parseClaimsJws(token);
+        String username = claimsJws.getBody().get("userName").toString();
 
         List<SetDTO> foundSets = setService.getCreatedSets(username);
 
