@@ -84,7 +84,7 @@ public class SetServiceTest {
     public void test_createStudySet(){
         SetDTO setDTO = new SetDTO();
         setDTO.setSetName("mockName");
-        setDTO.setCreator(mockAccount);
+//        setDTO.setCreator(mockAccount);
         setDTO.setPublic(true);
         setDTO.setSetId(2);
 

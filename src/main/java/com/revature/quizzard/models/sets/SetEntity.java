@@ -49,7 +49,7 @@ public @Data class SetEntity {
     public SetEntity(SetDTO setDTO) {
         this.isPublic = setDTO.isPublic();
         this.name = setDTO.getSetName();
-        this.creator = setDTO.getCreator();
-        this.cards = new HashSet<>(setDTO.getCardDTOList().stream().map(CardEntity::new).collect(Collectors.toSet()));
+//        this.creator = setDTO.getCreator();
+        this.cards = new HashSet<>(setDTO.getLocalFlashcards().stream().map(CardEntity::new).collect(Collectors.toSet()));
     }
 }

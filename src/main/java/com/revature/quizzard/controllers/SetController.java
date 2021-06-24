@@ -3,6 +3,7 @@ package com.revature.quizzard.controllers;
 import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.SetService;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class SetController {
 
     private SetService setService;
+    private final Logger logger = LogManager.getLogger();
 
     @Autowired
     public SetController(SetService setService) {
@@ -44,7 +46,9 @@ public class SetController {
 
     @PostMapping(value = "/sets/newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public SetDTO createNewSet(@RequestBody SetDTO newSet){
+        logger.info(newSet);
         SetDTO newStudySet = setService.createStudySets(newSet);
+
         System.out.println("New set creation method invoked.");
         return newStudySet;
     }
