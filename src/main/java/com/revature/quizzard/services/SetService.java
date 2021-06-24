@@ -64,8 +64,8 @@ public class SetService {
     @Transactional
     public SetDTO createStudySets(SetDTO newSet) {
         SetEntity setEntity = new SetEntity(newSet);
-        setRepo.save(setEntity);
-        System.out.println("Saved:" + newSet.getSetName());
-        return newSet;
+        SetEntity savedEntity = setRepo.save(setEntity);
+        System.out.println("Saved:" + setEntity.getName());
+        return new SetDTO(savedEntity);
     }
 }
