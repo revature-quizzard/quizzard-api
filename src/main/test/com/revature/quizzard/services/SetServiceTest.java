@@ -76,7 +76,7 @@ public class SetServiceTest {
         mockSetDTO.setName(mockSet.getName());
 
         Set<SetDTO> expectedResult = new HashSet<SetDTO>();
-        expectedResult.add(mockSetDTO);//HERE I NEED TO CHECK
+        expectedResult.add(mockSetDTO);
 
         //Act
         Set<SetDTO> actualResult= sut.findIsPublic(true);

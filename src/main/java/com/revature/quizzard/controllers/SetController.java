@@ -27,7 +27,7 @@ public class SetController {
      * @return -- JSON structure with the public set data and their public cards
      */
     @GetMapping(value = "public", produces = APPLICATION_JSON_VALUE)
-    public Set<SetDTO> getPubicSetsDtos(HttpServletRequest  req){
+    public Set<SetDTO> getPubicSets(HttpServletRequest  req){
         return setService.findIsPublic(true);
     }
 
