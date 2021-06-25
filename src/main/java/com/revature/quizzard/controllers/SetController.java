@@ -69,5 +69,11 @@ public class SetController {
         return studyCards;
     }
 
+    @GetMapping(value = "/sets/{setId}", produces = APPLICATION_JSON_VALUE)
+    public SetDTO findSetByID(@PathVariable int setId, HttpServletRequest request){
+        SetDTO studySet = setService.getSetById(setId);
+        return studySet;
+    }
+
 
 }

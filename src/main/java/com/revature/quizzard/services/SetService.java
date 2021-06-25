@@ -89,4 +89,12 @@ public class SetService {
 
         return setCards;
     }
+
+    @Transactional
+    public SetDTO getSetById(int setId){
+        SetEntity setEntity = setRepo.findById(setId).orElseThrow(ResourceNotFoundException::new);
+        SetDTO studySet = new SetDTO(setEntity);
+
+        return studySet;
+    }
 }
