@@ -76,6 +76,8 @@ public class SetServiceTest {
     @Test(expected = ResourceNotFoundException.class)
     public void test_getCreatedSetsWithInvalidUsername() {
 
+        when(mockAccountRepo.findByUsername(any())).thenReturn(null);
+
         List<SetDTO> result = sut.getCreatedSets("test");
 
     }

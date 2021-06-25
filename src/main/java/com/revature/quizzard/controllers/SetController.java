@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RequestMapping("/sets")
 public class SetController {
 
     private SetService setService;
@@ -40,7 +42,7 @@ public class SetController {
      * @author Vinson Chin
      * @author Austin Knauer
      */
-    @GetMapping(value = "/sets/created", produces = "application/json")
+    @GetMapping(value = "created", produces = "application/json")
     public List<SetDTO> findAllCreatedSetsByAccount(HttpServletRequest request, HttpServletResponse response) {
 
         String authToken = request.getHeader("Authorization");
