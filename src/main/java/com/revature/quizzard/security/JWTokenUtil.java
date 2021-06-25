@@ -37,6 +37,11 @@ public class JWTokenUtil {
         this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
+    /*
+    Make sure token String splits off "Bearer" to properly parse token.
+    @JamesFallon
+     */
+
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
@@ -60,6 +65,7 @@ public class JWTokenUtil {
     }
 
     private Boolean isTokenExpired(String token) {
+        token = token.split(" ")[1];
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }

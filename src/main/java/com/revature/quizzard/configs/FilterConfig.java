@@ -32,17 +32,19 @@ public class FilterConfig {
         return filterRegistrationBean;
     }
 
-    /**
-     * Registration bean for the JWTokenFilter
-     *
-     * @return filterRegistrationBean
-     */
-    @Bean
-    @SuppressWarnings({"rawtypes, unchecked"})
-    public FilterRegistrationBean JWTokenRegistrationBean() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new JWTokenFilter());
-        filterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
-        return filterRegistrationBean;
-    }
+    //DO NOT REGISTER A FILTER LIKE THIS IF YOU PLAN TO OVERRIDE HTE INIT METHOD -Richard
+
+//    /**
+//     * Registration bean for the JWTokenFilter
+//     *
+//     * @return filterRegistrationBean
+//     */
+//    @Bean
+//    @SuppressWarnings({"rawtypes, unchecked"})
+//    public FilterRegistrationBean JWTokenRegistrationBean() {
+//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+//        filterRegistrationBean.setFilter(new JWTokenFilter());
+//        filterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
+//        return filterRegistrationBean;
+//    }
 }

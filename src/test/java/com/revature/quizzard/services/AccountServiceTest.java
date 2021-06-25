@@ -126,6 +126,22 @@ public class AccountServiceTest {
 
     }
 
+    @Test
+    public void updatewithtakenInfo(){
+        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
+        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
+        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "fake@email.com", "");
+        Map<String, Object> updatedMap = new HashMap<>();
+        updatedMap.put("conflict", "email and/or username is already taken");
+
+        when(mockAccountRepository.findByUsername(anyString())).thenReturn(account);
+        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
+        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.ofNullable(null));
+
+        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
+        assertEquals(testMap, updatedMap);
+    }
+
 
 
 

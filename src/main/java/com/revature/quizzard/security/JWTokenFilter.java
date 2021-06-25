@@ -21,17 +21,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
 @Component
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JWTokenFilter implements Filter {
 
     private JWTokenUtil jwtTokenUtil;
@@ -74,12 +69,12 @@ public class JWTokenFilter implements Filter {
                     .parseClaimsJws(token);
             Claims body = claimsJws.getBody();
             String username = body.get("userName").toString();
-            System.out.println(body.get("role"));
-
+            /*
+            Was not able to transfer data back into set. Had to change data structure to read the roles from token
+            @James Fallon
+             */
             List<LinkedHashMap<Object, Object>> roles = (List<LinkedHashMap<Object, Object>>) body.get("role");
-
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
             for(Map role : roles){
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority((String) role.get("name"));
                 authorities.add(authority);

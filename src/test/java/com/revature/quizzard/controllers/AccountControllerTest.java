@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class AccountsControllerTest {
+public class AccountControllerTest {
     private WebApplicationContext webContext;
     private AccountRepository accountRepository;
     private UserRepository userRepository;
@@ -42,7 +42,7 @@ public class AccountsControllerTest {
     private JWTokenUtil jwTokenUtil;
 
     @Autowired
-    public AccountsControllerTest(WebApplicationContext webContext, AccountRepository accountRepository, UserRepository userRepository, RoleRepository roleRepository, JWTokenUtil jwTokenUtil) {
+    public AccountControllerTest(WebApplicationContext webContext, AccountRepository accountRepository, UserRepository userRepository, RoleRepository roleRepository, JWTokenUtil jwTokenUtil) {
         this.webContext = webContext;
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
