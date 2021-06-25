@@ -7,6 +7,7 @@ import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
 import org.junit.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+@ActiveProfiles("test")
 public class SetServiceTest {
 
     private SetService sut;
@@ -25,12 +27,13 @@ public class SetServiceTest {
     private List<SetEntity> mockSetList;
     private AccountEntity mockAccount;
     private Set<CardEntity> mockCards;
+    private CardRepository mockCardRepo;
 
     @Before
     public void setupTest() {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo);
     }
 
     @After
@@ -79,4 +82,24 @@ public class SetServiceTest {
         List<SetDTO> result = sut.getCreatedSets("test");
 
     }
+
+//    @Test
+//    public void test_createStudySet(){
+//        SetDTO setDTO = new SetDTO();
+//        setDTO.setSetName("mockName");
+////        setDTO.setCreator(mockAccount);
+//        setDTO.setPublic(true);
+//        setDTO.setSetId(2);
+//
+//        //Expected
+//        doReturn(new SetEntity()).when(mockSetRepo).save(any());
+//        //Act
+//        SetDTO result = sut.createStudySets(setDTO);
+//
+//        //Assert
+//        verify(mockSetRepo, times(1)).save(any());
+//
+//        assertEquals(setDTO, result);
+//
+//    }
 }
