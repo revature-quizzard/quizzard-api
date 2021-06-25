@@ -1,30 +1,27 @@
 package com.revature.quizzard.services;
 
-import com.revature.quizzard.dtos.AccountInfoDTO;
-import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
-import com.revature.quizzard.exceptions.InvalidRequestException;
-import com.revature.quizzard.models.composites.AccountCardEntity;
-import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.dtos.AccountRegisterDTO;
+import com.revature.quizzard.dtos.AuthenticatedDTO;
+import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.exceptions.DuplicateRegistrationException;
+import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.models.user.AccountEntity;
-import com.revature.quizzard.models.user.UserEntity;
-import com.revature.quizzard.repositories.AccountCardRepository;
+import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.repositories.AccountRepository;
-import com.revature.quizzard.repositories.CardRepository;
+import com.revature.quizzard.repositories.RoleRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.HashSet;
+import java.util.Optional;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.*;
-
-import static org.mockito.MockitoAnnotations.*;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class AccountServiceTest {
 
@@ -33,116 +30,124 @@ public class AccountServiceTest {
 
     @Mock
     private AccountRepository mockAccountRepository;
+
     @Mock
     private UserRepository mockUserRepository;
 
-    @Before
-    public void setUpTest() {
-        openMocks(this);
+    @Mock
+    private RoleRepository mockRoleRepository;
 
+    @Before
+    public void setUp() {
+        openMocks(this);
     }
 
     @After
-    public void tearDownTest() {
+    public void tearDown() {
         mockAccountRepository = null;
         mockUserRepository = null;
+        mockRoleRepository = null;
     }
 
     @Test
-    public void updateUserEmail(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "fake@email.com", "");
-        Map<String, Object> updatedMap = new HashMap<>();
-        updatedMap.put("email", accountInfoDTO.getEmail());
+    public void test_loginWithValidCredentials() {
 
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.of(user));
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
+        //Arrange
+        AuthenticatedDTO authenticatedDTO;
+        AccountEntity accountEntity = new AccountEntity();
 
-        assertEquals(testMap, updatedMap);
+        accountEntity.setId(1);
+        accountEntity.setUsername("valid");
+        accountEntity.setPassword("password");
+        accountEntity.setRoles(new HashSet<RoleEntity>());
+        accountEntity.setPoints(32767);
 
+        CredentialsDTO credentialsDTO = new CredentialsDTO("valid","password");
 
+        when(mockAccountRepository.findByUsernameAndPassword(credentialsDTO.getUsername(), credentialsDTO.getPassword()))
+                .thenReturn(accountEntity);
+
+        //Act
+        authenticatedDTO = sut.login(credentialsDTO);
+
+        //Assert
+        Assert.assertEquals(new AuthenticatedDTO(1,32767, "valid", new HashSet<RoleEntity>()), authenticatedDTO);
+    }
+
+    @Test(expected = InvalidCredentialsException.class)
+    public void test_loginWithInvalidCredentials() {
+        //Arrange
+        CredentialsDTO credentialsDTO = new CredentialsDTO("invalid","password");
+
+        //Act
+        sut.login(credentialsDTO);
+
+        //Assert
+        verify(mockAccountRepository, times(1)).findByUsernameAndPassword(credentialsDTO.getUsername(), credentialsDTO.getPassword());
     }
 
     @Test
-    public void updateUsername(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("faker", "", "");
-        Map<String, Object> updatedMap = new HashMap<>();
-        updatedMap.put("username", accountInfoDTO.getUsername());
+    public void test_registerWithValidInformation() {
+        //Arrange
+        AccountEntity accountEntity = new AccountEntity();
 
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.of(user));
+        accountEntity.setId(1);
+        accountEntity.setUsername("valid");
+        accountEntity.setPassword("password");
+        accountEntity.setPoints(32767);
 
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
+        AuthenticatedDTO authenticatedDTO;
+        AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
 
-        assertEquals(testMap, updatedMap);
-    }
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
 
-    @Test
-    public void updatePassword(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "", "fakePassword");
-        Map<String, Object> updatedMap = new HashMap<>();
-        updatedMap.put("password", true);
+        //Act
+        authenticatedDTO = sut.register(accountRegisterDTO);
 
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.of(user));
 
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
-
-        assertEquals(testMap, updatedMap);
-    }
-
-    @Test
-    public void updateWithNoAccount(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "fake@email.com", "");
-
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.ofNullable(null));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.of(user));
-
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
-        assertNull(testMap);
+        //Assert
+        Assert.assertEquals(new AuthenticatedDTO(accountEntity).getUsername(),authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(1)).save(any());
 
     }
 
-    @Test
-    public void updateWithNoUser(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "fake@email.com", "");
+    @Test(expected = DuplicateRegistrationException.class)
+    public void test_registerWithTakenUsername() {
+        //Arrange
+        AuthenticatedDTO authenticatedDTO;
+        AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
+        when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
 
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.ofNullable(null));
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
 
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
-        assertNull(testMap);
+        //Act
+        authenticatedDTO = sut.register(accountRegisterDTO);
 
-
+        //Assert
+        Assert.assertNull(authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(0)).save(any());
     }
 
-    @Test
-    public void updatewithtakenInfo(){
-        UserEntity user = new UserEntity(1, "mock", "mocker", "mockman@mail.com");
-        AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "fake@email.com", "");
-        Map<String, Object> updatedMap = new HashMap<>();
-        updatedMap.put("conflict", "email and/or username is already taken");
+    @Test(expected = DuplicateRegistrationException.class)
+    public void test_registerWithTakenEmail() {
+        //Arrange
+        AuthenticatedDTO authenticatedDTO;
+        AccountRegisterDTO accountRegisterDTO = new AccountRegisterDTO("valid","password","valid@email.com", "Validity", "Person");
+        when(mockAccountRepository.save(any())).thenThrow(DuplicateRegistrationException.class);
 
-        when(mockAccountRepository.findByUsername(anyString())).thenReturn(account);
-        when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
-        when(mockUserRepository.findById (anyInt())).thenReturn(Optional.ofNullable(null));
+        RoleEntity roleEntity = new RoleEntity(1, "ROLE_USER");
+        when(mockRoleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
 
-        Map testMap = sut.updateAccountInfo(1, accountInfoDTO);
-        assertEquals(testMap, updatedMap);
+        //Act
+        authenticatedDTO = sut.register(accountRegisterDTO);
+
+        //Assert
+        Assert.assertNull(authenticatedDTO.getUsername());
+        verify(mockAccountRepository, times(1)).save(any());
+        verify(mockUserRepository, times(0)).save(any());
     }
-
-
-
-
 }

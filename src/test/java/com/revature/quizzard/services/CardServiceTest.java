@@ -1,26 +1,21 @@
 package com.revature.quizzard.services;
 
+import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.exceptions.InvalidRequestException;
 import com.revature.quizzard.models.composites.AccountCardEntity;
-import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.models.user.AccountEntity;
-import com.revature.quizzard.repositories.AccountCardRepository;
-import com.revature.quizzard.repositories.AccountRepository;
-import com.revature.quizzard.repositories.CardRepository;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import com.revature.quizzard.repositories.*;
+import org.junit.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class CardServiceTest {
@@ -37,16 +32,68 @@ public class CardServiceTest {
     @Mock
     private AccountCardRepository mockAccountCardRepository;
 
+
+
     @Before
-    public void setUpTest() {
-        openMocks(this);
+    public void setupTest(){
+       openMocks(this);
+
     }
 
     @After
-    public void tearDownTest() {
+    public void teardownTest(){
         mockAccountCardRepository = null;
         mockCardRepository = null;
         mockAccountRepository = null;
+        sut = null;
+    }
+
+    @Test
+    public void test_getCards(){
+        //Expected
+        List<CardDTO> cardDTOList = new ArrayList<>();
+        CardDTO cardDTO = new CardDTO();
+        cardDTO.setAnswer("bar");
+        cardDTO.setQuestion("foo");
+        cardDTO.setPublic(true);
+        cardDTO.setReviewable(true);
+        cardDTO.setSubjectId(1);
+        cardDTOList.add(cardDTO);
+
+        //Sut input
+        List<CardEntity> cardEntities = new ArrayList<>();
+        CardEntity cardEntity = new CardEntity(cardDTO);
+        cardEntities.add(cardEntity);
+
+        doReturn(cardEntities).when(mockCardRepository).findAll();
+
+        //Act
+        List<CardDTO> result = sut.getCards();
+
+        //Assert
+        verify(mockCardRepository, times(1)).findAll();
+        assertTrue(cardDTOList.get(0).getQuestion().equals(result.get(0).getQuestion()));
+
+    }
+
+    @Test
+    public void test_createCard(){
+        CardDTO cardDTO = new CardDTO();
+        cardDTO.setAnswer("bar");
+        cardDTO.setQuestion("foo");
+        cardDTO.setPublic(true);
+        cardDTO.setReviewable(true);
+        cardDTO.setSubjectId(1);
+
+        //Expected
+        doReturn(new CardEntity()).when(mockCardRepository).save(any());
+        //Act
+        CardDTO result = sut.createCard(cardDTO);
+
+        //Assert
+        verify(mockCardRepository, times(1)).save(any());
+
+        assertEquals(cardDTO, result);
     }
 
     @Test

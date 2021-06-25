@@ -1,25 +1,29 @@
 package com.revature.quizzard.models.sets;
 
+import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "sets")
 public @Data class SetEntity {
 
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int setId;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -37,9 +41,15 @@ public @Data class SetEntity {
 
 
     @Column(name = "name", nullable = false)
-    String name;
+    private String name;
 
     @Column(name = "public")
-    Boolean isPublic;
+    private Boolean isPublic;
 
+    public SetEntity(SetDTO setDTO) {
+        this.isPublic = setDTO.isPublic();
+        this.name = setDTO.getSetName();
+//        this.creator = setDTO.getCreator();
+//        this.cards = new HashSet<>(setDTO.getLocalFlashcards().stream().map(CardEntity::new).collect(Collectors.toSet()));
+    }
 }

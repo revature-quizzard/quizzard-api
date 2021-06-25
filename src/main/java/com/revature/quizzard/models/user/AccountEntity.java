@@ -7,6 +7,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.quizzard.dtos.responsemodel.lists.AccountCardDTO;
 import com.revature.quizzard.models.composites.AccountCardEntity;
 import com.revature.quizzard.models.flashcards.ReviewEntity;
+import com.revature.quizzard.models.sets.SetEntity;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+
 import lombok.*;
 
 import javax.persistence.*;

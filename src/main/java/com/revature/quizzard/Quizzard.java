@@ -15,6 +15,7 @@ public class Quizzard implements ApplicationRunner {
     public static void main(String[] args) {
         LogManager.getLogger().info("Log this please");
         System.out.println("Can you see me");
+        System.out.println("I bet you can");
         SpringApplication.run(Quizzard.class, args);
     }
 
