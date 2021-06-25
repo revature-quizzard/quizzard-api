@@ -62,17 +62,17 @@ public class SetControllerTest {
         mockAuthDTO = null;
     }
 
-    @Test
-    public void test_getCards() throws Exception {
-        //Arrange
-
-        //Act
-        this.mockMvc.perform(get("/sets/public")
-                .header("Content-Type", "application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+//    @Test
+//    public void test_getCards() throws Exception {
+//        //Arrange
+//
+//        //Act
+//        this.mockMvc.perform(get("/sets/public")
+//                .header("Content-Type", "application/json"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
 
     @Test
     public void test_createCards() throws Exception {
