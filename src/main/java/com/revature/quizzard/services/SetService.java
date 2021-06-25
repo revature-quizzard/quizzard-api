@@ -5,13 +5,13 @@ import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
-import com.revature.quizzard.repositories.AccountRepository;
-import com.revature.quizzard.repositories.SetRepository;
+import com.revature.quizzard.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.smartcardio.*;
 import java.util.*;
 
 @Service
@@ -21,6 +21,7 @@ public class SetService {
 
     private SetRepository setRepo;
     private AccountRepository accountRepo;
+    private CardRepository cardRepo;
 
     /**
      * Returns a list of sets that were created by the account. Takes in a username and finds the account associated
@@ -63,7 +64,15 @@ public class SetService {
 
     @Transactional
     public SetDTO createStudySets(SetDTO newSet) {
+        List<CardDTO> list = newSet.getLocalFlashcards();
+        Set<CardEntity> entitySet = new HashSet<>();
+        for (CardDTO cardDTO: list) {
+            entitySet.add(cardRepo.findCardEntityById(cardDTO.getId()));
+        }
         SetEntity setEntity = new SetEntity(newSet);
+
+        setEntity.setCards(entitySet);
+
         SetEntity savedEntity = setRepo.save(setEntity);
         System.out.println("Saved:" + setEntity.getName());
         return new SetDTO(savedEntity);
