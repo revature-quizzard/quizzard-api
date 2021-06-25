@@ -77,4 +77,14 @@ public class SetControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void test_findStudySetCards() throws Exception{
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/1/cards")
+                .header("Content-Type", "application/json"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+    }
+
 }

@@ -99,4 +99,20 @@ public class SetServiceTest {
         assertEquals(setDTO, result);
 
     }
+
+    @Test
+    public void test_getCardsBySetId(){
+        SetEntity setEntity = new SetEntity();
+        Set<CardEntity> expected = new HashSet<>();
+        expected.add(new CardEntity(new CardDTO(1, "question", "answer", true, true, 1)));
+        setEntity.setCards(expected);
+
+        when(mockSetRepo.findById(1)).thenReturn(java.util.Optional.of(setEntity));
+
+        List<CardDTO> actual = sut.getCardsBySetId(1);
+
+        verify(mockSetRepo, times(1)).findById(1);
+
+        assertEquals(actual.size(), 1);
+    }
 }
