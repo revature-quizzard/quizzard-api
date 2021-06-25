@@ -87,4 +87,14 @@ public class SetControllerTest {
 
     }
 
+    @Test
+    public void test_findStudySetById() throws Exception{
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/1")
+                .header("Content-Type", "application/json"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+    }
+
 }
