@@ -55,7 +55,14 @@ public class SetController {
         return newStudySet;
     }
 
-    //get all cards from set by set id
+    /**
+     * Returns all the cards for a specified study set
+     * @param setId The studySet id
+     * @param request The HttpServlet Request
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
     @GetMapping(value = "/sets/{setId}/cards", produces = APPLICATION_JSON_VALUE)
     public List<CardDTO> findAllCardsBySetID(@PathVariable int setId, HttpServletRequest request){
         List<CardDTO> studyCards = setService.getCardsBySetId(setId);

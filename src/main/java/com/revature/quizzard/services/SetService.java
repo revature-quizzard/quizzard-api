@@ -70,6 +70,13 @@ public class SetService {
         return new SetDTO(savedEntity);
     }
 
+    /**
+     * Gets all the cards from a specified study set from the database
+     * @param setId The study set id
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
     @Transactional
     public List<CardDTO> getCardsBySetId(int setId){
 
