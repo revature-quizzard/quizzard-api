@@ -33,5 +33,6 @@ hs_err_pid*
 #Target folder
 target/
 
+#sql files
 *.sql
 
