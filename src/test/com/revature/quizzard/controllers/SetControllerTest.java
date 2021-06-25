@@ -57,7 +57,7 @@ public class SetControllerTest {
         when(mockSetService.findIsPublic(true)).thenReturn(mockSetDTO);
 
         //Act
-        this.mockMvc.perform(get("/set/public")
+        this.mockMvc.perform(get("/sets/public")
                 .header("Content-Type", "application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())

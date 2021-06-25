@@ -15,7 +15,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * SetController Class -- Allows to reach the API functionalities for the Set component
  */
 @RestController
-@RequestMapping("/set")
+@RequestMapping("/sets")
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class SetController {
 
