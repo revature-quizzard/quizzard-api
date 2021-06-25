@@ -53,10 +53,6 @@ public class SetController {
 
         List<SetDTO> foundSets = setService.getCreatedSets(username);
 
-        if (foundSets == null) {
-            response.setStatus(404);
-            return null;
-        }
         response.setStatus(200);
         return foundSets;
     }
