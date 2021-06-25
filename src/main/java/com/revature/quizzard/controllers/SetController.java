@@ -1,5 +1,6 @@
 package com.revature.quizzard.controllers;
 
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.services.SetService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -51,6 +53,13 @@ public class SetController {
 
         System.out.println("New set creation method invoked.");
         return newStudySet;
+    }
+
+    //get all cards from set by set id
+    @GetMapping(value = "/sets/{setId}/cards", produces = APPLICATION_JSON_VALUE)
+    public List<CardDTO> findAllCardsBySetID(@PathVariable int setId, HttpServletRequest request){
+        List<CardDTO> studyCards = setService.getCardsBySetId(setId);
+        return studyCards;
     }
 
 

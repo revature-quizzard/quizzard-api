@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.smartcardio.Card;
 import java.util.*;
 
 @Service
@@ -67,5 +68,18 @@ public class SetService {
         SetEntity savedEntity = setRepo.save(setEntity);
         System.out.println("Saved:" + setEntity.getName());
         return new SetDTO(savedEntity);
+    }
+
+    @Transactional
+    public List<CardDTO> getCardsBySetId(int setId){
+
+        SetEntity setEntity = setRepo.findById(setId).orElseThrow(ResourceNotFoundException::new);
+        List<CardDTO> setCards = new ArrayList<>();
+
+        for (CardEntity card:setEntity.getCards()) {
+            setCards.add(new CardDTO(card));
+        }
+
+        return setCards;
     }
 }
