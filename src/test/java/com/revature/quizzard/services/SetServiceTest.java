@@ -25,12 +25,13 @@ public class SetServiceTest {
     private List<SetEntity> mockSetList;
     private AccountEntity mockAccount;
     private Set<CardEntity> mockCards;
+    private CardRepository mockCardRepo;
 
     @Before
     public void setupTest() {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo);
     }
 
     @After

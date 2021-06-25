@@ -50,6 +50,6 @@ public @Data class SetEntity {
         this.isPublic = setDTO.isPublic();
         this.name = setDTO.getSetName();
 //        this.creator = setDTO.getCreator();
-        this.cards = new HashSet<>(setDTO.getLocalFlashcards().stream().map(CardEntity::new).collect(Collectors.toSet()));
+//        this.cards = new HashSet<>(setDTO.getLocalFlashcards().stream().map(CardEntity::new).collect(Collectors.toSet()));
     }
 }
