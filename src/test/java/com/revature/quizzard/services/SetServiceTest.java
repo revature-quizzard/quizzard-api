@@ -79,4 +79,24 @@ public class SetServiceTest {
         List<SetDTO> result = sut.getCreatedSets("test");
 
     }
+
+    @Test
+    public void test_createStudySet(){
+        SetDTO setDTO = new SetDTO();
+        setDTO.setSetName("mockName");
+//        setDTO.setCreator(mockAccount);
+        setDTO.setPublic(true);
+        setDTO.setSetId(2);
+
+        //Expected
+        doReturn(new SetEntity()).when(mockSetRepo).save(any());
+        //Act
+        SetDTO result = sut.createStudySets(setDTO);
+
+        //Assert
+        verify(mockSetRepo, times(1)).save(any());
+
+        assertEquals(setDTO, result);
+
+    }
 }

@@ -1,7 +1,8 @@
 package com.revature.quizzard.services;
 
-import com.revature.quizzard.dtos.SetDTO;
+import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
+import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountRepository;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -52,5 +51,21 @@ public class SetService {
         } else {
             throw new ResourceNotFoundException();
         }
+    }
+
+    /**
+     * Saves a new set into the database which converts the provided setDTO into a setEntity
+     * @param newSet A SetDTO to be sent to the database
+     * @return SetEntity
+     * @author Ann Louis-Charles
+     * @author Chris Levano
+     */
+
+    @Transactional
+    public SetDTO createStudySets(SetDTO newSet) {
+        SetEntity setEntity = new SetEntity(newSet);
+        SetEntity savedEntity = setRepo.save(setEntity);
+        System.out.println("Saved:" + setEntity.getName());
+        return new SetDTO(savedEntity);
     }
 }
