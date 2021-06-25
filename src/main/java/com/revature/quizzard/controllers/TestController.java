@@ -18,13 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TestController {
 
-
     private final AccountRepository accountRepository;
     private final CardService cardService;
-
 
     @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
