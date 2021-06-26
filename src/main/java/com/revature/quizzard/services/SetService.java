@@ -6,6 +6,7 @@ import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
+import com.revature.quizzard.security.JWTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class SetService {
     private SetRepository setRepo;
     private AccountRepository accountRepo;
     private CardRepository cardRepo;
+    private JWTokenUtil tokenUtil;
 
     /**
      * Returns a list of sets that were created by the account. Takes in a username and finds the account associated
@@ -80,6 +82,16 @@ public class SetService {
     public List<SetEntity> getPublicSets()
     {
         return setRepo.findAllByIsPublic(true);
+    }
+    public List<SetEntity> getOwnedsets(String token) {
+        System.out.println("Inside Service layer: " + token);
+        int id = tokenUtil.getIdFromToken(token);
+        Optional<AccountEntity> optionalAccountEntity = accountRepo.findById(id);
+        if(optionalAccountEntity.isPresent()) {
+            return setRepo.findAllByCreator(optionalAccountEntity.get());
+        } else {
+            throw new ResourceNotFoundException();
+        }
     }
     public Optional<SetEntity> getSetById(int id)
     {

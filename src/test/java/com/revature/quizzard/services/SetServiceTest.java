@@ -6,6 +6,7 @@ import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
+import com.revature.quizzard.security.JWTokenUtil;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -27,13 +28,15 @@ public class SetServiceTest {
     private List<SetEntity> mockSetList;
     private AccountEntity mockAccount;
     private Set<CardEntity> mockCards;
+    private JWTokenUtil mockTokenUtil;
     private CardRepository mockCardRepo;
 
     @Before
     public void setupTest() {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo);
+        mockTokenUtil = mock(JWTokenUtil.class);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo, mockTokenUtil);
     }
 
     @After

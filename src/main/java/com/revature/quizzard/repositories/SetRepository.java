@@ -15,6 +15,8 @@ public interface SetRepository extends JpaRepository<SetEntity, Integer> {
     Optional<SetEntity> findById(int id);
     List<SetEntity> findAllByIsPublic(boolean condition);
 
+    List<SetEntity> findAllByCreator(AccountEntity creator);
+
     @Query(nativeQuery = true, value = "SELECT * FROM sets WHERE account_id = ?1")
     List<SetEntity> findAllCreatedByAccount(Optional<AccountEntity> creator);
 

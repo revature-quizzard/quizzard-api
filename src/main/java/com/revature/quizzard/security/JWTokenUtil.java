@@ -52,11 +52,13 @@ public class JWTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
+        System.out.println("Inside JWToken: " + token);
         token = token.split(" ")[1];
         return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
     }
 
     public int getIdFromToken(String token) {
+        //token = token.split(" ")[1];
         return Integer.parseInt(getClaimFromToken(token, Claims::getId));
     }
 

@@ -30,7 +30,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-
+//@CrossOrigin("*")//Needed this to solve a cors issue. Obviously less than ideal
 public class TestController {
 
     private final AccountRepository accountRepository;
@@ -67,11 +67,24 @@ public class TestController {
         cardService.addFavoriteCard(dto);
     }
 
-    @GetMapping("/sets")
+    @GetMapping("/publicSets")
     @ResponseStatus(HttpStatus.OK)
     public List<SetEntity> getPublicSets()
     {
         List<SetEntity> list = setService.getPublicSets();
+        System.out.println(list);
+        return list;
+    }
+
+    @GetMapping("/ownedSets")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SetEntity> getOwnedSets(HttpServletRequest request)
+    {
+        //TODO: Adjust this to get sets owned by user
+
+        String token = request.getHeader("Authorization");
+        System.out.println("Inside Controller: " + token);
+        List<SetEntity> list = setService.getOwnedsets(token);
         System.out.println(list);
         return list;
     }
