@@ -1,4 +1,4 @@
-package com.revature.quizzard.models.flashcards;
+package com.revature.quizzard.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,15 +9,17 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "subjects")
-public @Data class SubjectEntity {
+public @Data class User {
 
     @Id
-    @Column(name = "subject_id", unique = true, nullable = false)
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
 
 }
