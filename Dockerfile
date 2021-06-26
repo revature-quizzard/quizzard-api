@@ -1,3 +1,4 @@
+
 #FROM openjdk:8-jdk-alpine
 #
 #ARG JAR_FILE=target/quizzard-api-1.0-SNAPSHOT.jar
