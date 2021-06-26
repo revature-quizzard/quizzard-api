@@ -86,6 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> pointsToAuthenticate = new ArrayList<>();
         pointsToAuthenticate.add("/h2/**");
         pointsToAuthenticate.add("/test/**");
+        pointsToAuthenticate.add("/accounts/**");
         pointsToAuthenticate.add("/login");
         pointsToAuthenticate.add("/register");
         pointsToAuthenticate.add("/swagger-ui.html/**");
@@ -109,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//      authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
+     authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
         authenticationManagerBuilder.userDetailsService(userDetailService);
     }
 

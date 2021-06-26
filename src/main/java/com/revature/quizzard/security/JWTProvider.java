@@ -50,6 +50,7 @@ public class JWTProvider {
         return token;
     }
 
+
     /**
      *  Returns the authentication associated with a token that is stored in an active cache
      * @param token The users JWT token
