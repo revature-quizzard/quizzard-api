@@ -5,6 +5,7 @@ import com.revature.quizzard.repositories.SubjectRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
-
+@ActiveProfiles("test")
 public class SubjectServiceTest {
 
     private SubjectService sut;

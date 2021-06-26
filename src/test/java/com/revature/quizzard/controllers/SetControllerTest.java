@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.setup.*;
 import org.springframework.web.context.*;
 
 
-
+@ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class SetControllerTest {
@@ -50,17 +51,17 @@ public class SetControllerTest {
         mockAccount = null;
     }
 
-    @Test
-    public void test_getCards() throws Exception {
-        //Arrange
-
-        //Act
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/set/public")
-                .header("Content-Tye", "application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+//    @Test
+//    public void test_getCards() throws Exception {
+//        //Arrange
+//
+//        //Act
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/set/public")
+//                .header("Content-Type", "application/json"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
 
     @Test
     public void test_createCards() throws Exception {
