@@ -1,6 +1,7 @@
 package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.CardDTO;
+import com.revature.quizzard.dtos.SetCardDTO;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.exceptions.StudySetNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
@@ -34,10 +35,12 @@ import java.util.Optional;
 
 public class TestController {
 
+
     private final AccountRepository accountRepository;
     private final SubjectRepository subjectRepository;
     private final CardService cardService;
     private final SetService setService;
+
 
     @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
@@ -62,7 +65,9 @@ public class TestController {
 
     @PostMapping("/favorite/card")
     @ResponseStatus(HttpStatus.OK)
+
     public void toggleFavoriteCard(@RequestBody CardFavoriteDTO dto) {
+
         cardService.addFavoriteCard(dto);
     }
 
@@ -77,14 +82,15 @@ public class TestController {
 
     @PostMapping("/cards/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public CardEntity saveCard(@RequestBody CardDTO newCard)
+    public CardEntity saveCard(@RequestBody SetCardDTO dto)
     {
-        System.out.println(newCard);
-        Optional<SetEntity>     set = setService.getSetById(newCard.getStudySet_id());
-        Optional<SubjectEntity> subject = subjectRepository.findById(newCard.getSubject_id());
-        Optional<AccountEntity> account = accountRepository.findById(newCard.getAccount_id());
-        CardEntity card = new CardEntity(newCard.getId(), null, newCard.getQuestion(), newCard.getAnswer(),
-                                         newCard.isReviewable(), newCard.isPublic(), subject.orElse(null), account.orElse(null));
+        System.out.println(dto);
+        Optional<SetEntity>     set = setService.getSetById(dto.getStudySetId());
+        Optional<SubjectEntity> subject = subjectRepository.findById(dto.getSubject().getId());
+        AccountEntity account = accountRepository.findByUsername(dto.getCreator().getUsername());
+        System.out.println(account);
+        CardEntity card = new CardEntity(dto.getId(), null, dto.getQuestion(), dto.getAnswer(),
+                                         dto.isReviewable(), dto.isPublic(), subject.orElse(null), account);
         set.orElseThrow(StudySetNotFoundException::new).getCards().add(card);
         CardEntity returnCard = cardService.savePublicCard(card);
         SetEntity returnSet = setService.updateSet(set.get());

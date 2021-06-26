@@ -1,5 +1,6 @@
 package com.revature.quizzard.configs;
 
+
 import com.revature.quizzard.security.AuthEntryPointJwt;
 import com.revature.quizzard.security.CorsFilter;
 import com.revature.quizzard.security.JWTokenFilter;
@@ -85,13 +86,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> pointsToAuthenticate = new ArrayList<>();
         pointsToAuthenticate.add("/h2/**");
         pointsToAuthenticate.add("/test/**");
+        pointsToAuthenticate.add("/login");
+        pointsToAuthenticate.add("/register");
         pointsToAuthenticate.add("/swagger-ui.html/**");
         pointsToAuthenticate.add("/configuration/**");
         pointsToAuthenticate.add("/swagger-resources/**");
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
+
         pointsToAuthenticate.add("/sets/**");
         pointsToAuthenticate.add("/cards/**");
+
+        pointsToAuthenticate.add("/card/**");
+        pointsToAuthenticate.add("/subject/**");
+        pointsToAuthenticate.add("/created/**");
+
         return pointsToAuthenticate.toArray(new String[0]);
     }
 
@@ -178,3 +187,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .select().apis(RequestHandlerSelectors.basePackage("com.revature.quizzard")).build();
     }
 }
+

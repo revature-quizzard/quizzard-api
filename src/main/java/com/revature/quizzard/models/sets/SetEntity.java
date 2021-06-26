@@ -19,7 +19,7 @@ public @Data class SetEntity {
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(
@@ -35,10 +35,10 @@ public @Data class SetEntity {
     private AccountEntity creator; // creator/owner
 
     @Column(name = "name", nullable = false)
-    String name;
+    private String name;
 
     @Column(name = "public")
-    Boolean isPublic;
+    private Boolean isPublic;
 
     @Override
     public String toString()
@@ -47,6 +47,8 @@ public @Data class SetEntity {
                        "id=" + id +
                        ", name='" + name + '\'' +
                        ", isPublic=" + isPublic +
+                       ", creator=" + creator +
+                       ", cards=" + cards +
                        '}';
     }
 }

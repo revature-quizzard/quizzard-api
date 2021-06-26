@@ -1,6 +1,7 @@
 FROM openjdk:8-jdk-alpine
 
 ARG JAR_FILE=target/quizzard-api-1.0-SNAPSHOT.jar
+<<<<<<< HEAD
 #ARG DB_URL
 #ARG DB_PASSWORD
 #ARG DB_USERNAME
@@ -30,8 +31,13 @@ ARG JAR_FILE=target/quizzard-api-1.0-SNAPSHOT.jar
 #COPY ${JAR_FILE} app.jar
 #WORKDIR /home/docker/data
 #RUN chmod +x /app.jar
+=======
+>>>>>>> pre_dev
 
 EXPOSE 5000
 ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
+<<<<<<< HEAD
 
+=======
+>>>>>>> pre_dev

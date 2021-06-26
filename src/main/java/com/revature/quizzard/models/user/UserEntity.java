@@ -1,7 +1,7 @@
 package com.revature.quizzard.models.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,15 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public @Data class UserEntity {
+public class UserEntity {
 
     @Id
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-//    @OneToOne(targetEntity = AccountEntity.class, fetch = FetchType.LAZY)
-//    private AccountEntity account;
 
     @Column(name = "first_name")
     private String firstName;
@@ -28,5 +25,22 @@ public @Data class UserEntity {
 
     @Column(name = "email")
     private String email;
+
+    public int getId() {return this.id;}
+
+
+    public String getFirstName() {return this.firstName;}
+
+    public String getLastName() {return this.lastName;}
+
+    public String getEmail() {return this.email;}
+
+    public void setId(int id) {this.id = id; }
+
+    public void setFirstName(String firstName) {this.firstName = firstName; }
+
+    public void setLastName(String lastName) {this.lastName = lastName; }
+
+    public void setEmail(String email) {this.email = email; }
 
 }
