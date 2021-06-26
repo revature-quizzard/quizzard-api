@@ -1,6 +1,8 @@
 package com.revature.quizzard.services;
 
 
+
+import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
@@ -16,14 +18,19 @@ import com.revature.quizzard.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 
 
 /**
  * Service for Accounts
  */
+@Transactional
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountService {
@@ -73,6 +80,76 @@ public class AccountService {
     }
 
     /**
+<<<<<<< HEAD
+     * This method is responsible for being able to update the Account username, password and User email to be persisted into the database.
+     * @param id
+     * @param accountInfoDTO
+     * @return updateAccountInfo
+     * @author James Fallon, Juan Mendoza
+     */
+
+    public Map<String, Object> updateAccountInfo(int id, AccountInfoDTO accountInfoDTO){
+        Map<String, Object> updatedAccountMap = new HashMap<>();
+
+        if(userRepository.findByEmail(accountInfoDTO.getEmail()) == null && accountRepository.findByUsername(accountInfoDTO.getUsername()) == null){
+
+            if(accountRepository.findById(id).isPresent()) {
+
+
+                AccountEntity account = accountRepository.findById(id).get();
+
+
+                if (userRepository.findById(account.getUser().getId()).isPresent()) {
+                    UserEntity user = userRepository.findById(account.getUser().getId()).get();
+
+                    if (isValid(accountInfoDTO.getPassword())) {
+                        account.setPassword(accountInfoDTO.getPassword());
+                        updatedAccountMap.put("password", true);
+                    }
+
+                    if (isValid(accountInfoDTO.getEmail())) {
+                        user.setEmail(accountInfoDTO.getEmail());
+                        updatedAccountMap.put("email", user.getEmail());
+                    }
+
+                    if (isValid(accountInfoDTO.getUsername())) {
+                        account.setUsername(accountInfoDTO.getUsername());
+                        updatedAccountMap.put("username", account.getUsername());
+                    }
+
+
+                    userRepository.save(user);
+                    accountRepository.save(account);
+                    return updatedAccountMap;
+                }
+
+
+            }
+            return null;
+        }else{
+            updatedAccountMap.put("conflict", "email and/or username is already taken");
+            return updatedAccountMap;
+        }
+
+    }
+
+    /**
+     * If fields are blank, then they will not be updated
+     * @param str
+     * @return
+     * @James Fallon Juan Mendoza
+     */
+    private boolean isValid(String str){
+        if(str.trim().equals("")){
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    /**
      * This method is responsible for login into an account that exists in the database
      * @param credentialsDTO The DTO required for authentication.
      * @return accountLoginDTO The DTO required to login to an account.
@@ -94,6 +171,7 @@ public class AccountService {
 
         return authenticatedDTO;
     }
+
 }
 
 

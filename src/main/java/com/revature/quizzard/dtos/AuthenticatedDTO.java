@@ -1,3 +1,4 @@
+
 package com.revature.quizzard.dtos;
 
 import com.revature.quizzard.models.user.AccountEntity;
@@ -23,4 +24,6 @@ public @Data class AuthenticatedDTO {
         this.roles = accountEntity.getRoles();
     }
 
+
 }
+

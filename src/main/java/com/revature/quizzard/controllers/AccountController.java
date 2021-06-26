@@ -1,5 +1,6 @@
 package com.revature.quizzard.controllers;
 
+import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
@@ -12,7 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * The Controller for Accounts.
@@ -73,5 +78,20 @@ public class AccountController {
         response.addHeader("Authorization", "Bearer " + jwTokenUtil.generateToken(authenticatedDTO));
 
         return authenticatedDTO;
+    }
+
+
+    /**
+     * This Put method will consume information to be updated on account and user by accountID which will be retrieved by the parsing of JWT.
+     * @param accountInfoDTO
+     * @param req
+     * @returnupdatedAccountMap
+     * @author James Fallon, Juan Mendoza
+     */
+    @PutMapping(value = "/accounts/update", consumes = APPLICATION_JSON_VALUE)
+    public Map updateAccount(@RequestBody AccountInfoDTO accountInfoDTO, HttpServletRequest req){
+        int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
+        Map updatedAccountMap = accountService.updateAccountInfo(accountID, accountInfoDTO);
+        return updatedAccountMap;
     }
 }

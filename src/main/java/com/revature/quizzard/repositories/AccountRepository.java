@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
@@ -15,6 +16,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
 
     boolean existsByUsername(String username);
 
-    boolean existsUserByUsernameAndPassword(String username, String password);
+    boolean existsUserByUsernameAndPassword(String name, String password);
+    
+
 
 }

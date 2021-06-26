@@ -1,27 +1,29 @@
 package com.revature.quizzard.security;
-import com.revature.quizzard.models.user.RoleEntity;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JWTokenFilter implements Filter {
+
     private JWTokenUtil jwtTokenUtil;
     /**
      *  Constructor for the JWTokenFilter
@@ -33,6 +35,7 @@ public class JWTokenFilter implements Filter {
 //    }
     public JWTokenFilter(){
     }
+
     @Override
     public void init(FilterConfig cfg) {
         ApplicationContext container = WebApplicationContextUtils.getRequiredWebApplicationContext(cfg.getServletContext());
@@ -56,19 +59,19 @@ public class JWTokenFilter implements Filter {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(jwtTokenUtil.getSecretKey())
                     .parseClaimsJws(token);
-            //String rolePrefix = "ROLE_";
             Claims body = claimsJws.getBody();
             String username = body.get("userName").toString();
-            System.out.println(body.get("role"));
+            /*
+            Was not able to transfer data back into set. Had to change data structure to read the roles from token
+            @James Fallon
+             */
             List<LinkedHashMap<Object, Object>> roles = (List<LinkedHashMap<Object, Object>>) body.get("role");
-            // List<RoleEntity> roles = (List<RoleEntity>) body.get("role");
-            // If we implement roles this would be the spot to process this accordingly, or into permissions, giving GrantedAuthorities for all unique permissions
-            //role = rolePrefix + role;
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             for(Map role : roles){
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority((String) role.get("name"));
                 authorities.add(authority);
             }
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
