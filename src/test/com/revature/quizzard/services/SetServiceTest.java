@@ -42,7 +42,7 @@ public class SetServiceTest {
 
 
     @Test
-    public void when_findIsPublicPublicResultIsNotEmpty(){
+    public void when_findIsPublicResultIsNotEmpty(){
 
         //Arrange
         UserEntity mockUser = new UserEntity(1,"fN","lN","fn.ln@email.com");
