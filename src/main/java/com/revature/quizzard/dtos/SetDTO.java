@@ -26,7 +26,7 @@ public class SetDTO {
     private List<CardDTO> localFlashcards;
 
     public SetDTO(SetEntity setEntity) {
-        this.setId = setEntity.getSetId();
+        this.setId = setEntity.getId();
         this.setName = setEntity.getName();
         this.isPublic = setEntity.getIsPublic();
         this.creator = setEntity.getCreator();

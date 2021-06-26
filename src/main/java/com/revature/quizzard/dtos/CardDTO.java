@@ -1,11 +1,10 @@
 package com.revature.quizzard.dtos;
 
-import com.revature.quizzard.models.composites.*;
-import com.revature.quizzard.models.flashcards.*;
-import lombok.*;
-
-import javax.persistence.*;
-import java.util.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import com.revature.quizzard.models.flashcards.CardEntity;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class CardDTO {
@@ -26,4 +25,5 @@ public class CardDTO {
         this.isPublic = cardEntity.isPublic();
         this.subjectId = cardEntity.getSubject().getId();
     }
+
 }

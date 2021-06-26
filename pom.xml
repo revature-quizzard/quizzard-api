@@ -19,6 +19,7 @@
     <groupId>com.revature</groupId>
     <artifactId>quizzard-api</artifactId>
     <version>latest</version>
+
     <name>Qwizzard</name>
 
     <developers>

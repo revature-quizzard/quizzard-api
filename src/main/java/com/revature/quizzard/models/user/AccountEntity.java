@@ -34,7 +34,7 @@ public class AccountEntity {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
 
@@ -45,7 +45,7 @@ public class AccountEntity {
     @JoinTable(
             name = "accounts_roles",
             joinColumns = { @JoinColumn(name = "account_id")},
-            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+            inverseJoinColumns = { @JoinColumn(name = "role_id")}
     )
     private Set<RoleEntity> roles = new HashSet<>();
 

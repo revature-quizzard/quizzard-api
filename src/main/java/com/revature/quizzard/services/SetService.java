@@ -65,7 +65,7 @@ public class SetService {
     public SetDTO createStudySets(SetDTO newSet) {
         List<CardDTO> list = newSet.getLocalFlashcards();
         Set<CardEntity> entitySet = new HashSet<>();
-        for (CardDTO cardDTO: list) {
+        for (CardDTO cardDTO : list) {
             entitySet.add(cardRepo.findCardEntityById(cardDTO.getId()));
         }
         SetEntity setEntity = new SetEntity(newSet);
@@ -75,5 +75,19 @@ public class SetService {
         SetEntity savedEntity = setRepo.save(setEntity);
         System.out.println("Saved:" + setEntity.getName());
         return new SetDTO(savedEntity);
+    }
+
+    public List<SetEntity> getPublicSets()
+    {
+        return setRepo.findAllByIsPublic(true);
+    }
+    public Optional<SetEntity> getSetById(int id)
+    {
+        return setRepo.findById(id);
+    }
+    public SetEntity updateSet(SetEntity set)
+    {
+        return setRepo.save(set);
+
     }
 }
