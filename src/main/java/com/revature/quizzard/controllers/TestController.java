@@ -81,9 +81,8 @@ public class TestController {
     public List<SetEntity> getOwnedSets(HttpServletRequest request)
     {
         //TODO: Adjust this to get sets owned by user
-
         String token = request.getHeader("Authorization");
-        System.out.println("Inside Controller: " + token);
+        System.out.println("~ ~ ~ ~ ~ ~ ~ Inside Controller: " + token);
         List<SetEntity> list = setService.getOwnedsets(token);
         System.out.println(list);
         return list;

@@ -58,7 +58,6 @@ public class JWTokenUtil {
     }
 
     public int getIdFromToken(String token) {
-        //token = token.split(" ")[1];
         return Integer.parseInt(getClaimFromToken(token, Claims::getId));
     }
 

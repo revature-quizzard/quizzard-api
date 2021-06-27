@@ -55,7 +55,7 @@ public class JWTokenFilter implements Filter {
         String authToken = ((HttpServletRequest)request).getHeader("Authorization");
         if (authToken != null) {
             String token = authToken.split(" ")[1];
-            System.out.println(jwtTokenUtil == null);
+            //System.out.println(jwtTokenUtil == null);
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(jwtTokenUtil.getSecretKey())
                     .parseClaimsJws(token);

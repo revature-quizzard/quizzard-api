@@ -59,9 +59,13 @@ public class SetController {
 
 
     @PostMapping(value = "newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public SetDTO createNewSet(@RequestBody SetDTO newSet){
+    public SetDTO createNewSet(@RequestBody SetDTO newSet, HttpServletRequest request){
         logger.info(newSet);
-        SetDTO newStudySet = setService.createStudySets(newSet);
+
+        String authToken = request.getHeader("Authorization");
+        int creatorId = jwtTokenUtil.getIdFromToken(authToken);
+
+        SetDTO newStudySet = setService.createStudySets(newSet, creatorId);
 
         System.out.println("New set creation method invoked.");
         return newStudySet;

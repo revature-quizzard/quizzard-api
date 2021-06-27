@@ -64,18 +64,25 @@ public class SetService {
      */
 
     @Transactional
-    public SetDTO createStudySets(SetDTO newSet) {
+    public SetDTO createStudySets(SetDTO newSet, int creatorId) {
         List<CardDTO> list = newSet.getLocalFlashcards();
         Set<CardEntity> entitySet = new HashSet<>();
         for (CardDTO cardDTO : list) {
             entitySet.add(cardRepo.findCardEntityById(cardDTO.getId()));
         }
-        SetEntity setEntity = new SetEntity(newSet);
 
+        //Get the account of the creator of the set
+        Optional<AccountEntity> optionalCreatorAccount = accountRepo.findById(creatorId);
+        if(optionalCreatorAccount.isPresent()) {
+            newSet.setCreator(optionalCreatorAccount.get());
+        }
+
+
+        SetEntity setEntity = new SetEntity(newSet);
         setEntity.setCards(entitySet);
 
         SetEntity savedEntity = setRepo.save(setEntity);
-        System.out.println("Saved:" + setEntity.getName());
+        System.out.println(" ~ ~ ~ ~ ~ Saved:" + setEntity.getName());
         return new SetDTO(savedEntity);
     }
 
@@ -84,7 +91,7 @@ public class SetService {
         return setRepo.findAllByIsPublic(true);
     }
     public List<SetEntity> getOwnedsets(String token) {
-        System.out.println("Inside Service layer: " + token);
+        System.out.println("~ ~ ~ ~ ~ ~ ~ Inside Service layer: " + token);
         int id = tokenUtil.getIdFromToken(token);
         Optional<AccountEntity> optionalAccountEntity = accountRepo.findById(id);
         if(optionalAccountEntity.isPresent()) {
