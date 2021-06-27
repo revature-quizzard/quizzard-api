@@ -7,12 +7,14 @@ import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
 import org.junit.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+@ActiveProfiles("test")
 public class SetServiceTest {
 
     private SetService sut;
@@ -68,15 +70,18 @@ public class SetServiceTest {
 
         List<SetDTO> result = sut.getCreatedSets("test");
 
-        assertEquals(result.size(), 0);
+        assertEquals(0, result.size());
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void test_getCreatedSetsWithInvalidUsername() {
 
+        when(mockAccountRepo.findByUsername(any())).thenReturn(null);
+
         List<SetDTO> result = sut.getCreatedSets("test");
 
     }
+
 
     @Test
     public void test_createStudySet(){
@@ -116,7 +121,7 @@ public class SetServiceTest {
 
     @Test
     public void test_getSetById(){
-        SetDTO expected = new SetDTO(1, "setname", true, new ArrayList<>());
+        SetDTO expected = new SetDTO(1, "setname", true, new AccountEntity(), new ArrayList<>());
         SetEntity setEntity = new SetEntity(expected);
 
         when(mockSetRepo.findById(1)).thenReturn(Optional.of(setEntity));
@@ -127,4 +132,5 @@ public class SetServiceTest {
 
         assertEquals(actual.getSetName(), expected.getSetName());
     }
+
 }

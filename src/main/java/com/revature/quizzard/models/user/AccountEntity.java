@@ -64,6 +64,10 @@ public class AccountEntity {
 
     public int getId() {return this.id;}
 
+    public UserEntity getUser(){
+        return this.user;
+    }
+
     public Set<AccountCardEntity> getAccountCardEntities() {return this.accountCardEntities;}
 
     public Set<RoleEntity> getRoles() {return this.roles;}

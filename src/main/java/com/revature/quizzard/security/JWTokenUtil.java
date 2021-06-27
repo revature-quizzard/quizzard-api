@@ -1,8 +1,6 @@
 package com.revature.quizzard.security;
 
 import com.revature.quizzard.dtos.AuthenticatedDTO;
-import com.revature.quizzard.dtos.RoleDTO;
-import com.revature.quizzard.dtos.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,6 +37,11 @@ public class JWTokenUtil {
         this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
     }
 
+    /*
+    Make sure token String splits off "Bearer" to properly parse token.
+    @JamesFallon
+     */
+
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
@@ -49,11 +52,12 @@ public class JWTokenUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
+        token = token.split(" ")[1];
         return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
     }
 
     public int getIdFromToken(String token) {
-        return Integer.parseInt(getClaimFromToken(token, Claims::getSubject));
+        return Integer.parseInt(getClaimFromToken(token, Claims::getId));
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -61,6 +65,7 @@ public class JWTokenUtil {
     }
 
     private Boolean isTokenExpired(String token) {
+        token = token.split(" ")[1];
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -73,6 +78,7 @@ public class JWTokenUtil {
      */
     public String generateToken(AuthenticatedDTO authenticatedDTO) {
         return Jwts.builder()
+
                 .setIssuer("Revature Quizzard")
                 .setId("" + authenticatedDTO.getId())
                 .setSubject(authenticatedDTO.getUsername())

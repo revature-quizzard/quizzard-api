@@ -1,3 +1,4 @@
+
 #FROM openjdk:8-jdk-alpine
 #
 #ARG JAR_FILE=target/quizzard-api-1.0-SNAPSHOT.jar
@@ -9,6 +10,7 @@
 FROM openjdk:8-jdk-alpine
 
 ARG JAR_FILE=target/*.jar
+ARG PROFILE=local
 ARG DB_URL
 ARG DB_PASSWORD
 ARG DB_USERNAME
@@ -24,5 +26,6 @@ ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 COPY ${JAR_FILE} app.jar
 WORKDIR /home/docker/data
 #RUN chmod +x /app.jar
+RUN echo "java -Dspring.profiles.active=$PROFILE -jar /app.jar" >> ./entry.sh
 EXPOSE 5000
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["sh", "entry.sh"]
