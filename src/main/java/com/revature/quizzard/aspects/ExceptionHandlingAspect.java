@@ -3,6 +3,7 @@ package com.revature.quizzard.aspects;
 import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.exceptions.InvalidRequestException;
+import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,4 +23,8 @@ public class ExceptionHandlingAspect {
     @ExceptionHandler(DuplicateRegistrationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public void handleDuplicateRegistrationException() {}
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleResourceNotFoundException() {}
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.smartcardio.*;
+
 import java.util.*;
 
 @Service
@@ -76,5 +77,33 @@ public class SetService {
         SetEntity savedEntity = setRepo.save(setEntity);
         System.out.println("Saved:" + setEntity.getName());
         return new SetDTO(savedEntity);
+    }
+
+    /**
+     * Gets all the cards from a specified study set from the database
+     * @param setId The study set id
+     * @return List<CardDTO>
+     * @author Giancarlo Tomasello
+     * @author Kevin Chang
+     */
+    @Transactional
+    public List<CardDTO> getCardsBySetId(int setId){
+
+        SetEntity setEntity = setRepo.findById(setId).orElseThrow(ResourceNotFoundException::new);
+        List<CardDTO> setCards = new ArrayList<>();
+
+        for (CardEntity card:setEntity.getCards()) {
+            setCards.add(new CardDTO(card));
+        }
+
+        return setCards;
+    }
+
+    @Transactional
+    public SetDTO getSetById(int setId){
+        SetEntity setEntity = setRepo.findById(setId).orElseThrow(ResourceNotFoundException::new);
+        SetDTO studySet = new SetDTO(setEntity);
+
+        return studySet;
     }
 }

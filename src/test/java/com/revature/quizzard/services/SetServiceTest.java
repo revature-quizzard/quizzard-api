@@ -8,10 +8,7 @@ import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
 import org.junit.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -99,5 +96,35 @@ public class SetServiceTest {
 
         assertEquals(setDTO, result);
 
+    }
+
+    @Test
+    public void test_getCardsBySetId(){
+        SetEntity setEntity = new SetEntity();
+        Set<CardEntity> expected = new HashSet<>();
+        expected.add(new CardEntity(new CardDTO(1, "question", "answer", true, true, 1)));
+        setEntity.setCards(expected);
+
+        when(mockSetRepo.findById(1)).thenReturn(Optional.of(setEntity));
+
+        List<CardDTO> actual = sut.getCardsBySetId(1);
+
+        verify(mockSetRepo, times(1)).findById(1);
+
+        assertEquals(actual.size(), 1);
+    }
+
+    @Test
+    public void test_getSetById(){
+        SetDTO expected = new SetDTO(1, "setname", true, new ArrayList<>());
+        SetEntity setEntity = new SetEntity(expected);
+
+        when(mockSetRepo.findById(1)).thenReturn(Optional.of(setEntity));
+
+        SetDTO actual = sut.getSetById(1);
+
+        verify(mockSetRepo, times(1)).findById(1);
+
+        assertEquals(actual.getSetName(), expected.getSetName());
     }
 }
