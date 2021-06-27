@@ -37,3 +37,11 @@ target/
 #sql files
 *.sql
 
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/
+
+target/
+
