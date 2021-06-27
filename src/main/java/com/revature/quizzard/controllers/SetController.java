@@ -76,13 +76,13 @@ public class SetController {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    @GetMapping(value = "/sets/{setId}/cards", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{setId}/cards", produces = APPLICATION_JSON_VALUE)
     public List<CardDTO> findAllCardsBySetID(@PathVariable int setId, HttpServletRequest request){
         List<CardDTO> studyCards = setService.getCardsBySetId(setId);
         return studyCards;
     }
 
-    @GetMapping(value = "/sets/{setId}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{setId}", produces = APPLICATION_JSON_VALUE)
     public SetDTO findSetByID(@PathVariable int setId, HttpServletRequest request){
         SetDTO studySet = setService.getSetById(setId);
         return studySet;

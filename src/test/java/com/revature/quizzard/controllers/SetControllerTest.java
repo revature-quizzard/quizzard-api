@@ -92,7 +92,7 @@ public class SetControllerTest {
 
     @Test
     public void test_findStudySetCards() throws Exception{
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/sets/1/cards")
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/1/cards")
                 .header("Content-Type", "application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
@@ -102,7 +102,7 @@ public class SetControllerTest {
 
     @Test
     public void test_findStudySetById() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/sets/1")
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/sets/1")
                                                    .header("Content-Type", "application/json"))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andDo(MockMvcResultHandlers.print())
