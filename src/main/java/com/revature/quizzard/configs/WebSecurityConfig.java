@@ -50,7 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwTokenFilter = jwTokenFilter;
     }
 
-
     /**
      *  Processes and configures behavior of security requests, sets the authentication entry point, authorizes pertinent uri's, and then authenticates all other uri's
      *  Also adds in the filters necessary for the control flow to allow for proper processing of all communications from an origin and the api
@@ -93,8 +92,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/subject/**");
         pointsToAuthenticate.add("/created/**");
         pointsToAuthenticate.add("/actuator/health");
+        pointsToAuthenticate.add("/publicSets/**");
 //        pointsToAuthenticate.add("/ownedSets/**");
-//        pointsToAuthenticate.add("/publicSets/**");
 //        pointsToAuthenticate.add("/**");
         return pointsToAuthenticate.toArray(new String[0]);
     }
