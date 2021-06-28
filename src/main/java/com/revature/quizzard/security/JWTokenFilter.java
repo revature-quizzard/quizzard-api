@@ -51,6 +51,7 @@ public class JWTokenFilter implements Filter {
      * @author Nicholas Recino
      */
     @Override
+    @SuppressWarnings({"unchecked"})
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authToken = ((HttpServletRequest)request).getHeader("Authorization");
         if (authToken != null) {
@@ -67,7 +68,7 @@ public class JWTokenFilter implements Filter {
              */
             List<LinkedHashMap<Object, Object>> roles = (List<LinkedHashMap<Object, Object>>) body.get("role");
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            for(Map role : roles){
+            for(Map<Object, Object> role : roles){
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority((String) role.get("name"));
                 authorities.add(authority);
             }
