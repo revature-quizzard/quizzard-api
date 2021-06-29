@@ -2,6 +2,7 @@ package com.revature.quizzard.services;
 
 import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
+import com.revature.quizzard.exceptions.StudySetNotFoundException;
 import com.revature.quizzard.models.flashcards.*;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
@@ -9,9 +10,15 @@ import com.revature.quizzard.repositories.*;
 import com.revature.quizzard.security.JWTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -23,6 +30,17 @@ public class SetService {
     private AccountRepository accountRepo;
     private CardRepository cardRepo;
     private JWTokenUtil tokenUtil;
+    private SubjectRepository subjectRepository;
+    private AccountRepository accountRepository;
+    private CardService cardService;
+
+    public SetService(SetRepository setRepo, AccountRepository accountRepo, CardRepository cardRepo, JWTokenUtil tokenUtil)
+    {
+        this.setRepo = setRepo;
+        this.accountRepo = accountRepo;
+        this.cardRepo = cardRepo;
+        this.tokenUtil = tokenUtil;
+    }
 
     /**
      * Returns a list of sets that were created by the account. Takes in a username and finds the account associated
@@ -90,8 +108,8 @@ public class SetService {
     {
         return setRepo.findAllByIsPublic(true);
     }
-    public List<SetEntity> getOwnedsets(String token) {
-        System.out.println("~ ~ ~ ~ ~ ~ ~ Inside Service layer: " + token);
+
+    public List<SetEntity> getOwnedSets(String token) {
         int id = tokenUtil.getIdFromToken(token);
         Optional<AccountEntity> optionalAccountEntity = accountRepo.findById(id);
         if(optionalAccountEntity.isPresent()) {
@@ -104,9 +122,19 @@ public class SetService {
     {
         return setRepo.findById(id);
     }
-    public SetEntity updateSet(SetEntity set)
-    {
-        return setRepo.save(set);
 
+    public CardEntity save(SetCardDTO setCardDTO)
+    {
+        Optional<SetEntity> set = getSetById(setCardDTO.getStudySetId());
+        Optional<SubjectEntity> subject = subjectRepository.findById(setCardDTO.getSubject().getId());
+        AccountEntity account = accountRepository.findByUsername(setCardDTO.getCreator().getUsername());
+        System.out.println(account);
+        CardEntity card = new CardEntity(setCardDTO.getId(), null, setCardDTO.getQuestion(), setCardDTO.getAnswer(),
+                                         setCardDTO.isReviewable(), setCardDTO.isPublic(), subject.orElse(null), account);
+        set.orElseThrow(StudySetNotFoundException::new).getCards().add(card);
+        CardEntity returnCard = cardService.savePublicCard(card);
+        setRepo.save(set.get());
+        return returnCard;
     }
+
 }
