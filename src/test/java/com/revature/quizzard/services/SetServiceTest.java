@@ -12,10 +12,7 @@ import com.revature.quizzard.security.JWTokenUtil;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -91,7 +88,7 @@ public class SetServiceTest {
     }
 
     @Test
-    public void when_getPublicSetsResultIsNotEmpty(){
+    public void test_getPublicSetsResultIsNotEmpty(){
 
         //Arrange
         UserEntity mockUser = new UserEntity(1,"fN","lN","fn.ln@email.com");
@@ -115,8 +112,7 @@ public class SetServiceTest {
         mockSetOfCards.add(mockCard);
         mockSet.setCards(mockSetOfCards);
 
-        List<SetEntity> mockPublicSets = new ArrayList<SetEntity>() {
-        };
+        List<SetEntity> mockPublicSets = new ArrayList<SetEntity>();
         mockPublicSets.add(mockSet);
         when(mockSetRepo.findAllByIsPublic(anyBoolean())).thenReturn(mockPublicSets);
 
@@ -129,6 +125,43 @@ public class SetServiceTest {
         //Assert
         Assert.assertEquals(expectedResult.stream().findFirst().get().getId(), actualResult.stream().findFirst().get().getId());
 
+
+    }
+
+    @Test
+    public void test_getSetById(){
+        //Arrange
+        UserEntity mockUser = new UserEntity(1,"fN","lN","fn.ln@email.com");
+
+        RoleEntity mockRole = new RoleEntity(1,"ADMIN");
+
+        AccountEntity mockAccount = new AccountEntity();
+        mockAccount.setId(1);
+        mockAccount.setUser(mockUser);
+
+        CardEntity mockCard = new CardEntity();
+        mockCard.setId(1);
+        mockCard.setCreator(mockAccount);
+
+        SetEntity mockSet = new SetEntity();
+        mockSet.setId(1);
+        mockSet.setName("Public Set 1");
+        mockSet.setIsPublic(true);
+        mockSet.setCreator(mockAccount);
+        Set<CardEntity> mockSetOfCards = new HashSet<CardEntity>();
+        mockSetOfCards.add(mockCard);
+        mockSet.setCards(mockSetOfCards);
+
+        when(mockSetRepo.findById(anyInt())).thenReturn(java.util.Optional.of(mockSet));
+
+        SetEntity expectedResult = new SetEntity();
+        expectedResult.setId(mockSet.getId());
+        //Act
+
+        Optional<SetEntity> actualResult = sut.getSetById(1);
+
+        //Assert
+        Assert.assertEquals(expectedResult.getId(), actualResult.get().getId());
 
     }
 
