@@ -28,7 +28,7 @@ public @Data class CardEntity {
     @Column(name = "question", nullable = false)
     private String question;
 
-    @Column(name = "answer", nullable = false)
+    @Column(name = "answer", columnDefinition = "TEXT", nullable = false)
     private String answer;
 
     @Column(name = "reviewable")
