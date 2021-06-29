@@ -3,6 +3,7 @@ package com.revature.quizzard.services;
 import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
@@ -27,27 +28,34 @@ public class SetServiceTest {
     private SetEntity mockSetEntity;
     private List<SetEntity> mockSetList;
     private AccountEntity mockAccount;
+    private CardEntity mockCard;
     private Set<CardEntity> mockCards;
     private JWTokenUtil mockTokenUtil;
     private CardRepository mockCardRepo;
+    private SubjectRepository mockSubjectRepo;
+    private SubjectEntity mockSubjectEntity;
 
     @Before
     public void setupTest() {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
         mockTokenUtil = mock(JWTokenUtil.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo, mockTokenUtil);
+        mockSubjectRepo = mock(SubjectRepository.class);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockSubjectRepo, mockCardRepo, mockTokenUtil);
     }
 
     @After
     public void teardownTest() {
         mockSetRepo = null;
         mockAccountRepo = null;
+        mockSubjectRepo = null;
         sut = null;
         mockSetEntity = null;
         mockAccount = null;
         mockSetList = null;
+        mockCard = null;
         mockCards = null;
+        mockSetEntity = null;
     }
 
     @Test
@@ -86,6 +94,24 @@ public class SetServiceTest {
 
         List<SetDTO> result = sut.getCreatedSets("test");
 
+    }
+
+    @Test
+    public void test_save(){
+        CredentialsDTO credentialsDTO = new CredentialsDTO("mocker", "mockpass");
+        mockSubjectEntity = new SubjectEntity(100, "mock");
+        mockSetEntity = new SetEntity();
+        mockSetEntity.setId(100);
+
+        SetCardDTO setCardDTO = new SetCardDTO(100, "What is mock", "mock", true, true, mockSubjectEntity, 100, credentialsDTO);
+
+        when(mockSubjectRepo.findById(anyInt())).thenReturn(java.util.Optional.of(mockSubjectEntity));
+        when(mockAccountRepo.findByUsername(anyString())).thenReturn(mockAccount);
+
+        mockCard = new CardEntity(setCardDTO.getId(), null, setCardDTO.getQuestion(), setCardDTO.getAnswer(),
+                setCardDTO.isReviewable(), setCardDTO.isPublic(), mockSubjectEntity, mockAccount);
+
+        sut.save(setCardDTO);
     }
 
 //    @Test

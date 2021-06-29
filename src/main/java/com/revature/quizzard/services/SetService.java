@@ -34,12 +34,13 @@ public class SetService {
     private AccountRepository accountRepository;
     private CardService cardService;
 
-    public SetService(SetRepository setRepo, AccountRepository accountRepo, CardRepository cardRepo, JWTokenUtil tokenUtil)
+    public SetService(SetRepository setRepo, AccountRepository accountRepo, SubjectRepository subjectRepository, CardRepository cardRepo, JWTokenUtil tokenUtil)
     {
         this.setRepo = setRepo;
         this.accountRepo = accountRepo;
         this.cardRepo = cardRepo;
         this.tokenUtil = tokenUtil;
+        this.subjectRepository = subjectRepository;
     }
 
     /**
