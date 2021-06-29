@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.*;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.SetDTO;
+import com.revature.quizzard.models.sets.*;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.SetService;
@@ -124,6 +125,19 @@ public class SetControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
+    }
+
+    @Test
+    public void test_getOwnedSets() throws Exception {
+        List<SetEntity> results = new ArrayList<>();
+        when(mockSetService.getOwnedSets(any())).thenReturn(results);
+
+        this.mockMvc.perform(get("/ownedSets")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
     }
 
 }
