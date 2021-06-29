@@ -81,6 +81,7 @@ public class SetService {
      * @author Chris Levano
      */
 
+    //TODO Kevin
     @Transactional
     public SetDTO createStudySets(SetDTO newSet, int creatorId) {
         List<CardDTO> list = newSet.getLocalFlashcards();
@@ -104,12 +105,13 @@ public class SetService {
         return new SetDTO(savedEntity);
     }
 
+    //TODO Ozzy
     public List<SetEntity> getPublicSets()
     {
         return setRepo.findAllByIsPublic(true);
     }
 
-
+    //TODO Giancarlo
     public List<SetEntity> getOwnedSets(String token) {
 
         int id = tokenUtil.getIdFromToken(token);
@@ -120,12 +122,15 @@ public class SetService {
             throw new ResourceNotFoundException();
         }
     }
+
+    //TODO Ozzy
     public Optional<SetEntity> getSetById(int id)
     {
         return setRepo.findById(id);
     }
 
 
+    //TODO James
     public CardEntity save(SetCardDTO setCardDTO)
     {
         Optional<SetEntity> set = getSetById(setCardDTO.getStudySetId());
