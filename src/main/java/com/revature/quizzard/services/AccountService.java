@@ -6,9 +6,12 @@ import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
+import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
 import com.revature.quizzard.exceptions.InvalidRoleException;
+import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.models.user.UserEntity;
@@ -80,7 +83,6 @@ public class AccountService {
     }
 
     /**
-<<<<<<< HEAD
      * This method is responsible for being able to update the Account username, password and User email to be persisted into the database.
      * @param id
      * @param accountInfoDTO
@@ -134,10 +136,32 @@ public class AccountService {
     }
 
     /**
+     * Takes in an AddPointsDTO (just one field with points for the time being) and adds the points to the account total.
+     *
+     * @param pointsToAdd AddPointsDTO
+     * @param userId int
+     * @return AccountResponseDTO containing updated account information
+     * @throws ResourceNotFoundException if no account is found by the username.
+     * @author Richard Taylor && Uros Vorkapic
+     */
+    public AccountResponseDTO updatePoints(AddPointsDTO pointsToAdd, int userId) throws ResourceNotFoundException {
+        Optional<AccountEntity> _account = accountRepository.findById(userId);
+
+        if(_account.isPresent()) {
+            AccountEntity account = _account.get();
+            account.setPoints(account.getPoints() + pointsToAdd.getPoints());
+            return new AccountResponseDTO(accountRepository.save(account));
+        } else {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+
+    /**
      * If fields are blank, then they will not be updated
      * @param str
      * @return
-     * @James Fallon Juan Mendoza
+     * @author James Fallon && Juan Mendoza
      */
     private boolean isValid(String str){
         if(str.trim().equals("")){

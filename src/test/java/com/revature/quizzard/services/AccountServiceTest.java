@@ -3,8 +3,11 @@ package com.revature.quizzard.services;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
+import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.exceptions.DuplicateRegistrationException;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
+import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.repositories.AccountRepository;
@@ -16,13 +19,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
+import static org.junit.Assert.*;
 
 @ActiveProfiles("test")
 public class AccountServiceTest {
@@ -151,5 +158,39 @@ public class AccountServiceTest {
         Assert.assertNull(authenticatedDTO.getUsername());
         verify(mockAccountRepository, times(1)).save(any());
         verify(mockUserRepository, times(0)).save(any());
+    }
+
+    @Test
+    public void test_addPointsWithValidDetails() {
+        AddPointsDTO pointsDTO = new AddPointsDTO();
+        pointsDTO.setPoints(5);
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setUsername("username");
+        accountEntity.setPassword("password");
+        accountEntity.setId(1);
+        accountEntity.setPoints(0);
+
+        when(mockAccountRepository.save(any())).thenReturn(accountEntity);
+        //do not use any here, it will break -Richard
+        when(mockAccountRepository.findById(1)).thenReturn(Optional.of(accountEntity));
+
+        AccountResponseDTO responseDTO = sut.updatePoints(pointsDTO, accountEntity.getId());
+
+        assertEquals(5, responseDTO.getPoints());
+    }
+
+    @Test
+    public void test_addPointsWithInvalidDetails() {
+        AccountEntity accountEntity = new AccountEntity();
+
+        when(mockAccountRepository.findById(0)).thenReturn(Optional.empty());
+
+        try {
+            sut.updatePoints(new AddPointsDTO(), accountEntity.getId());
+        } catch (Exception e) {
+            assertTrue(e instanceof ResourceNotFoundException);
+        } finally {
+            verify(mockAccountRepository, times(0)).save(any());
+        }
     }
 }

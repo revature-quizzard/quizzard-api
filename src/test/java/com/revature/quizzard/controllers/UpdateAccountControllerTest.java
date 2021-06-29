@@ -4,6 +4,7 @@ package com.revature.quizzard.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.models.user.UserEntity;
@@ -28,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
@@ -40,6 +42,7 @@ public class UpdateAccountControllerTest {
     private RoleRepository roleRepository;
     private MockMvc mockMvc;
     private JWTokenUtil jwTokenUtil;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public UpdateAccountControllerTest(WebApplicationContext webContext, AccountRepository accountRepository, UserRepository userRepository, RoleRepository roleRepository, JWTokenUtil jwTokenUtil) {
@@ -92,4 +95,47 @@ public class UpdateAccountControllerTest {
         }
     }
 
+    @Test
+    public void test_addPointsWithValidToken() throws Exception {
+        UserEntity user = new UserEntity(1, "Alice", "Anderson", "aanderson@mail.com");
+        RoleEntity role = new RoleEntity(1, "ROLE_USER");
+        Set<RoleEntity> roles = new HashSet<>();
+        roles.add(role);
+        AccountEntity account = new AccountEntity(1, user, null, roles, "aanderson", "password", 0);
+        AddPointsDTO dto = new AddPointsDTO();
+        dto.setPoints(5);
+
+        String token = jwTokenUtil.generateToken(new AuthenticatedDTO(account));
+        String requestBody = objectMapper.writeValueAsString(dto);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/accounts/points")
+                .header("Authorization", "Bearer " + token).content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
+
+    }
+
+    @Test
+    public void test_addPointsWithInvalidToken() throws Exception {
+        UserEntity user = new UserEntity(69, "worong", "person", "worong@mail.com");
+        RoleEntity role = new RoleEntity(69, "ROLE_USER");
+        Set<RoleEntity> roles = new HashSet<>();
+        roles.add(role);
+        AccountEntity account = new AccountEntity(69, user, null, roles, "worongperson", "password", 0);
+        AddPointsDTO dto = new AddPointsDTO();
+        dto.setPoints(5);
+
+        String token = jwTokenUtil.generateToken(new AuthenticatedDTO(account));
+        String requestBody = objectMapper.writeValueAsString(dto);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/accounts/points")
+                .header("Authorization", "Bearer " + token).content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+
+    }
 }
