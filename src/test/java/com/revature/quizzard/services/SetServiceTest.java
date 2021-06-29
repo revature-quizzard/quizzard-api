@@ -10,10 +10,7 @@ import com.revature.quizzard.security.JWTokenUtil;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -88,6 +85,30 @@ public class SetServiceTest {
 
     }
 
+    @Test
+    public void test_getOwnedSets(){
+
+        mockAccount = new AccountEntity();
+        mockSetList = new ArrayList<>();
+        mockSetList.add(new SetEntity());
+
+        when(mockTokenUtil.getIdFromToken(anyString())).thenReturn(1);
+        when(mockAccountRepo.findById(1)).thenReturn(java.util.Optional.ofNullable(mockAccount));
+        when(mockSetRepo.findAllByCreator(mockAccount)).thenReturn(mockSetList);
+
+        List<SetEntity> result = sut.getOwnedSets(anyString());
+
+        assertEquals(mockSetList.size(), result.size());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void test_getOwnedSets_NoAccount(){
+
+        when(mockTokenUtil.getIdFromToken(anyString())).thenReturn(1);
+        when(mockAccountRepo.findById(anyInt())).thenReturn(Optional.empty());
+
+        sut.getOwnedSets(anyString());
+    }
 //    @Test
 //    public void test_createStudySet(){
 //        SetDTO setDTO = new SetDTO();
