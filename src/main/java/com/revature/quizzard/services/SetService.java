@@ -28,19 +28,21 @@ public class SetService {
 
     private SetRepository setRepo;
     private AccountRepository accountRepo;
+    private SubjectRepository subjectRepository;
     private CardRepository cardRepo;
     private JWTokenUtil tokenUtil;
-    private SubjectRepository subjectRepository;
-    private AccountRepository accountRepository;
     private CardService cardService;
 
-    public SetService(SetRepository setRepo, AccountRepository accountRepo, CardRepository cardRepo, JWTokenUtil tokenUtil)
-    {
-        this.setRepo = setRepo;
-        this.accountRepo = accountRepo;
-        this.cardRepo = cardRepo;
-        this.tokenUtil = tokenUtil;
-    }
+
+//    public SetService(SetRepository setRepo, AccountRepository accountRepo, SubjectRepository subjectRepository, CardRepository cardRepo, JWTokenUtil tokenUtil, CardService cardService)
+//    {
+//        this.setRepo = setRepo;
+//        this.accountRepo = accountRepo;
+//        this.cardRepo = cardRepo;
+//        this.tokenUtil = tokenUtil;
+//        this.subjectRepository = subjectRepository;
+//        this.cardService = cardService;
+//    }
 
     /**
      * Returns a list of sets that were created by the account. Takes in a username and finds the account associated
@@ -135,7 +137,7 @@ public class SetService {
     {
         Optional<SetEntity> set = getSetById(setCardDTO.getStudySetId());
         Optional<SubjectEntity> subject = subjectRepository.findById(setCardDTO.getSubject().getId());
-        AccountEntity account = accountRepository.findByUsername(setCardDTO.getCreator().getUsername());
+        AccountEntity account = accountRepo.findByUsername(setCardDTO.getCreator().getUsername());
         System.out.println(account);
         CardEntity card = new CardEntity(setCardDTO.getId(), null, setCardDTO.getQuestion(), setCardDTO.getAnswer(),
                                          setCardDTO.isReviewable(), setCardDTO.isPublic(), subject.orElse(null), account);

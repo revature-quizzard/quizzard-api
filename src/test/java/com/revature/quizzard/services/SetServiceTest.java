@@ -3,10 +3,12 @@ package com.revature.quizzard.services;
 import com.revature.quizzard.dtos.*;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
 import com.revature.quizzard.security.JWTokenUtil;
+import org.apache.catalina.User;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -24,30 +26,46 @@ public class SetServiceTest {
     private SetEntity mockSetEntity;
     private List<SetEntity> mockSetList;
     private AccountEntity mockAccount;
+    private CardEntity mockCard;
     private Set<CardEntity> mockCards;
     private JWTokenUtil mockTokenUtil;
     private CardRepository mockCardRepo;
+    private SubjectRepository mockSubjectRepo;
+    private SubjectEntity mockSubjectEntity;
+    private CardService mockCardService;
 
     @Before
     public void setupTest() {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
         mockTokenUtil = mock(JWTokenUtil.class);
-        mockAccount = new AccountEntity();
         mockCardRepo = mock(CardRepository.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo, mockCardRepo, mockTokenUtil);
+        mockSubjectRepo = mock(SubjectRepository.class);
+        mockCardService = mock(CardService.class);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockSubjectRepo, mockCardRepo, mockTokenUtil, mockCardService);
+
+        mockAccount = new AccountEntity();
+
+
     }
 
     @After
     public void teardownTest() {
         mockSetRepo = null;
         mockAccountRepo = null;
+
+        mockSubjectRepo = null;
+
         mockCardRepo = null;
+        mockCardService = null;
+
         sut = null;
         mockSetEntity = null;
         mockAccount = null;
         mockSetList = null;
+        mockCard = null;
         mockCards = null;
+        mockSetEntity = null;
     }
 
     @Test
@@ -87,6 +105,48 @@ public class SetServiceTest {
     }
 
     @Test
+    public void test_save(){
+
+        CredentialsDTO credentialsDTO = new CredentialsDTO("mocker", "mockpass");
+
+        mockSetEntity = new SetEntity();
+        mockSetEntity.setId(100);
+        mockAccount = new AccountEntity(100, null, null, null, "mocker", "mockpass", 100);
+        mockSubjectEntity = new SubjectEntity(100, "mock");
+
+
+        SetCardDTO setCardDTO = new SetCardDTO(100, "What is mock", "mock", true, true, mockSubjectEntity, 100, credentialsDTO);
+        mockCard = new CardEntity(setCardDTO.getId(), null, setCardDTO.getQuestion(), setCardDTO.getAnswer(),
+                setCardDTO.isReviewable(), setCardDTO.isPublic(), mockSubjectEntity, mockAccount);
+        when(sut.getSetById(anyInt())).thenReturn(Optional.ofNullable(mockSetEntity));
+        when(mockSubjectRepo.findById(anyInt())).thenReturn(java.util.Optional.of(mockSubjectEntity));
+        when(mockAccountRepo.findByUsername(anyString())).thenReturn(mockAccount);
+        when(mockCardService.savePublicCard(any())).thenReturn(mockCard);
+        CardEntity cardEntity = sut.save(setCardDTO);
+        assertEquals(mockCard.getAnswer(), cardEntity.getAnswer());
+        assertEquals(mockCard.getQuestion(), cardEntity.getQuestion());
+    }
+
+//    @Test
+//    public void test_createStudySet(){
+//        SetDTO setDTO = new SetDTO();
+//        setDTO.setSetName("mockName");
+////        setDTO.setCreator(mockAccount);
+//        setDTO.setPublic(true);
+//        setDTO.setSetId(2);
+//
+//        //Expected
+//        doReturn(new SetEntity()).when(mockSetRepo).save(any());
+//        //Act
+//        SetDTO result = sut.createStudySets(setDTO);
+//
+//        //Assert
+//        verify(mockSetRepo, times(1)).save(any());
+//
+//        assertEquals(setDTO, result);
+//
+//    }
+
     public void test_getOwnedSets() {
 
         mockAccount = new AccountEntity();
@@ -156,5 +216,6 @@ public class SetServiceTest {
 
 
     }
+
 
 }
