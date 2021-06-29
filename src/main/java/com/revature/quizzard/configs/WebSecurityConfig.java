@@ -93,8 +93,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/created/**");
         pointsToAuthenticate.add("/actuator/health");
         pointsToAuthenticate.add("/publicSets/**");
-//        pointsToAuthenticate.add("/ownedSets/**");
-//        pointsToAuthenticate.add("/**");
+        pointsToAuthenticate.add("/ownedSets/**");
+        pointsToAuthenticate.add("/sets/**");
+
         return pointsToAuthenticate.toArray(new String[0]);
     }
 

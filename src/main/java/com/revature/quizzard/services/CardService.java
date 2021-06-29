@@ -53,17 +53,17 @@ public class CardService {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    public List<CardDTO> getCardsByAccountId(int id){
-        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
-        List<CardDTO> cardDTOS = new ArrayList<>();
-
-        for(CardEntity card: cardEntities){
-            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
-                    card.isPublic(), card.getSubject().getId()));
-        }
-
-        return cardDTOS;
-    }
+//    public List<CardDTO> getCardsByAccountId(int id){
+//        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
+//        List<CardDTO> cardDTOS = new ArrayList<>();
+//
+//        for(CardEntity card: cardEntities){
+//            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
+//                    card.isPublic(), card.getSubject().getId()));
+//        }
+//
+//        return cardDTOS;
+//    }
 
     /**
      * Saves a new card into the database by converting the CardDTO into a CardEntity
@@ -157,7 +157,6 @@ public class CardService {
 
     public CardEntity savePublicCard(CardEntity newCard)
     {
-
         return cardRepository.save(newCard);
     }
 }

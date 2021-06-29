@@ -1,9 +1,12 @@
 package com.revature.quizzard.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
 import com.revature.quizzard.dtos.AuthenticatedDTO;
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.SetDTO;
+import com.revature.quizzard.models.sets.*;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.SetService;
@@ -21,11 +24,13 @@ import org.springframework.test.web.servlet.result.*;
 import org.springframework.test.web.servlet.setup.*;
 import org.springframework.web.context.*;
 
+import javax.servlet.http.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -55,6 +60,7 @@ public class SetControllerTest {
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockAuthDTO = new AuthenticatedDTO(1, 0, "test", new HashSet<>());
     }
 
     @AfterEach
@@ -80,8 +86,11 @@ public class SetControllerTest {
         SetDTO newSet = new SetDTO();
         ObjectMapper json = new ObjectMapper();
         //mockAccount needs acctController, jwtTokenUtil, and jwt.secret
+//        HttpServletRequest mockReq = mock(HttpServletRequest);
 
         this.mockMvc.perform(post("/sets/newset")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.writeValueAsString(newSet))
                 .accept(MediaType.APPLICATION_JSON))
@@ -93,7 +102,6 @@ public class SetControllerTest {
     @Test
     public void test_getCreatedSets() throws Exception {
         //Arrange
-        mockAuthDTO = new AuthenticatedDTO(1, 0, "test", new HashSet<>());
         List<SetDTO> results = new ArrayList<>();
         when(mockSetService.getCreatedSets(any())).thenReturn(results);
 
@@ -102,6 +110,48 @@ public class SetControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void test_getPublicSets() throws Exception {
+        //Arrange
+        List<SetEntity> mockSetEntity = new ArrayList<>();
+        mockSetEntity.add(new SetEntity());
+
+        when(mockSetService.getPublicSets()).thenReturn(mockSetEntity);
+
+        //Act
+        this.mockMvc.perform(get("/publicSets")
+                .header("Content-Type", "application/json"))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void test_cardsSave() throws Exception {
+        CardDTO newCard = new CardDTO(1, "", "", true, true, 1);
+        ObjectMapper json = new ObjectMapper();
+
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/cards/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.writeValueAsString(newCard))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+
+    @Test
+    public void test_getOwnedSets() throws Exception {
+        List<SetEntity> results = new ArrayList<>();
+        when(mockSetService.getOwnedSets(any())).thenReturn(results);
+
+        this.mockMvc.perform(get("/ownedSets")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
     }
 
 }
