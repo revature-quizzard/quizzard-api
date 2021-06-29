@@ -87,7 +87,7 @@ public class UpdateAccountServiceTest {
         AccountEntity account = new AccountEntity(1, user, null, null, "mocker", "password", 1);
         AccountInfoDTO accountInfoDTO = new AccountInfoDTO("", "", "fakePassword");
         Map<String, Object> updatedMap = new HashMap<>();
-        updatedMap.put("password", true);
+        updatedMap.put("password", "Password Updated");
 
         when(mockAccountRepository.findById (anyInt())).thenReturn(Optional.of(account));
         when(mockUserRepository.findById (anyInt())).thenReturn(Optional.of(user));

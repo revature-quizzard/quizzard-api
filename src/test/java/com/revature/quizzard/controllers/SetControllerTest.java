@@ -1,10 +1,12 @@
 package com.revature.quizzard.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
 import com.revature.quizzard.dtos.AuthenticatedDTO;
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.SetDTO;
-import com.revature.quizzard.models.sets.SetEntity;
+import com.revature.quizzard.models.sets.*;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.SetService;
@@ -122,8 +124,33 @@ public class SetControllerTest {
         this.mockMvc.perform(get("/publicSets")
                 .header("Content-Type", "application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+
+    @Test
+    public void test_cardsSave() throws Exception {
+        CardDTO newCard = new CardDTO(1, "", "", true, true, 1);
+        ObjectMapper json = new ObjectMapper();
+
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/cards/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.writeValueAsString(newCard))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
+    }
+
+
+    @Test
+    public void test_getOwnedSets() throws Exception {
+        List<SetEntity> results = new ArrayList<>();
+        when(mockSetService.getOwnedSets(any())).thenReturn(results);
+
+        this.mockMvc.perform(get("/ownedSets")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
     }
 
 }
