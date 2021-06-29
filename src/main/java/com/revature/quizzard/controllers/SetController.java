@@ -27,7 +27,7 @@ import java.util.Optional;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/sets")
+@RequestMapping("/")
 public class SetController {
 
     private SetService setService;
@@ -48,7 +48,7 @@ public class SetController {
      * @author Vinson Chin
      * @author Austin Knauer
      */
-    @GetMapping(value = "created", produces = "application/json")
+    @GetMapping(value = "/sets/created", produces = "application/json")
     public List<SetDTO> findAllCreatedSetsByAccount(HttpServletRequest request, HttpServletResponse response) {
 
         String authToken = request.getHeader("Authorization");
@@ -65,7 +65,7 @@ public class SetController {
     }
 
 
-    @PostMapping(value = "newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/sets/newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public SetDTO createNewSet(@RequestBody SetDTO newSet, HttpServletRequest request){
         logger.info(newSet);
 
