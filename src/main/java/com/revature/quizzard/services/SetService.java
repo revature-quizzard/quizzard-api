@@ -90,6 +90,7 @@ public class SetService {
     {
         return setRepo.findAllByIsPublic(true);
     }
+
     public List<SetEntity> getOwnedsets(String token) {
         System.out.println("~ ~ ~ ~ ~ ~ ~ Inside Service layer: " + token);
         int id = tokenUtil.getIdFromToken(token);
@@ -107,6 +108,5 @@ public class SetService {
     public SetEntity updateSet(SetEntity set)
     {
         return setRepo.save(set);
-
     }
 }
