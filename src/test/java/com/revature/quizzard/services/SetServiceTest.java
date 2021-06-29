@@ -8,6 +8,7 @@ import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.*;
 import com.revature.quizzard.security.JWTokenUtil;
+import org.apache.catalina.User;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -31,6 +32,7 @@ public class SetServiceTest {
     private CardRepository mockCardRepo;
     private SubjectRepository mockSubjectRepo;
     private SubjectEntity mockSubjectEntity;
+    private CardService mockCardService;
 
     @Before
     public void setupTest() {
@@ -39,7 +41,8 @@ public class SetServiceTest {
         mockTokenUtil = mock(JWTokenUtil.class);
         mockCardRepo = mock(CardRepository.class);
         mockSubjectRepo = mock(SubjectRepository.class);
-        sut = new SetService(mockSetRepo, mockAccountRepo, mockSubjectRepo, mockCardRepo, mockTokenUtil);
+        mockCardService = mock(CardService.class);
+        sut = new SetService(mockSetRepo, mockAccountRepo, mockSubjectRepo, mockCardRepo, mockTokenUtil, mockCardService);
 
         mockAccount = new AccountEntity();
 
@@ -54,6 +57,7 @@ public class SetServiceTest {
         mockSubjectRepo = null;
 
         mockCardRepo = null;
+        mockCardService = null;
 
         sut = null;
         mockSetEntity = null;
@@ -102,20 +106,25 @@ public class SetServiceTest {
 
     @Test
     public void test_save(){
+
         CredentialsDTO credentialsDTO = new CredentialsDTO("mocker", "mockpass");
-        mockSubjectEntity = new SubjectEntity(100, "mock");
+
         mockSetEntity = new SetEntity();
         mockSetEntity.setId(100);
+        mockAccount = new AccountEntity(100, null, null, null, "mocker", "mockpass", 100);
+        mockSubjectEntity = new SubjectEntity(100, "mock");
+
 
         SetCardDTO setCardDTO = new SetCardDTO(100, "What is mock", "mock", true, true, mockSubjectEntity, 100, credentialsDTO);
-
-        when(mockSubjectRepo.findById(anyInt())).thenReturn(java.util.Optional.of(mockSubjectEntity));
-        when(mockAccountRepo.findByUsername(anyString())).thenReturn(mockAccount);
-
         mockCard = new CardEntity(setCardDTO.getId(), null, setCardDTO.getQuestion(), setCardDTO.getAnswer(),
                 setCardDTO.isReviewable(), setCardDTO.isPublic(), mockSubjectEntity, mockAccount);
-
-        sut.save(setCardDTO);
+        when(sut.getSetById(anyInt())).thenReturn(Optional.ofNullable(mockSetEntity));
+        when(mockSubjectRepo.findById(anyInt())).thenReturn(java.util.Optional.of(mockSubjectEntity));
+        when(mockAccountRepo.findByUsername(anyString())).thenReturn(mockAccount);
+        when(mockCardService.savePublicCard(any())).thenReturn(mockCard);
+        CardEntity cardEntity = sut.save(setCardDTO);
+        assertEquals(mockCard.getAnswer(), cardEntity.getAnswer());
+        assertEquals(mockCard.getQuestion(), cardEntity.getQuestion());
     }
 
 //    @Test
