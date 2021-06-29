@@ -112,6 +112,18 @@ public class SetControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    public void test_getPublicSets() throws Exception{
+        //Arrange
+        List<SetEntity> mockSetEntity = new ArrayList<>();
+        mockSetEntity.add(new SetEntity());
+
+        when(mockSetService.getPublicSets()).thenReturn(mockSetEntity);
+
+        //Act
+        this.mockMvc.perform(get("/publicSets")
+                .header("Content-Type", "application/json"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
 
     @Test
     public void test_cardsSave() throws Exception {
@@ -126,6 +138,7 @@ public class SetControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
+
 
     @Test
     public void test_getOwnedSets() throws Exception {
