@@ -11,10 +11,7 @@ import com.revature.quizzard.security.JWTokenUtil;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -40,15 +37,24 @@ public class SetServiceTest {
         mockSetRepo = mock(SetRepository.class);
         mockAccountRepo = mock(AccountRepository.class);
         mockTokenUtil = mock(JWTokenUtil.class);
+        mockCardRepo = mock(CardRepository.class);
         mockSubjectRepo = mock(SubjectRepository.class);
         sut = new SetService(mockSetRepo, mockAccountRepo, mockSubjectRepo, mockCardRepo, mockTokenUtil);
+
+        mockAccount = new AccountEntity();
+
+
     }
 
     @After
     public void teardownTest() {
         mockSetRepo = null;
         mockAccountRepo = null;
+
         mockSubjectRepo = null;
+
+        mockCardRepo = null;
+
         sut = null;
         mockSetEntity = null;
         mockAccount = null;
@@ -61,7 +67,6 @@ public class SetServiceTest {
     @Test
     public void test_getCreatedSetsWithValidUsernameAndSet() {
 
-        mockAccount = new AccountEntity();
         mockSetList = new ArrayList<>();
         mockCards = new HashSet<>();
         mockSetEntity = new SetEntity(1, mockCards, mockAccount, "test", true);
@@ -77,7 +82,6 @@ public class SetServiceTest {
     @Test
     public void test_getCreatedSetsWithValidUsernameAndNoSet() {
 
-        mockAccount = new AccountEntity();
         mockSetList = new ArrayList<>();
         when(mockAccountRepo.findByUsername(any())).thenReturn(mockAccount);
         when(mockSetRepo.findAllCreatedByAccount(any())).thenReturn(mockSetList);
@@ -133,4 +137,76 @@ public class SetServiceTest {
 //        assertEquals(setDTO, result);
 //
 //    }
+
+    public void test_getOwnedSets() {
+
+        mockAccount = new AccountEntity();
+        mockSetList = new ArrayList<>();
+        mockSetList.add(new SetEntity());
+
+        when(mockTokenUtil.getIdFromToken(anyString())).thenReturn(1);
+        when(mockAccountRepo.findById(1)).thenReturn(java.util.Optional.ofNullable(mockAccount));
+        when(mockSetRepo.findAllByCreator(mockAccount)).thenReturn(mockSetList);
+
+        List<SetEntity> result = sut.getOwnedSets(anyString());
+
+        assertEquals(mockSetList.size(), result.size());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void test_getOwnedSets_NoAccount() {
+
+        when(mockTokenUtil.getIdFromToken(anyString())).thenReturn(1);
+        when(mockAccountRepo.findById(anyInt())).thenReturn(Optional.empty());
+
+        sut.getOwnedSets(anyString());
+    }
+
+    public void test_createStudySets(){
+        //Arrange user
+        int creatorId = 100;
+        mockAccount.setId(100);
+        mockAccount.setUsername("testuser");
+        mockAccount.setPassword("testpassword");
+
+        //Setup cards
+        List<CardDTO> cards = new ArrayList<>();
+        CardDTO card = new CardDTO();
+        card.setId(100);
+        card.setPublic(true);
+        card.setAnswer("answer");
+        card.setQuestion("question");
+        card.setSubjectId(1);
+        card.setReviewable(true);
+        cards.add(card);
+
+        CardEntity cardEntity = new CardEntity(card);
+
+        //Setup set
+        SetDTO newSet = new SetDTO();
+        newSet.setSetId(100);
+        newSet.setSetName("TestSet");
+        newSet.setPublic(true);
+        newSet.setCreator(mockAccount);
+        newSet.setLocalFlashcards(cards);
+
+        SetEntity setEntity = new SetEntity(newSet);
+        setEntity.setId(100);
+
+        when(mockCardRepo.findCardEntityById(anyInt())).thenReturn(cardEntity);
+        when(mockAccountRepo.findById(anyInt())).thenReturn(java.util.Optional.ofNullable(mockAccount));
+        when(mockSetRepo.save(any())).thenReturn(setEntity);
+
+        //Act
+        SetDTO result = sut.createStudySets(newSet, creatorId);
+
+        //Assert
+        assertEquals(newSet.getSetId(), result.getSetId());
+
+
+
+
+    }
+
+
 }
