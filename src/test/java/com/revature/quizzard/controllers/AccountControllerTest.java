@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
 import com.revature.quizzard.exceptions.InvalidCredentialsException;
+import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.AccountService;
@@ -160,4 +162,6 @@ public class AccountControllerTest {
                 .andExpect(status().isUnauthorized()) //We get back a 401 unauthorized
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username").doesNotExist());
     }
+
+
 }

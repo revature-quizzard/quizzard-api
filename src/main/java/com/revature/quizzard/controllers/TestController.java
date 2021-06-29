@@ -2,6 +2,7 @@ package com.revature.quizzard.controllers;
 
 import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.SetCardDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.exceptions.StudySetNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
@@ -10,10 +11,12 @@ import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.SubjectRepository;
+import com.revature.quizzard.services.AccountService;
 import com.revature.quizzard.services.CardService;
 import com.revature.quizzard.services.SetService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +40,7 @@ public class TestController {
     private final SubjectRepository subjectRepository;
     private final CardService cardService;
     private final SetService setService;
+    private final AccountService accountService;
 
     @GetMapping("/test")
     public void securityHealthStatus(HttpServletRequest request, HttpServletResponse response){
@@ -106,4 +110,5 @@ public class TestController {
         System.out.println(returnCard);
         return returnCard;
     }
+
 }

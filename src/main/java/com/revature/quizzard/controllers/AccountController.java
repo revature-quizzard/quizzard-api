@@ -4,6 +4,8 @@ import com.revature.quizzard.dtos.AccountInfoDTO;
 import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
+import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
+import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.AccountService;
 import io.swagger.annotations.ResponseHeader;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,5 +96,25 @@ public class AccountController {
         int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
         Map updatedAccountMap = accountService.updateAccountInfo(accountID, accountInfoDTO);
         return updatedAccountMap;
+    }
+
+    /**
+     * Takes in a JSON with the structure
+     * <code>
+     *     {
+     *         "points" : "(amount)"
+     *     }
+     * </code>
+     * where amount is the number of points to add (or potentially remove, if the number is negative) from the account.
+     *
+     * @param dto AddPointsDTO
+     * @param req HttpServletRequest
+     * @return AccountResponseDTO containing update user information.
+     */
+    @PostMapping("/accounts/points")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountResponseDTO addPointsToUser(@RequestBody AddPointsDTO dto, HttpServletRequest req) {
+        int accountID = jwTokenUtil.getIdFromToken(req.getHeader("Authorization"));
+        return accountService.updatePoints(dto, accountID);
     }
 }

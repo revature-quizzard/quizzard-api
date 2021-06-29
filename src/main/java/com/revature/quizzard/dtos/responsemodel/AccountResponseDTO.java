@@ -10,20 +10,20 @@ import lombok.*;
 import java.util.Set;
 
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-public class AccountResponseDTO {
+public @Data class AccountResponseDTO {
 
     private Set<RoleEntity> roles;
 
-    private Set<AccountCardDTO> cards;
+//    private Set<AccountCardDTO> cards;
 
     private String username;
+
+    private int points;
 
     public AccountResponseDTO(AccountEntity accountEntity) {
         this.roles = accountEntity.getRoles();
         this.username = accountEntity.getUsername();
-        this.cards = accountEntity.getAccountCards();
+//        this.cards = accountEntity.getAccountCards();
+        this.points = accountEntity.getPoints();
     }
 }
