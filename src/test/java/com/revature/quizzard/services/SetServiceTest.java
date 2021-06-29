@@ -5,6 +5,8 @@ import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
+import com.revature.quizzard.models.user.RoleEntity;
+import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.*;
 import com.revature.quizzard.security.JWTokenUtil;
 import org.junit.*;
@@ -85,6 +87,48 @@ public class SetServiceTest {
         when(mockAccountRepo.findByUsername(any())).thenReturn(null);
 
         List<SetDTO> result = sut.getCreatedSets("test");
+
+    }
+
+    @Test
+    public void when_getPublicSetsResultIsNotEmpty(){
+
+        //Arrange
+        UserEntity mockUser = new UserEntity(1,"fN","lN","fn.ln@email.com");
+
+        RoleEntity mockRole = new RoleEntity(1,"ADMIN");
+
+        AccountEntity mockAccount = new AccountEntity();
+        mockAccount.setId(1);
+        mockAccount.setUser(mockUser);
+
+        CardEntity mockCard = new CardEntity();
+        mockCard.setId(1);
+        mockCard.setCreator(mockAccount);
+
+        SetEntity mockSet = new SetEntity();
+        mockSet.setId(1);
+        mockSet.setName("Public Set 1");
+        mockSet.setIsPublic(true);
+        mockSet.setCreator(mockAccount);
+        Set<CardEntity> mockSetOfCards = new HashSet<CardEntity>();
+        mockSetOfCards.add(mockCard);
+        mockSet.setCards(mockSetOfCards);
+
+        List<SetEntity> mockPublicSets = new ArrayList<SetEntity>() {
+        };
+        mockPublicSets.add(mockSet);
+        when(mockSetRepo.findAllByIsPublic(anyBoolean())).thenReturn(mockPublicSets);
+
+        List<SetEntity> expectedResult = new ArrayList<>();
+        expectedResult.add(mockSet);
+
+        //Act
+        List<SetEntity> actualResult= sut.getPublicSets();
+
+        //Assert
+        Assert.assertEquals(expectedResult.stream().findFirst().get().getId(), actualResult.stream().findFirst().get().getId());
+
 
     }
 
