@@ -21,11 +21,13 @@ import org.springframework.test.web.servlet.result.*;
 import org.springframework.test.web.servlet.setup.*;
 import org.springframework.web.context.*;
 
+import javax.servlet.http.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -55,6 +57,7 @@ public class SetControllerTest {
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockAuthDTO = new AuthenticatedDTO(1, 0, "test", new HashSet<>());
     }
 
     @AfterEach
@@ -80,8 +83,11 @@ public class SetControllerTest {
         SetDTO newSet = new SetDTO();
         ObjectMapper json = new ObjectMapper();
         //mockAccount needs acctController, jwtTokenUtil, and jwt.secret
+//        HttpServletRequest mockReq = mock(HttpServletRequest);
 
         this.mockMvc.perform(post("/sets/newset")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.writeValueAsString(newSet))
                 .accept(MediaType.APPLICATION_JSON))
@@ -93,7 +99,6 @@ public class SetControllerTest {
     @Test
     public void test_getCreatedSets() throws Exception {
         //Arrange
-        mockAuthDTO = new AuthenticatedDTO(1, 0, "test", new HashSet<>());
         List<SetDTO> results = new ArrayList<>();
         when(mockSetService.getCreatedSets(any())).thenReturn(results);
 

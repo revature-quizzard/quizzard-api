@@ -109,7 +109,9 @@ public class SetService {
         return setRepo.findAllByIsPublic(true);
     }
 
+
     public List<SetEntity> getOwnedSets(String token) {
+
         int id = tokenUtil.getIdFromToken(token);
         Optional<AccountEntity> optionalAccountEntity = accountRepo.findById(id);
         if(optionalAccountEntity.isPresent()) {
@@ -122,6 +124,7 @@ public class SetService {
     {
         return setRepo.findById(id);
     }
+
 
     public CardEntity save(SetCardDTO setCardDTO)
     {
