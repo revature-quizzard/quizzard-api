@@ -43,10 +43,10 @@ public class CardController {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
-    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
-        return cardService.getCardsByAccountId(Integer.parseInt(id));
-    }
+//    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
+//    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
+//        return cardService.getCardsByAccountId(Integer.parseInt(id));
+//    }
 
 
     /**
@@ -67,16 +67,16 @@ public class CardController {
         return createdCard;
     }
       
-    @PostMapping("/favorite")
-    @ResponseStatus(HttpStatus.OK)
-    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
-        cardService.addFavoriteCard(cardFavoriteDTO);
-    }
-
-    @PostMapping("/confident")
-    @ResponseStatus(HttpStatus.OK)
-    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
-        cardService.toggleConfidentCard(cardConfidentDTO);
-
-    }
+//    @PostMapping("/favorite")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
+//        cardService.addFavoriteCard(cardFavoriteDTO);
+//    }
+//
+//    @PostMapping("/confident")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
+//        cardService.toggleConfidentCard(cardConfidentDTO);
+//
+//    }
 }

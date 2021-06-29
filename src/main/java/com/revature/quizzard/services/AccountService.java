@@ -106,7 +106,7 @@ public class AccountService {
 
                     if (isValid(accountInfoDTO.getPassword())) {
                         account.setPassword(accountInfoDTO.getPassword());
-                        updatedAccountMap.put("password", true);
+                        updatedAccountMap.put("password", "Password Updated");
                     }
 
                     if (isValid(accountInfoDTO.getEmail())) {
