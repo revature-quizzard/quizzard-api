@@ -121,7 +121,7 @@ public class SetControllerTest {
         when(mockSetService.getPublicSets()).thenReturn(mockSetEntity);
 
         //Act
-        this.mockMvc.perform(get("/publicSets")
+        this.mockMvc.perform(get("/sets/publicSets")
                 .header("Content-Type", "application/json"))
                     .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -131,7 +131,7 @@ public class SetControllerTest {
         CardDTO newCard = new CardDTO(1, "", "", true, true, 1);
         ObjectMapper json = new ObjectMapper();
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/cards/save")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/sets/cards/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.writeValueAsString(newCard))
                 .accept(MediaType.APPLICATION_JSON))
@@ -146,7 +146,7 @@ public class SetControllerTest {
         List<SetEntity> results = new ArrayList<>();
         when(mockSetService.getOwnedSets(any())).thenReturn(results);
 
-        this.mockMvc.perform(get("/ownedSets")
+        this.mockMvc.perform(get("/sets/ownedSets")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print())
