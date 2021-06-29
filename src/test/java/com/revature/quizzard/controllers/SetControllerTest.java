@@ -113,7 +113,7 @@ public class SetControllerTest {
     }
 
     @Test
-    public void test_getPublicSets() throws Exception{
+    public void test_getPublicSets() throws Exception {
         //Arrange
         List<SetEntity> mockSetEntity = new ArrayList<>();
         mockSetEntity.add(new SetEntity());
@@ -123,7 +123,8 @@ public class SetControllerTest {
         //Act
         this.mockMvc.perform(get("/publicSets")
                 .header("Content-Type", "application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
     @Test
     public void test_cardsSave() throws Exception {

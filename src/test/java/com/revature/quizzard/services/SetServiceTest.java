@@ -148,11 +148,11 @@ public class SetServiceTest {
     }
 
     @Test
-    public void test_getSetById(){
+    public void test_getSetById() {
         //Arrange
-        UserEntity mockUser = new UserEntity(1,"fN","lN","fn.ln@email.com");
+        UserEntity mockUser = new UserEntity(1, "fN", "lN", "fn.ln@email.com");
 
-        RoleEntity mockRole = new RoleEntity(1,"ADMIN");
+        RoleEntity mockRole = new RoleEntity(1, "ADMIN");
 
         AccountEntity mockAccount = new AccountEntity();
         mockAccount.setId(1);
@@ -181,8 +181,9 @@ public class SetServiceTest {
 
         //Assert
         Assert.assertEquals(expectedResult.getId(), actualResult.get().getId());
+    }
 
-
+    @Test
     public void test_save(){
         CredentialsDTO credentialsDTO = new CredentialsDTO("mocker", "mockpass");
 
@@ -225,6 +226,7 @@ public class SetServiceTest {
 //
 //    }
 
+    @Test
     public void test_getOwnedSets() {
 
         mockAccount = new AccountEntity();
@@ -249,6 +251,7 @@ public class SetServiceTest {
         sut.getOwnedSets(anyString());
     }
 
+    @Test
     public void test_createStudySets(){
         //Arrange user
         int creatorId = 100;
