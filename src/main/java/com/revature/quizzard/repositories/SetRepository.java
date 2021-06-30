@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface SetRepository extends JpaRepository<SetEntity, Integer> {
-
-    Optional<SetEntity> findById(int id);
+    //This shouldn't be necessary. Keeping it here commented out just in case something breaks.
+    //Optional<SetEntity> findById(int id);
     List<SetEntity> findAllByIsPublic(boolean condition);
 
     List<SetEntity> findAllByCreator(AccountEntity creator);

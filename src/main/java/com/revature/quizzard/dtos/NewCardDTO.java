@@ -11,4 +11,4 @@ public class NewCardDTO {
         private boolean reviewable;
         private boolean isPublic;
         private String subjectName;
-    }
+}

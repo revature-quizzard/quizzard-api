@@ -1,28 +1,23 @@
 package com.revature.quizzard.controllers;
 
-import com.revature.quizzard.dtos.*;
-import com.revature.quizzard.exceptions.StudySetNotFoundException;
+import com.revature.quizzard.dtos.SetCardDTO;
+import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.models.flashcards.CardEntity;
-import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
-import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.security.JWTokenUtil;
 import com.revature.quizzard.services.SetService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.apache.logging.log4j.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

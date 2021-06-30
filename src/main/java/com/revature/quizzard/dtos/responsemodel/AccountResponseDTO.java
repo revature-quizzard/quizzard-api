@@ -1,11 +1,9 @@
 package com.revature.quizzard.dtos.responsemodel;
 
-import com.revature.quizzard.dtos.responsemodel.lists.AccountCardDTO;
-import com.revature.quizzard.models.composites.AccountCardEntity;
-import com.revature.quizzard.models.composites.AccountCardId;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.RoleEntity;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 

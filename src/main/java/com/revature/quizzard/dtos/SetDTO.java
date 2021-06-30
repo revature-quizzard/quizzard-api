@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.*;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

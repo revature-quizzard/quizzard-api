@@ -1,15 +1,9 @@
 package com.revature.quizzard.services;
 
 import com.revature.quizzard.dtos.AccountInfoDTO;
-import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
-import com.revature.quizzard.exceptions.InvalidRequestException;
-import com.revature.quizzard.models.composites.AccountCardEntity;
-import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import com.revature.quizzard.models.user.UserEntity;
-import com.revature.quizzard.repositories.AccountCardRepository;
 import com.revature.quizzard.repositories.AccountRepository;
-import com.revature.quizzard.repositories.CardRepository;
 import com.revature.quizzard.repositories.UserRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +11,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-
-import javax.jws.soap.SOAPBinding;
 import java.util.*;
 
 import static org.mockito.MockitoAnnotations.*;

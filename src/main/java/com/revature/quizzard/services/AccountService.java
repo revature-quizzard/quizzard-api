@@ -1,10 +1,8 @@
 package com.revature.quizzard.services;
 
-
-
 import com.revature.quizzard.dtos.AccountInfoDTO;
-import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.AccountRegisterDTO;
+import com.revature.quizzard.dtos.AuthenticatedDTO;
 import com.revature.quizzard.dtos.CredentialsDTO;
 import com.revature.quizzard.dtos.requestmodels.AddPointsDTO;
 import com.revature.quizzard.dtos.responsemodel.AccountResponseDTO;
@@ -21,7 +19,6 @@ import com.revature.quizzard.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;

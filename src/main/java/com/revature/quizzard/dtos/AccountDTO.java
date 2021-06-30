@@ -1,7 +1,5 @@
 package com.revature.quizzard.dtos;
 
-
-
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;

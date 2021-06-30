@@ -5,12 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-
 @AllArgsConstructor
 @NoArgsConstructor
 public @Data class UpdatedAccountDTO extends AuthenticatedDTO {
-
 
     private boolean updatedPassword;
     private boolean updatedUsername;
