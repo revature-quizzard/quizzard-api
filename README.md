@@ -1,1 +1,1 @@
-# quizzard-api
+# Qwizzard (API)
