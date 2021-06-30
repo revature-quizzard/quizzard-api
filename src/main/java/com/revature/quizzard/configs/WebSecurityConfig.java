@@ -2,7 +2,6 @@ package com.revature.quizzard.configs;
 
 
 import com.revature.quizzard.security.AuthEntryPointJwt;
-import com.revature.quizzard.security.CorsFilter;
 import com.revature.quizzard.security.JWTokenFilter;
 import com.revature.quizzard.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -38,23 +36,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthEntryPointJwt unauthorizedHandler;
     private UserDetailsServiceImpl userDetailService;
     private JWTokenFilter jwTokenFilter;
-    private CorsFilter corsFilter;
-
     /**
      *  Spring Security Configuration Constructor
      * @param unauthorizedHandler Entry point used to handle any unauthorized requests
      * @param userDetailService Implementation used to load a "User object" into an Authentication object
      * @param jwTokenFilter The Filter responsible for intercepting communications and parsing the jwt token on the header in said communications
-     * @param corsFilter The filter responsible for allowing for other origins to have access to desired headers in a response
      * @author Nichols Recino
      */
-    public WebSecurityConfig(AuthEntryPointJwt unauthorizedHandler, UserDetailsServiceImpl userDetailService,JWTokenFilter jwTokenFilter,CorsFilter corsFilter) {
+    public WebSecurityConfig(AuthEntryPointJwt unauthorizedHandler, UserDetailsServiceImpl userDetailService,JWTokenFilter jwTokenFilter) {
         this.unauthorizedHandler = unauthorizedHandler;
         this.userDetailService = userDetailService;
         this.jwTokenFilter = jwTokenFilter;
-        this.corsFilter = corsFilter;
     }
-
 
     /**
      *  Processes and configures behavior of security requests, sets the authentication entry point, authorizes pertinent uri's, and then authenticates all other uri's
@@ -66,13 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().sameOrigin();
+        http.cors().and().headers().frameOptions().sameOrigin();
         http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeRequests().antMatchers(authenticatePointsForTesting()).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
     }
 
     /**
@@ -86,6 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<String> pointsToAuthenticate = new ArrayList<>();
         pointsToAuthenticate.add("/h2/**");
         pointsToAuthenticate.add("/test/**");
+        pointsToAuthenticate.add("/accounts/**");
         pointsToAuthenticate.add("/login");
         pointsToAuthenticate.add("/register");
         pointsToAuthenticate.add("/swagger-ui.html/**");
@@ -93,11 +86,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/swagger-resources/**");
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
+        pointsToAuthenticate.add("/cards/**");
         pointsToAuthenticate.add("/card/**");
         pointsToAuthenticate.add("/subject/**");
         pointsToAuthenticate.add("/created/**");
-        pointsToAuthenticate.add("/sets/**");
         pointsToAuthenticate.add("/actuator/health");
+        pointsToAuthenticate.add("/publicSets/**");
+        pointsToAuthenticate.add("/ownedSets/**");
+        pointsToAuthenticate.add("/sets/**");
+
         return pointsToAuthenticate.toArray(new String[0]);
     }
 
@@ -109,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//      authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
+     authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder()); // Use this if we decided to encode passwords
         authenticationManagerBuilder.userDetailsService(userDetailService);
     }
 
@@ -144,6 +141,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedOrigins(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
+        config.setExposedHeaders(Collections.singletonList("Authorization, Content-Type, X-Auth-Token"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

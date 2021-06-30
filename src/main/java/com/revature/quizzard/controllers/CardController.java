@@ -1,17 +1,14 @@
 package com.revature.quizzard.controllers;
 
 
-import com.revature.quizzard.dtos.*;
-import com.revature.quizzard.dtos.requestmodels.*;
-import org.springframework.web.bind.annotation.*;
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.services.CardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.*;
-
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -43,10 +40,10 @@ public class CardController {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
-    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
-        return cardService.getCardsByAccountId(Integer.parseInt(id));
-    }
+//    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
+//    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
+//        return cardService.getCardsByAccountId(Integer.parseInt(id));
+//    }
 
 
     /**
@@ -67,16 +64,16 @@ public class CardController {
         return createdCard;
     }
       
-    @PostMapping("/favorite")
-    @ResponseStatus(HttpStatus.OK)
-    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
-        cardService.addFavoriteCard(cardFavoriteDTO);
-    }
-
-    @PostMapping("/confident")
-    @ResponseStatus(HttpStatus.OK)
-    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
-        cardService.toggleConfidentCard(cardConfidentDTO);
-
-    }
+//    @PostMapping("/favorite")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
+//        cardService.addFavoriteCard(cardFavoriteDTO);
+//    }
+//
+//    @PostMapping("/confident")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
+//        cardService.toggleConfidentCard(cardConfidentDTO);
+//
+//    }
 }

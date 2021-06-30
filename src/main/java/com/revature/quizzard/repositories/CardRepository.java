@@ -10,14 +10,16 @@ import java.util.Set;
 
 @Repository
 public interface CardRepository extends JpaRepository<CardEntity, Integer> {
+    //This shouldn't be necessary. Keeping comment here in case we find removing it breaks something.
+    //CardEntity save(CardEntity newCard);
 
-    Set<CardEntity> findByisPublicIsTrue();
+    Set<CardEntity> findByIsPublicIsTrue();
     Set<CardEntity> findByReviewableTrue();
     CardEntity findCardEntityById(int Id);
 
-
     @Query(nativeQuery = true, value = "select c.* from accounts_cards ac inner join cards c on (ac.card_id = c.card_id) where ac.account_id = ?1")
     List<CardEntity> findAllCardsByAccountId(int accountId);
+
 
 
 }

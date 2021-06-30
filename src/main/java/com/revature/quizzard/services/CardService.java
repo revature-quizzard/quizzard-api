@@ -1,12 +1,6 @@
 package com.revature.quizzard.services;
 
-
-
-import com.revature.quizzard.dtos.*;
-import com.revature.quizzard.models.flashcards.*;
-import com.revature.quizzard.repositories.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.dtos.requestmodels.CardConfidentDTO;
 import com.revature.quizzard.dtos.requestmodels.CardFavoriteDTO;
 import com.revature.quizzard.exceptions.InvalidRequestException;
@@ -17,14 +11,12 @@ import com.revature.quizzard.repositories.AccountCardRepository;
 import com.revature.quizzard.repositories.AccountRepository;
 import com.revature.quizzard.repositories.CardRepository;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.*;
-
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -60,17 +52,17 @@ public class CardService {
      * @author Giancarlo Tomasello
      * @author Kevin Chang
      */
-    public List<CardDTO> getCardsByAccountId(int id){
-        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
-        List<CardDTO> cardDTOS = new ArrayList<>();
-
-        for(CardEntity card: cardEntities){
-            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
-                    card.isPublic(), card.getSubject().getId()));
-        }
-
-        return cardDTOS;
-    }
+//    public List<CardDTO> getCardsByAccountId(int id){
+//        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
+//        List<CardDTO> cardDTOS = new ArrayList<>();
+//
+//        for(CardEntity card: cardEntities){
+//            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
+//                    card.isPublic(), card.getSubject().getId()));
+//        }
+//
+//        return cardDTOS;
+//    }
 
     /**
      * Saves a new card into the database by converting the CardDTO into a CardEntity
@@ -160,5 +152,10 @@ public class CardService {
         } else {
             throw new InvalidRequestException();
         }
+    }
+
+    public CardEntity savePublicCard(CardEntity newCard)
+    {
+        return cardRepository.save(newCard);
     }
 }

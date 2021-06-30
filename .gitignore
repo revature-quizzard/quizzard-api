@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+logs/
 
 # BlueJ files
 *.ctxt
@@ -35,4 +36,12 @@ target/
 
 #sql files
 *.sql
+
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/
+
+target/
 
