@@ -1,6 +1,5 @@
 package com.revature.quizzard.repositories;
 
-import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +10,10 @@ import java.util.Set;
 
 @Repository
 public interface CardRepository extends JpaRepository<CardEntity, Integer> {
+    //This shouldn't be necessary. Keeping comment here in case we find removing it breaks something.
+    //CardEntity save(CardEntity newCard);
 
-    CardEntity save(CardEntity newCard);
-
-    Set<CardEntity> findByisPublicIsTrue();
+    Set<CardEntity> findByIsPublicIsTrue();
     Set<CardEntity> findByReviewableTrue();
     CardEntity findCardEntityById(int Id);
 

@@ -1,12 +1,10 @@
 package com.revature.quizzard.models.composites;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.quizzard.models.flashcards.CardEntity;
 import com.revature.quizzard.models.user.AccountEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -55,7 +53,6 @@ public class AccountCardEntity {
 
     @Column(name = "favorite")
     private Boolean favorite;
-
 
     public AccountCardEntity(AccountEntity accountEntity, CardEntity cardEntity, Boolean favorite, Boolean confident) {
         this.setAccountEntity(accountEntity);

@@ -1,24 +1,24 @@
 package com.revature.quizzard.services;
 
-import com.revature.quizzard.dtos.*;
+import com.revature.quizzard.dtos.CardDTO;
+import com.revature.quizzard.dtos.SetCardDTO;
+import com.revature.quizzard.dtos.SetDTO;
 import com.revature.quizzard.exceptions.ResourceNotFoundException;
 import com.revature.quizzard.exceptions.StudySetNotFoundException;
-import com.revature.quizzard.models.flashcards.*;
+import com.revature.quizzard.models.flashcards.CardEntity;
+import com.revature.quizzard.models.flashcards.SubjectEntity;
 import com.revature.quizzard.models.sets.SetEntity;
 import com.revature.quizzard.models.user.AccountEntity;
-import com.revature.quizzard.repositories.*;
+import com.revature.quizzard.repositories.AccountRepository;
+import com.revature.quizzard.repositories.CardRepository;
+import com.revature.quizzard.repositories.SetRepository;
+import com.revature.quizzard.repositories.SubjectRepository;
 import com.revature.quizzard.security.JWTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -33,16 +33,6 @@ public class SetService {
     private JWTokenUtil tokenUtil;
     private CardService cardService;
 
-
-//    public SetService(SetRepository setRepo, AccountRepository accountRepo, SubjectRepository subjectRepository, CardRepository cardRepo, JWTokenUtil tokenUtil, CardService cardService)
-//    {
-//        this.setRepo = setRepo;
-//        this.accountRepo = accountRepo;
-//        this.cardRepo = cardRepo;
-//        this.tokenUtil = tokenUtil;
-//        this.subjectRepository = subjectRepository;
-//        this.cardService = cardService;
-//    }
 
     /**
      * Returns a list of sets that were created by the account. Takes in a username and finds the account associated

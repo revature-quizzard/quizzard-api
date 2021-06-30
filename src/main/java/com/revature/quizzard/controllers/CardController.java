@@ -1,17 +1,14 @@
 package com.revature.quizzard.controllers;
 
 
-import com.revature.quizzard.dtos.*;
-import com.revature.quizzard.dtos.requestmodels.*;
-import org.springframework.web.bind.annotation.*;
+import com.revature.quizzard.dtos.CardDTO;
 import com.revature.quizzard.services.CardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.*;
-
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
