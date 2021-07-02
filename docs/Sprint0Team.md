@@ -13,7 +13,7 @@
 - Austin Knauer
 - Chris Levano
 - Ej Best
-- Everett Duiguid
+- Everett Diuguid
 - Giancarlo Tomasello
 - James Bailon
 - James Peter Fallon
