@@ -40,6 +40,9 @@ target/
 #logs directory
 /logs
 
+#logs directory
+/logs
+
 .classpath
 .factorypath
 .project
