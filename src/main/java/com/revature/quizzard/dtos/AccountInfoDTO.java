@@ -40,12 +40,4 @@ public class AccountInfoDTO {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "AccountInfoDTO{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

@@ -73,7 +73,6 @@ public class SetController {
         return newStudySet;
     }
 
-    //TODO Ozzy
     @GetMapping("/publicSets")
     @ResponseStatus(HttpStatus.OK)
     public List<SetEntity> getPublicSets()
@@ -81,7 +80,6 @@ public class SetController {
         return setService.getPublicSets();
     }
 
-    //TODO Kevin
     @GetMapping("/ownedSets")
     @ResponseStatus(HttpStatus.OK)
     public List<SetEntity> getOwnedSets(HttpServletRequest request)
@@ -90,7 +88,6 @@ public class SetController {
         return setService.getOwnedSets(token);
     }
 
-    //TODO Giancarlo
     @PostMapping("/cards/save")
     @ResponseStatus(HttpStatus.CREATED)
     public CardEntity saveCard(@RequestBody SetCardDTO dto)
