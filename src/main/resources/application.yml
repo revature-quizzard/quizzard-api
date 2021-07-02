@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: quizzard
+  profiles:
+    active: local #set profiles to local, test, dev, or any other profiles you'd like to use
+server:
+  port: 5000
+jwt:
+  secret: #your secret key here, used to generate JSON Web Token
+
+logging:
+  file:
+    name: logs/quizzard.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: revature
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+      enabled: true
+      path: /h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: #your database url here
+    driver-class-name: #your database driver (ours for PostgeSQL was 'org.postgresql.Driver')
+    username: #your database user's username here
+    password: #your database user's password here
+  jpa:
+    database-platform: #your database dialect used by JPA repositories (ours for PostgreSQL was 'org.hibernate.dialect.PostgreSQL9Dialect')
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: revature
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+      enabled: true
+      path: /h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create

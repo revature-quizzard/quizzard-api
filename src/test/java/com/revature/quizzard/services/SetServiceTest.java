@@ -10,7 +10,6 @@ import com.revature.quizzard.models.user.RoleEntity;
 import com.revature.quizzard.models.user.UserEntity;
 import com.revature.quizzard.repositories.*;
 import com.revature.quizzard.security.JWTokenUtil;
-import org.apache.catalina.User;
 import org.junit.*;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -68,42 +67,6 @@ public class SetServiceTest {
         mockCard = null;
         mockCards = null;
         mockSetEntity = null;
-    }
-
-    @Test
-    public void test_getCreatedSetsWithValidUsernameAndSet() {
-
-        mockSetList = new ArrayList<>();
-        mockCards = new HashSet<>();
-        mockSetEntity = new SetEntity(1, mockCards, mockAccount, "test", true);
-        mockSetList.add(mockSetEntity);
-        when(mockAccountRepo.findByUsername(any())).thenReturn(mockAccount);
-        when(mockSetRepo.findAllCreatedByAccount(any())).thenReturn(mockSetList);
-
-        List<SetDTO> result = sut.getCreatedSets("test");
-
-        assertEquals(1, result.size());
-    }
-
-    @Test
-    public void test_getCreatedSetsWithValidUsernameAndNoSet() {
-
-        mockSetList = new ArrayList<>();
-        when(mockAccountRepo.findByUsername(any())).thenReturn(mockAccount);
-        when(mockSetRepo.findAllCreatedByAccount(any())).thenReturn(mockSetList);
-
-        List<SetDTO> result = sut.getCreatedSets("test");
-
-        assertEquals(0, result.size());
-    }
-
-    @Test(expected = ResourceNotFoundException.class)
-    public void test_getCreatedSetsWithInvalidUsername() {
-
-        when(mockAccountRepo.findByUsername(any())).thenReturn(null);
-
-        List<SetDTO> result = sut.getCreatedSets("test");
-
     }
 
     @Test

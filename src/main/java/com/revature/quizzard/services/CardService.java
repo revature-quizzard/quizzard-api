@@ -46,25 +46,6 @@ public class CardService {
     }
 
     /**
-     * Returns a list of cards that belong to a specified user
-     * @param id The account id
-     * @return List<CardDTO>
-     * @author Giancarlo Tomasello
-     * @author Kevin Chang
-     */
-//    public List<CardDTO> getCardsByAccountId(int id){
-//        List<CardEntity> cardEntities = cardRepository.findAllCardsByAccountId(id);
-//        List<CardDTO> cardDTOS = new ArrayList<>();
-//
-//        for(CardEntity card: cardEntities){
-//            cardDTOS.add(new CardDTO(card.getId(), card.getQuestion(), card.getAnswer(), card.isReviewable(),
-//                    card.isPublic(), card.getSubject().getId()));
-//        }
-//
-//        return cardDTOS;
-//    }
-
-    /**
      * Saves a new card into the database by converting the CardDTO into a CardEntity
      * @param newCard A CardDTO representing the card to be added to the database
      * @return CardDTO

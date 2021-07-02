@@ -35,31 +35,6 @@ public class SetController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    /**
-     * Retrieves from the database all sets that were created by account
-     * @param request HTTP request containing the authorization token with username
-     * @param response HTTP response
-     * @return List<SetDTO>
-     * @author Vinson Chin
-     * @author Austin Knauer
-     */
-    @GetMapping(value = "/created", produces = "application/json")
-    public List<SetDTO> findAllCreatedSetsByAccount(HttpServletRequest request, HttpServletResponse response) {
-
-        String authToken = request.getHeader("Authorization");
-        String token = authToken.split(" ")[1];
-        Jws<Claims> claimsJws = Jwts.parser()
-                .setSigningKey(jwtTokenUtil.getSecretKey())
-                .parseClaimsJws(token);
-        String username = claimsJws.getBody().get("userName").toString();
-
-        List<SetDTO> foundSets = setService.getCreatedSets(username);
-
-        response.setStatus(200);
-        return foundSets;
-    }
-
-
     @PostMapping(value = "/newset", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public SetDTO createNewSet(@RequestBody SetDTO newSet, HttpServletRequest request){
         logger.info(newSet);
@@ -73,7 +48,6 @@ public class SetController {
         return newStudySet;
     }
 
-    //TODO Ozzy
     @GetMapping("/publicSets")
     @ResponseStatus(HttpStatus.OK)
     public List<SetEntity> getPublicSets()
@@ -81,7 +55,6 @@ public class SetController {
         return setService.getPublicSets();
     }
 
-    //TODO Kevin
     @GetMapping("/ownedSets")
     @ResponseStatus(HttpStatus.OK)
     public List<SetEntity> getOwnedSets(HttpServletRequest request)
@@ -90,7 +63,6 @@ public class SetController {
         return setService.getOwnedSets(token);
     }
 
-    //TODO Giancarlo
     @PostMapping("/cards/save")
     @ResponseStatus(HttpStatus.CREATED)
     public CardEntity saveCard(@RequestBody SetCardDTO dto)

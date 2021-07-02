@@ -29,10 +29,6 @@ public class JWTokenFilter implements Filter {
      *  Constructor for the JWTokenFilter
      * @author Nicholas Recino
      */
-//    @Autowired
-//    public JWTokenFilter(JWTokenUtil jwTokenUtil){
-//        this.jwtTokenUtil = jwTokenUtil;
-//    }
     public JWTokenFilter(){
     }
 
