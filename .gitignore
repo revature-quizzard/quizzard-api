@@ -27,15 +27,15 @@ hs_err_pid*
 /.idea
 *.iml
 
-#Config fiiles
-*.yml
-*.properties
+#Config fiiles you will need to gitignore
+#*.yml
+#*.properties
 
 #Target folder
 target/
 
 #sql files
-*.sql
+#*.sql
 
 .classpath
 .factorypath
