@@ -30,8 +30,6 @@ public class JWTokenUtil {
 
     }
 
-
-
     @PostConstruct
     public void init(){
         this.secretKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET),sigAlg.getJcaName());
@@ -70,7 +68,6 @@ public class JWTokenUtil {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
-
 
     /**
      * Generates a token based on the fields provided by a User Data Transfer Object

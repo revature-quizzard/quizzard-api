@@ -77,8 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public String[] authenticatePointsForTesting(){
         List<String> pointsToAuthenticate = new ArrayList<>();
         pointsToAuthenticate.add("/h2/**");
-        pointsToAuthenticate.add("/test/**");
-        pointsToAuthenticate.add("/accounts/**");
         pointsToAuthenticate.add("/login");
         pointsToAuthenticate.add("/register");
         pointsToAuthenticate.add("/swagger-ui.html/**");
@@ -86,14 +84,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         pointsToAuthenticate.add("/swagger-resources/**");
         pointsToAuthenticate.add("/v2/api-docs");
         pointsToAuthenticate.add("/webjars/**");
-        pointsToAuthenticate.add("/cards/**");
-        pointsToAuthenticate.add("/card/**");
-        pointsToAuthenticate.add("/subject/**");
-        pointsToAuthenticate.add("/created/**");
-        pointsToAuthenticate.add("/actuator/health");
-        pointsToAuthenticate.add("/publicSets/**");
-        pointsToAuthenticate.add("/ownedSets/**");
-        pointsToAuthenticate.add("/sets/**");
 
         return pointsToAuthenticate.toArray(new String[0]);
     }

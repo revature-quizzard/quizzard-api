@@ -103,18 +103,6 @@ public class AccountEntity {
         return Objects.hash(getId(), getAccountCardEntities(), getRoles(), getUsername(), getPassword(), getPoints());
     }
 
-    @Override
-    public String toString() {
-        return "AccountEntity{" +
-                "id=" + id +
-                ", accountCardEntities=" + accountCardEntities +
-                ", roles=" + roles +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", points=" + points +
-                '}';
-    }
-
     //scuffed implementation, I know
     public Set<AccountCardDTO> getAccountCards() {
         return this.accountCardEntities.stream()
