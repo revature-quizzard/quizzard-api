@@ -99,19 +99,6 @@ public class SetControllerTest {
                 .andReturn();
     }
 
-//    @Test
-//    public void test_getCreatedSets() throws Exception {
-//        //Arrange
-//        List<SetDTO> results = new ArrayList<>();
-//        when(mockSetService.getCreatedSets(any())).thenReturn(results);
-//
-//        //Act
-//        this.mockMvc.perform(get("/sets/created")
-//                .header("Content-Type", "application/json")
-//                .header("Authorization", "Bearer " + jwTokenUtil.generateToken(mockAuthDTO)))
-//                .andExpect(MockMvcResultMatchers.status().isOk());
-//    }
-
     @Test
     public void test_getPublicSets() throws Exception {
         //Arrange
