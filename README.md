@@ -1,5 +1,8 @@
-# Qwizzard (API)
+# Qwizard (API)
 This repository contains the backend of Qwizard. 
+
+ See the UI side of Qwizard here:
+ https://github.com/revature-quizzard/quizzard-ui
 
  Qwizard is a self-study web application made to assist Revature associates 
 with QC study. Qwizard has two main functions, study and quiz.
