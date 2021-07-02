@@ -37,6 +37,9 @@ target/
 #sql files
 #*.sql
 
+#logs directory
+/logs
+
 .classpath
 .factorypath
 .project
