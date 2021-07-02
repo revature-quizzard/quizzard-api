@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     UserEntity findByEmail(String username);
 
-    boolean existsByEmail(UserEntity entity); // Testing to see if this works later on if so This is Vince McMahon Levels of Ascension
+    //could potentially be used
     boolean existsByEmail(String email);
 
 }

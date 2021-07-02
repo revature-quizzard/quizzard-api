@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.*;
 
 /**
  * The Controller for Accounts.
@@ -74,8 +74,6 @@ public class AccountController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseHeader(name = "response")
     public AuthenticatedDTO login(@RequestBody CredentialsDTO credentialsDTO, HttpServletResponse response) {
-        //System.out.println(credentialsDTO.toString());
-
         AuthenticatedDTO authenticatedDTO = accountService.login(credentialsDTO);
         response.addHeader("Authorization", "Bearer " + jwTokenUtil.generateToken(authenticatedDTO));
 

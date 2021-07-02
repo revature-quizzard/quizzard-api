@@ -12,7 +12,6 @@ public @Data class AccountResponseDTO {
 
     private Set<RoleEntity> roles;
 
-//    private Set<AccountCardDTO> cards;
 
     private String username;
 
@@ -21,7 +20,6 @@ public @Data class AccountResponseDTO {
     public AccountResponseDTO(AccountEntity accountEntity) {
         this.roles = accountEntity.getRoles();
         this.username = accountEntity.getUsername();
-//        this.cards = accountEntity.getAccountCards();
         this.points = accountEntity.getPoints();
     }
 }

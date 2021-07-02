@@ -33,20 +33,6 @@ public class CardController {
 
 
     /**
-     * Returns all cards that belong to a specific account
-     * @param id The account id
-     * @param req The HttpServletRequest
-     * @return List<CardDTO>
-     * @author Giancarlo Tomasello
-     * @author Kevin Chang
-     */
-//    @GetMapping(value = "/account/{id}", produces = APPLICATION_JSON_VALUE)
-//    public List<CardDTO> getUsersCards(@PathVariable String id, HttpServletRequest req){
-//        return cardService.getCardsByAccountId(Integer.parseInt(id));
-//    }
-
-
-    /**
      * Creates a new flashcard in the database from a passed in CardDTO in the Request Body
      * @param newCard The new card object to be added
      * @param req The HttpServletRequest
@@ -63,17 +49,4 @@ public class CardController {
         System.out.println("Finished crate card method");
         return createdCard;
     }
-      
-//    @PostMapping("/favorite")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void toggleFavoriteCard(@RequestBody CardFavoriteDTO cardFavoriteDTO) {
-//        cardService.addFavoriteCard(cardFavoriteDTO);
-//    }
-//
-//    @PostMapping("/confident")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void toggleConfidentCard(@RequestBody CardConfidentDTO cardConfidentDTO) {
-//        cardService.toggleConfidentCard(cardConfidentDTO);
-//
-//    }
 }

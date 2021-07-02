@@ -54,7 +54,4 @@ public @Data class CardEntity {
     @JoinColumn(name = "account_id")
     private AccountEntity creator;
 
-
-//    @ManyToMany(mappedBy = "cards")
-//    private Set<SetEntity> setEntities = new HashSet<>();
 }

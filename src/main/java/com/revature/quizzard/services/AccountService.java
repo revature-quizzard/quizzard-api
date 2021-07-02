@@ -66,7 +66,6 @@ public class AccountService {
         userEntity.setFirstName(accountRegisterDTO.getFirstName());
         userEntity.setLastName(accountRegisterDTO.getLastName());
 
-
         try {
             accountRepository.save(accountEntity);
             userRepository.save(userEntity);
@@ -94,9 +93,7 @@ public class AccountService {
 
             if(accountRepository.findById(id).isPresent()) {
 
-
                 AccountEntity account = accountRepository.findById(id).get();
-
 
                 if (userRepository.findById(account.getUser().getId()).isPresent()) {
                     UserEntity user = userRepository.findById(account.getUser().getId()).get();
@@ -115,14 +112,10 @@ public class AccountService {
                         account.setUsername(accountInfoDTO.getUsername());
                         updatedAccountMap.put("username", account.getUsername());
                     }
-
-
                     userRepository.save(user);
                     accountRepository.save(account);
                     return updatedAccountMap;
                 }
-
-
             }
             return null;
         }else{
@@ -167,8 +160,6 @@ public class AccountService {
 
         return true;
     }
-
-
 
     /**
      * This method is responsible for login into an account that exists in the database
