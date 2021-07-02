@@ -1,16 +1,16 @@
-# Qwizard (API)
-This repository contains the backend of Qwizard. 
+# Qwizzard (API)
+This repository contains the backend of Qwizzard. 
 
- See the UI side of Qwizard here:
+ See the UI side of Qwizzard here:
  https://github.com/revature-quizzard/quizzard-ui
 
- Qwizard is a self-study web application made to assist Revature associates 
-with QC study. Qwizard has two main functions, study and quiz.
+ Qwizzard is a self-study web application made to assist Revature associates 
+with QC study. Qwizzard has two main functions, study and quiz.
 Both study and quiz are flashcard-centric.
 
 ### Flashcards:
 Flashcards are made up of questions and answers. This is the basic 
-unit of knowledge in Qwizard. Flashcards should contain a meaningful
+unit of knowledge in Qwizzard. Flashcards should contain a meaningful
 question, and a brief but complete answer. Flashcards are grouped into
 study sets, and associated with a category.
 
@@ -27,7 +27,7 @@ answers for each, randomly selected from the correct answers to other
 questions. A user selects an answer for each question, and is given a score.
 
 ## API Structure:
-Qwizard is a Spring application. It utilizes Spring modules for many problems,
+Qwizzard is a Spring application. It utilizes Spring modules for many problems,
 and should continue to implement more as the application grows. Current Spring 
 modules in use include:
  - Spring Core
